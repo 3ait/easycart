@@ -1,0 +1,147 @@
+package com.easycart.controller.admin.category.logic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.easycart.controller.admin.category.BrandForm;
+import com.easycart.controller.admin.category.CategoryView;
+import com.easycart.controller.admin.category.MenuForm;
+import com.easycart.db.dao.IMenuDao;
+import com.easycart.db.dao.IProductBrandDao;
+import com.easycart.db.entity.Menu;
+import com.easycart.db.entity.ProductBrand;
+
+/**
+ * 
+ * @author yaoliang
+ *
+ */
+@Component(value="categoryLogic")
+public class CategoryLogic {
+	
+	@Autowired
+	IMenuDao menuDao;
+	
+	@Autowired
+	IProductBrandDao productBrandDao;
+	
+	/**
+	 * 获取一级菜单
+	 * @return
+	 */
+	public CategoryView getLevel1Menu(){
+		CategoryView categoryView = new CategoryView();
+		List<MenuForm> list = new ArrayList<>();
+		menuDao.getLevel1Menu().forEach(menu -> {
+			MenuForm mf = new MenuForm();
+			BeanUtils.copyProperties(menu, mf);
+			list.add(mf);
+		});
+		categoryView.setMenuList(list);
+		return categoryView;
+	}
+	
+
+
+	/**
+	 * 编辑保存一级菜单
+	 * @param categoryView
+	 */
+	@Transactional(rollbackFor=Exception.class)
+	public void saveCategoryView(CategoryView categoryView) {
+		categoryView.getMenuList().forEach(menu1 ->{
+			Menu m = new Menu();
+			BeanUtils.copyProperties(menu1, m);
+			menuDao.update(m);
+		});
+	}
+	
+	/**
+	 * 编辑保存一级菜单
+	 * @param categoryView
+	 */
+	@Transactional(rollbackFor=Exception.class)
+	public Menu save(MenuForm menuForm) {
+		Menu m = new Menu();
+		BeanUtils.copyProperties(menuForm, m);
+		menuDao.save(m);
+		return m;
+	}
+	
+	/**
+	 * 根据ID删除菜单
+	 * @param categoryView
+	 */
+	
+	@Transactional(rollbackFor=Exception.class)
+	public void deleteCategoryById(int menuId) {
+		menuDao.delete(menuDao.getById(menuId));
+	}
+
+
+	/**
+	 * 根据fatherId获取子分类
+	 * @return
+	 */
+	public CategoryView getlevel2MenuByFatherId(int fatherId) {
+		
+		CategoryView categoryView = new CategoryView();
+		
+		List<MenuForm> list = new ArrayList<>();
+		menuDao.getSubMenuByFatherId(fatherId).forEach(menu2 -> {
+			MenuForm mf = new MenuForm();
+			BeanUtils.copyProperties(menu2, mf);
+			list.add(mf);
+		});
+		categoryView.setMenuList(list);
+		
+		return categoryView;
+	}
+	
+	/**
+	 * 根据一级菜单分类获取品牌
+	 * @return
+	 */
+	public CategoryView getBrandByMenu1Id(int menuId){
+		CategoryView categoryView = new CategoryView();
+		
+		List<BrandForm> list = new ArrayList<>();
+		productBrandDao.getByMenu1Id(menuId).forEach(productBrand -> {
+			BrandForm bf = new BrandForm();
+			BeanUtils.copyProperties(productBrand, bf);
+			list.add(bf);
+		});
+		categoryView.setBrandFormList(list);
+		
+		return categoryView;
+		
+	}
+
+	/**
+	 * 添加品牌
+	 * 
+	 * @param brandForm
+	 */
+	@Transactional(rollbackFor=Exception.class)
+	public void addBrand(BrandForm brandForm) {
+		ProductBrand pb = new ProductBrand();
+		BeanUtils.copyProperties(brandForm, pb);
+		productBrandDao.save(pb);
+	}
+	
+	/**
+	 * 删除品牌
+	 * 
+	 * @param brandForm
+	 */
+	@Transactional(rollbackFor=Exception.class)
+	public void delBrand(int brandId) {
+		productBrandDao.delete(productBrandDao.getById(brandId));
+	}
+	
+}

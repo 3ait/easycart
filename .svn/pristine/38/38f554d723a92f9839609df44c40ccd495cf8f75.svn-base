@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-18 0:30:35 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.MenuAttr" table="menu_attr" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="menu" class="com.easycart.db.entity.Menu" fetch="select">
+            <column name="menu_id" not-null="true" />
+        </many-to-one>
+        <property name="menuAttrName" type="string">
+            <column name="menu_attr_name" length="128" not-null="true" />
+        </property>
+        <set name="productAttrs" table="product_attr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_attr_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ProductAttr" />
+        </set>
+    </class>
+</hibernate-mapping>

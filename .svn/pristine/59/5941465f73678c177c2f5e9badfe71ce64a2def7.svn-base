@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/cart.css" th:href="@{/resources/web/css/cart.css}"  />
+		
+       <script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+			 $(document).ready(function(){
+				 $(".detail_quantity a").click(function () {
+	                    var count = $(this).attr("data");
+	                   	var productId = $(this).attr("name");
+	                   	
+	                    $("#itemAmount_"+productId).val(function () {
+	                        var value = $(this).val();
+
+                        	var totalNum = parseInt($("#productInCartNum").html());
+	                        if(count == "-"){
+	                        	if(value >1){
+									$("#productInCartNum").html(totalNum-1);
+								 }
+	                        	value--;
+							}else{
+								value++;
+								$("#productInCartNum").html(totalNum+1);
+							}
+							
+	                        if (value > 1) {
+	                            $(".detail_quantity .decrease").removeClass("no-decrease");
+	                        }else if (value = 1) {
+	                            $(".item-amount .decrease").addClass("no-decrease");
+	                            var value = 1;
+	                        }
+	                        
+	                        $(this).next().val(value);
+							var price = 0;
+							var num = 0;
+							var totalNum = 0;
+							$("input[name='single_cb']").each(function(index,obj){
+								price += parseFloat($("#"+obj.getAttribute("id")+"_price").val()) * parseInt($("#"+obj.getAttribute("id")+"_num").val());
+								num++;
+								totalNum +=parseInt($("#"+obj.getAttribute("id")+"_num").val());
+							});
+							
+							$("#totalPrice").html("$"+ price + " NZD");
+							$("#productNum").html($("#productInCartNum").html());
+							
+							$.ajax({
+								url: [[@{/cart/ajax/product/num}]],
+								method: "POST",
+								data: { 
+									"num" : $(this).next().val(),
+									"id" : productId,
+									},
+							}).done(function(ret){
+							});
+							
+							return value;
+	                    })
+	                });
+				 
+			 });
+                
+			
+			 	/**
+	             * goCart
+	            **/
+				function goCart(productId){
+					window.location.href = [[@{/}]]+ "cart/";
+				}
+			 	
+			 	/**
+	             * confirm
+	            **/
+				function confirmOrder(){
+					window.location.href = [[@{/cart/confirm/}]];
+				}
+			 	
+			 	/**
+			 	    删除购物车产品
+			 	**/
+			 	function deteProduct(obj,productId){
+			 		if(confirm("确认删除？")){
+			 			$.ajax({
+							url: [[@{/cart/ajax/delete}]],
+							method: "POST",
+							data: { 
+								"id" : productId,
+								},
+						}).done(function(ret){
+							$("#productInCartNum").html(ret);
+							$(obj).parent().remove();
+							$("#productNum").html(ret);
+						});
+			 		}
+			 	}
+			 	
+			/*]]>*/
+		</script>
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		
+		<div id="containerC">
+			<div id="section1">購物車</div>
+			<div id="section2">
+				<div class="cartBar">
+					<div class="block" style="flex: 4;"></div>
+					<div class="cWord">商品信息</div>
+					<div class="block" style="flex: 6;"></div>
+					<div class="cWord">單價(NZ$)</div>
+					<div class="block" style="flex: 3.2;"></div>
+					<div class="cWord">數量</div>
+					<div class="block" style="flex: 3.9;"></div>
+					<div class="cWord">操作</div>
+					<div class="block" style="flex: 2.4;"></div>
+				</div>
+				
+				<th:block th:attr="totalPrice='111'"></th:block>
+				<div class="cartProduct" th:each="productView:${productViewList}">
+					<div class="block" style="flex: 3.4;"></div>
+					<!-- 数量和价格 -->
+					 <input type="hidden" name="single_cb" th:id="|pid_${productView.product.id}|"></input>
+					<input type="hidden" th:id="|pid_${productView.product.id}_price|" th:value="${productView.product.price1}" />
+					
+					<div class="block" style="flex: 4.7;"></div>
+					<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+						<div class="cPic"><img style="width:108px;" th:src="@{/}+${productView.defaultImg.href}" /></div>
+					</a>
+					<div class="block" style="flex: 6;"></div>
+					<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+						<div class="cInfor" th:text="${productView.product.productNameCn}">产品名称</div>
+					</a>
+					<div class="block" style="flex: 30;"></div>
+					<div class="cPrice" th:text="|NZ$:${productView.product.price1}|">price</div>
+					<div class="block" style="flex: 17.5;"></div>
+					
+					<div class="detail_quantity" th:id="|detail_quantity_${productView.product.id}|">
+                        <a  onclick="return false;" th:name="|${productView.product.id}|" class="decrease no-decrease" data="-" >-</a>
+                        <input type="text" value="1" readonly="readonly" th:id="|itemAmount_${productView.product.id}|" class="text-amount" th:value="${productView.num}"></input>
+						<input type="hidden" th:id="|pid_${productView.product.id}_num|" value="1"  th:value="${productView.num}"></input>
+                        <a onclick="return false;" th:name="|${productView.product.id}|" class="increase" data="+">+</a>
+                    </div>
+					
+					<div class="block" style="flex: 21.2;"></div>
+					<div class="cDelet" th:onclick="|deteProduct(this,${productView.product.id})|">刪除</div>
+					<div class="block" style="flex: 16.3;"></div>
+				</div>
+
+				<div class="cartBar">
+					<div class="block" style="flex:4;"></div>
+					<div class="block" style="flex:73;"></div>
+					<div class="cWord">共&nbsp;<span style="color:#C81623;" id="productNum" th:text="|${productInCartNum}|">110</span> 件商品</div>
+					<div class="block" style="flex:14.3;"></div>
+					<div class="cWord" style="width: 280px;">合計： <span style="color:#C81623;" id="totalPrice" th:text="|$${productInCartPrice} NZD|">NZ$:0.00</span> (不含運費)</div>
+					<div id="closeAccount" th:onclick="|confirmOrder()|">結算</div>
+					<div class="block" style="flex:7.1;"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

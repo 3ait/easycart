@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css"/>
+
+	</head>
+
+	<body>
+		<div th:fragment="hearderFragement">
+			<div class="header1">
+				<div class="headLogin">
+					<ul>
+						<li th:if="${customer==null}"><a th:href="@{/customer/}">登錄</a></li>
+						<li th:if="${customer==null}">&nbsp;|&nbsp;</li>
+						<li th:if="${customer==null}"><a th:href="@{/customer/register}">註冊</a></li>
+						<li th:if="${customer!=null}" th:text="|你好：${customer.phone}|"></li>
+						<li >&nbsp;|&nbsp;</li>
+						<li><a th:href="@{/customer/order/}">我的訂單</a></li>
+						<li th:unless="${customer==null}">&nbsp;|&nbsp;</li>
+						<li th:unless="${customer==null}"><a th:href="@{/customer/logout}">退出</a></li>
+					</ul>
+				</div>
+			</div>
+			<form id="searchForm" action="#" th:action="@{/s}"  onsubmit="check()" method="get">
+				<div id="header2">
+					<div id="logo">
+						<a th:href="@{/}"><img src="../resources/logo02.jpg" th:src="@{/resources/logo02.jpg}" style="height: 65px;" /></a>
+						<a th:href="@{/}"><img src="../resources/logo003.png" th:src="@{/resources/logo003.png}" style="height: 42px; margin-left:20px ;" /></a>
+					</div>
+					<div style="width: 85px;"></div>
+					<div><input type="text" name="q"  id="q" th:value="${q}" placeholder=" 奶粉、蜜蜂、葡萄籽" /></div>
+					<div id="searchBotton" th:onclick="|productSearch()|">搜索</div>
+					<div style="width:85px;"></div>
+					<a th:href="@{/cart/}" target="_blank">
+						<div id="car">
+							<div class="headIcon"><img src="../resources/web/img/icon/cart.png" th:src="@{/resources/web/img/icon/cart.png}" alt="cart" />
+							</div>
+							<span style="padding:0 15px;">購物車</span>
+							<span class="headIcon" >(</span>
+							<span class="headIcon" id="productInCartNum" th:text="|${productInCartNum}|">(0)</span>
+							<span class="headIcon" >)</span>
+						</div>
+					</a>
+					
+				</div>
+			</form>
+			<div id="header3">
+
+				<ul class="ulF">
+					<div id="ulFcontainer">
+						<li class="liF"><a href="#" th:href="@{/}">首&nbsp;&nbsp;頁</a></li>
+						<li class="liF" th:each="menuView:${menuViewList}">
+							<a th:href="|@{/list/}${menuView.menu.nameEn}|"><div th:text="${menuView.menu.nameCn}">一级菜单</div></a>
+							<ul class="ulC">
+								<li>
+									<div class="navInner">
+										<div class="navInner_FC" style="">
+										<div class="navInnerContainer">
+											<div th:each="subMenu:${menuView.subMenuList}">
+												<a style="color: #626262;" th:href="|@{/list/}${menuView.menu.nameEn}?submenu=${subMenu.nameEn}|" >
+												<span th:text="${subMenu.nameCn}">二级菜单</span></a>
+											</div>
+										</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</div>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,132 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	cursor: default;
+}
+
+li {
+	list-style: none;
+}
+
+.containerAO {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.aLogo {
+	height: 78px;
+	/*background: red;*/
+	padding: 22px 75px;
+	display: flex;
+	align-items: center;
+}
+
+.ahNav {
+	display: flex;
+	justify-content: center;
+}
+
+.ahNavL {
+	width: 152px;
+	height: 50px;
+	background: #E7E7E7;
+	font-size: 18px;
+	line-height: 50px;
+	text-align: center;
+	border-radius:10px 10px 0 0 ;
+	cursor: pointer;
+}
+
+.aBar {
+	/*width: 200%;*/
+	height: 15px;
+	background: #F0C200;
+}

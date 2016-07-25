@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-30 14:51:00 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.ProductBrand" table="product_brand" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="menu" class="com.easycart.db.entity.Menu" fetch="select">
+            <column name="menu_id" not-null="true" />
+        </many-to-one>
+        <property name="brandNameCn" type="string">
+            <column name="brand_name_cn" length="128" />
+        </property>
+        <property name="brandNameEn" type="string">
+            <column name="brand_name_en" length="128" />
+        </property>
+        <property name="brandImgUrl" type="string">
+            <column name="brand_img_url" length="512" />
+        </property>
+        <set name="productAttrs" table="product_attr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_brand_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ProductAttr" />
+        </set>
+        <set name="products" table="product" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_brand_id" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Product" />
+        </set>
+    </class>
+</hibernate-mapping>

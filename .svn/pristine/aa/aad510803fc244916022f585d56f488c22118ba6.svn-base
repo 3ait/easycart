@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<div th:fragment="footerFragement">
+			<div id="footer1">
+				<div style="height: 80px;"></div>
+				<div id="footbar"></div>
+				<div style="height: 27px;"></div>
+			</div>
+			<div id="footer2">
+
+				<div id="footLeft">
+					<div>
+						<ul>
+							<li style="font-size: 14px;">店舖地址</li>
+							<li>
+								<div class="White"></div>
+							</li>
+							<li>
+								<div class="underLine"></div>
+							</li>
+							<li>
+								<div class="White"></div>
+							</li>
+						</ul>
+					</div>
+					<div id="add">
+						<div id="add1">
+							<span class="addName">Main Shop市區總店</span>
+							<div class="White10"></div>
+							<p>65 Wakefield Street, Auckland C.B.D.<br /> Tel : 0064-9-3031619 <br /> Fax : 0064-9-3031608 <br /> Email : info@royaldeer.co.nz</p>
+							<div class="White10"></div>
+							<span class="addName" style="">Howick 分店</span>
+							<div class="White10"></div>
+							<p>6Shop5/16 Gooch Place,<br /> Highgate ,Howick <br /> Tel : 09-537-1109
+							</p> <br />
+						</div>
+						<div style="width: 70px;"></div>
+						<div id="add2">
+							<span class="addName">Botany  South 分店</span>
+							<div class="White10"></div>
+							<p>14 Bishop Lenihan Place,<br /> East Tamaki <br /> Tel : 09-265-1100
+							</p>
+							<div class="White10"></div>
+							<span class="addName" style="">Glenfield 分店</span>
+							<div class="White10"></div>
+							<p>31 Link Drive, <br /> Glenfield
+								<br /> Tel : 09-912-8831
+							</p> <br />
+						</div>
+						<div style="width: 70px;"></div>
+						<div id="add3">
+							<span class="addName">Northcote 分店</span>
+							<div class="White10"></div>
+							<p>15 Pearn Place,<br /> Northcote Shopping Centre<br /> Tel : 09-480-3151
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="" style="width: 70px;"></div>
+
+				<div id="footMid">
+					<div>
+						<ul class="Aus">
+							<li style="color: black;">關於我們</li>
+							<li>
+								<div class="White"></div>
+							</li>
+							<li>
+								<div class="underLine"></div>
+							</li>
+
+							<li>
+								<div class="White"></div>
+							</li>
+							<li>
+								<a th:href="@{/about/us/}">
+									<div class="auChangColor">關於我們</div>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/about/policy/}">
+									<div class="auChangColor">售後政策</div>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/about/product_returns/}">
+									<div class="auChangColor">退貨條款</div>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/about/state/}">
+									<div class="auChangColor">退款說明</div>
+								</a>
+							</li>
+
+							<li>
+								<a th:href="@{/about/exceptions/}">
+									<div class="auChangColor">免責條款</div>
+								</a>
+							</li>
+							<li>
+								<!--<a th:href="@{/aboutus/a5/}"><div class="auChangColor">購物條款</div></a>-->
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div style="width: 90px;"></div>
+				<div id="footRight">
+					<div>
+						<ul class="Aus">
+							<li style="color: black;">訂單相關</li>
+							<li>
+								<div class="White"></div>
+							</li>
+							<li>
+								<div class="underLine"></div>
+							</li>
+
+							<li>
+								<div class="White"></div>
+							</li>
+							<li>
+								<a th:href="@{/customer/order/}">
+									<div class="auChangColor">訂單查詢</div>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/customer/}">
+									<div class="auChangColor">忘記密碼</div>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/about/freight/}">
+									<div class="auChangColor">運費細則</div>
+								</a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="clr"></div>
+
+			<div id="footer3">
+				<div id="hr"></div>
+				<div style="height: 8px;"></div>
+				<div id="copy">
+					<p>Copyright © 2016 Royal Deer of New Zealand Ltd 版權所有.</p>
+					<div style="height:4px ;"></div>
+					<p> 鹿皇土產- 紐西蘭大型禮品連鎖店</p>
+				</div>
+				<br />
+			</div>
+		</div>
+	</body>
+
+</html>

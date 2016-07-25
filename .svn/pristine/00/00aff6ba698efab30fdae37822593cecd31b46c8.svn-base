@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		test3
+	
+		
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			//密码是否修改
+			var flag = false;
+			function listEditConfirm(id){
+				if(!confirm("确认修改？")){
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/companyinfo/user/edit/save}]],
+					method: "POST",
+					data: { 
+						"userId" : id,
+						"status" : $("#"+id+"_status").val(),
+						"password" : flag? $("#"+id+"_password").val():"",
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("更新失败");
+				});
+			}
+		
+			function submitConfirm(){
+				if(!confirm("确定修改？")){
+					return false;
+				}
+				
+			}
+			
+			function changePass(_self){
+				$(_self).attr("readonly",false);
+				$(_self).val("");
+				flag = true;
+			}
+			
+			function cancel(){
+				window.location.reload();
+			}
+			/*]]>*/	
+		</script>
+		<style type="text/css">
+			.companyInfo{
+				display:flex;
+				flex-direction:column;
+			}
+			.companyInfo div{
+				width: 50%;
+				padding:5px; 
+				display: flex;
+				align-items:center;
+			}
+			.companyInfo div input{
+				width: 80%;
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">企业信息</div>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<form action="#" th:action="@{/admin/companyinfo/company/save}" onsubmit="submitConfirm()">
+					<div class="companyInfo">
+						<input type="hidden" th:field="*{companyInfoView.companyId}" />
+						<div>
+							<label>公司名称：</label><input type="text" th:field="*{companyInfoView.companyName}"/>
+						</div>
+						<div>
+							<label>公司电话：</label><input type="text" th:field="*{companyInfoView.companyPhone}"/>
+						</div>
+						<div>
+							<label>总店地址：</label><input type="text" th:field="*{companyInfoView.companyAddress}"/>
+						</div>
+						<div>
+							<label>账户名称：</label><input type="text" th:field="*{companyInfoView.accountName}"/>
+						</div>
+						<div>
+							<label>账户信息：</label><input type="text" th:field="*{companyInfoView.accountNumber}"/>
+						</div>
+					</div>
+					<div style="padding-left: 42%;">
+					<br />
+						<input type="submit" th:value="提交"  ></input>
+					</div>
+				</form>
+				
+				
+				<br />
+				<div class="apAll">
+					<table  >
+						<thead>
+							<tr >
+								<td >登陆邮箱</td>
+								<td >密码</td>
+								<td >状态</td>
+								<td >操作</td>
+							</tr>
+						</thead>
+						<tbody valign="middle">
+						
+							<tr  th:each="user : ${companyInfoView.userList}" >
+								<td >
+									<span th:text="${user.email}"></span>
+								</td>
+								<td>
+									<input type="password" th:id="|${user.id}_password|" th:onclick="|changePass(this)|" th:value="${user.password}" style="width: 400px;height: 30px;" readonly="readonly"/>
+								</td>
+								<td>
+									<select th:id="|${user.id}_status|"  style="width:100px;height: 30px;">
+									    <option value ="-1" >用户状态</option>
+									    <option value ="1" th:selected="${user.status==1}?1:0">使用中</option>
+									    <option value ="0" th:selected="${user.status==0}?1:0">不可用</option>
+									</select>
+								</td>
+								<td >
+									<input class="tBtn" type="button" th:onclick="|listEditConfirm('${user.id}')|" value="确认修改" /><br />
+									<input class="tBtn" type="button"  onclick="cancel()"  value="取消" /><br />
+								</td>
+							</tr>
+							<tr>
+								<form th:action="@{/admin/companyinfo/user/save}" th:object="${user}">
+									<td>
+										<input type="email" style="width: 400px;height: 30px;" th:field="*{email}"></input>
+									</td>
+									<td>
+										<input style="width: 400px;height: 30px;" th:field="*{password}"></input>
+									</td>
+									<td>
+										<select style="width:100px;height: 30px;" th:field="*{status}">
+										    <option value ="-1">用户状态</option>
+										    <option value ="1">使用中</option>
+										    <option value ="0">不可用</option>
+										</select>
+									</td>
+									<td>
+										<input class="tBtn" type="submit"  value="新增" /><br />
+									</td>
+								</form>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+<div style="height: 30px;"></div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8"></meta>
+		<title></title>
+		
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/sign_up.css" th:href="@{/resources/web/css/sign_up.css}"/>
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+		<script src="../../resources/web/js/sign_up.js" type="text/javascript" th:inline="javascript" th:src="@{/resources/web/js/sign_up.js}"></script>
+		<style type="text/css">
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+				background: url(img/bodyTest.png);
+			}
+			/*移动 图片地址变化*/
+		</style>
+		 <script th:inline="javascript">
+    		/*<![CDATA[*/
+    		  window.onload = function(){
+    			
+    			  if([[${flag}]]==1){
+		   	    	  $("#rpway2").click();
+		   	      }
+    			 
+    		}
+   			  var flag = true;
+    		  /**
+			    检查电话是否被注册
+			  **/
+			  function checkPhone(obj,id){
+				  $.ajax({
+					url: [[@{/customer/ajax/check/phone}]],
+					method: "POST",
+					data: { 
+						"phone" : obj.value,
+						},
+				}).done(function(ret){
+					if(ret=="yes"){
+						if(id=="regist_msg"){
+							$("#" + id).html("手机号已经注册，请重新输入");
+						}else if(id=="retrieve_msg"){
+							$("#" + id).html("");
+						}
+						flag = true;
+					}else{
+						if(id=="regist_msg"){
+							$("#" + id).html("");
+						}else if(id=="retrieve_msg"){
+							$("#" + id).html("手机号未注册");
+						}
+						flag = false;
+					}
+				});
+			  }
+    		  
+    		  /**
+    		  	注册保存
+    		  **/
+    		  function registerSave(){
+    			  if(flag){
+    				  alert("手机号已经注册");
+    				  return;
+    			  }
+    			  if($("#register_password1").val()!=$("#register_password2").val()){
+    				  $("#register_password2").css("border","red");
+    				  alert("确认密码不一致");
+    				  return;
+    			  }
+    			  if($("#identifyCode").val()==""){
+    				  return;
+    			  }
+    			  document.getElementById("registerForm").submit();
+    		  }
+    		  /**
+    		  	找回密码
+    		  **/
+    		  function retrieve(){
+    			  if(!flag){
+    				  return;
+    			  }
+    			  
+    			  if($("#retrieve_identifyCode").val()==""){
+    				  $("#retrieve_identifyCode").prev().css("color","red");
+    				  $("#retrieve_identifyCode").prev().click();
+    				  return;
+    			  }
+    			  if($("#retrieve_password1").val()==""){
+    				  $("#retrieve_password1").prev().css("color","red");
+    				  $("#retrieve_password1").prev().click();
+    				  return;
+    			  }
+    			  if($("#retrieve_password2").val()==""){
+    				  $("#retrieve_password2").prev().css("color","red");
+    				  $("#retrieve_password2").prev().click();
+    				  return;
+    			  }
+    			  if($("#retrieve_password1").val()!=$("#retrieve_password2").val()){
+    				  $("#retrieve_password1").prev().css("color","red");
+    				  $("#retrieve_password2").prev().css("color","red");
+    				  $("#retrieve_password1").prev().click();
+    				  return;
+    			  }
+    			  document.getElementById("retrieveForm").submit();
+    		  }
+    		  
+
+    		  /**
+    		  	发送验证码
+    		  */
+    		  function sendCode(type){
+    			  var phone = "";
+    			  if($("#"+type+"zone").val()=="-1"){
+    				  $("#"+type+"zone").focus();
+    				  return false;
+    			  }
+    			  if($("#"+ type +"phone").val()==""){
+    				  $("#"+ type +"phone").focus();
+    				  return false;
+    			  }else{
+    				  if($("#"+ type +"phone").val().indexOf("0")==0){
+    					  phone = $("#"+type+"zone").val() + $("#"+ type +"phone").val().substr(1);
+    				  }
+    			  }
+    			  $.ajax({
+						url: [[@{/customer/ajax/get/code}]],
+						method: "post",
+						data: { 
+							"phone" : phone,
+							},
+						 error: function(XMLHttpRequest, textStatus, errorThrown) {  
+					        	//#3这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
+					            alert(XMLHttpRequest.status);
+					            alert(XMLHttpRequest.readyState);
+					            alert(textStatus); // paser error;
+					        },
+					}).done(function(ret){
+						
+					});
+    			  return true;
+    		  }
+    	 /*]]>*/
+    </script>
+	</head>
+
+	<body>
+	<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		<div style="height: 50px;"></div>
+		<div class="containerSign">
+			<div class="signFrame">
+				<div class="rePassword">
+					<!--<div></div>-->
+					<div class="rpWay">
+						<div class="LoginLabel" id="rpway1">已有帳號，點擊登陸</div>
+						<div class="LoginLabel" id="rpway2">沒有帳號，立即註冊</div>
+						<div class="findPLabel" id="rpway3">通過手機找回密碼</div>
+					</div>
+					
+					
+					
+					<div class="rpWayInfor" >
+					<form id="loginForm"  method="post" th:action="@{/customer/login}" th:object="${customerForm}">
+						<!-- 登陆 -->
+						<div id="rpw1">
+							<div class="rpWayInfor1">
+	
+								<div class="White50" style="height: 50px;"></div>
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">手機號</div>
+										<input  type="text" class="rpiInput" th:field="*{phone}"/>
+									</div>
+								</div>
+	
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">密碼</div> <input type="password" maxlength="12" th:field="*{password}" class="rpiInput"  /></div>
+								</div>
+	
+								<div class="White60" id="loginMsg" style="height: 50px;padding-top: 20px;color: red;" th:text="${msg}"></div>
+								<div class="White60" style="height: 50px;"> <span id="forgotP" style="cursor: pointer;" >忘記密碼？</span><br /></div>
+								<div id="loginBtn" class="rpBtn">登錄</div>
+	
+							</div>
+	
+						</div>
+					</form>
+					<form id="registerForm"   method="post" th:action="@{/customer/register/save}" th:object="${customerForm}">
+						<!-- 注册 -->
+						<div id="rpw2">
+							<div class="rpWayInfor2">
+	
+								<div class="White30" style="height: 30px;"></div>
+								<div class="rpiDetail">
+									<div class="countrySelectDiv" >
+										<div class="rpiLabelC">
+											<select class="countrySelect" id="regist_zone" >
+												<option value="-1">手机号地区*</option>
+												<option value="64">新西蘭 +64</option>
+												<option value="86">中國 +86</option>
+												<option value="852">香港 +852</option>
+											</select>
+										</div>
+										<input th:onblur="|checkPhone(this,'regist_msg')|" type="text" id="register_phone" th:name="phone" maxlength="11" class="rpiInput"  />
+										<span id="regist_msg" style="color: red;"></span>
+									</div>
+								</div>
+								
+								
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">驗證碼*</div> <input type="text"  id="register_identifyCode" th:name="identifyCode" maxlength="6" name="" class="rpiInput" />
+									</div>
+									<input type="button" id="rpiSend" value="發送驗證碼"  />
+								</div>
+								
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">密碼*</div> <input type="password" id="register_password1" th:name="password"  maxlength="15"  class="rpiInput" /></div>
+								</div>
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">確認密碼*</div> <input type="password" id="register_password2" maxlength="15"  class="rpiInput"/></div>
+								</div>
+								<div class="White40" style="height: 40px;"></div>
+								<div class="White60" id="registMsg" style="height: 50px;padding-top: 20px;color: red;" th:text="${msg}"></div>
+								<div class="rpBtn" th:onclick="|registerSave()|">註冊</div>
+	
+							</div>
+
+	
+						</div>
+					</form>
+					<!--
+						作者：282713895@163.com
+						时间：2016-06-03
+						描述：找回密码
+					-->	
+					<form id="retrieveForm"   method="post" th:action="@{/customer/retrieve}" th:object="${customerForm}">					
+						<div id="rpw3">
+							<div class="rpWayInfor2">
+	
+								<div class="White30" style="height: 30px;"></div>
+								
+								<div class="rpiDetail">
+									<div class="countrySelectDiv">
+										<div class="rpiLabelC">
+											<select class="countrySelect" id="retrieve_zone">
+												<option value="-1">手机号地区*</option>
+												<option value="64">新西蘭 +64</option>
+												<option value="86">中國 +86</option>
+												<option value="852">香港 +852</option>
+											</select>
+										</div>
+										<input th:onblur="|checkPhone(this,'retrieve_msg')|" type="text" id="retrieve_phone" th:name="phone" maxlength="11" class="rpiInput"  />
+										<span id="retrieve_msg" style="color: red;"></span>
+									</div>
+								</div>
+								
+								
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">驗證碼*</div> 
+										<input type="text"  id="retrieve_identifyCode"  th:name="identifyCode" maxlength="6" name="" class="rpiInput" />
+									</div>
+									<!--<div class="rpiSend">發送驗證碼</div>-->
+									<input type="button" name="" id="find_rpiSend" value="發送驗證碼" />
+								</div>
+								
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">新密碼*</div> 
+										<input type="password" id="retrieve_password1" th:name="password"  maxlength="15"  class="rpiInput" />
+										</div>
+								</div>
+								<div class="rpiDetail">
+									<div class="rpiLabel">
+										<div class="rpiLabelC">確認密碼*</div> 
+											<input type="password" id="retrieve_password2" maxlength="15"  class="rpiInput"/>
+										</div>
+								</div>
+								<div class="backLogin"><span id="backLogin">返回登錄</span></div>
+								<div class="rpBtn" th:onclick="|retrieve()|">確認</div>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		<div style="height: 50px;"></div>
+		
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

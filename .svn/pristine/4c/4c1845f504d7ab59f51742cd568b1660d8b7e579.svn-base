@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			$(function() {
+				$(".tBtnA").click(function() {
+					$(this).siblings().children("input").removeAttr("disabled");
+					$(this).siblings().children("textarea").removeAttr("disabled");
+				})
+			})
+			//列表直接编辑
+			function listEditConfirm(productId){
+				if(!confirm("确认修改？")){
+					return false;
+				}
+				
+				var status =$("input[name='"+productId+"_status']:checked").val(); 
+				if( typeof(status) == "undefined"){ 
+					alert( "请设置产品状态！");
+					return false;
+				}
+				var frontPage = 0;
+				if($("#"+productId+"_frontPage").prop("checked")==true){
+					frontPage = "1";
+				}
+				var hot = 0;
+				if($("#"+productId+"_hot").prop("checked")==true){
+					hot = 1;
+				}
+				var promote = 0;
+				if($("#"+productId+"_promote").prop("checked")==true){
+					promote = 1;
+				}
+				var recommend = 0;
+				if($("#"+productId+"_recommend").prop("checked")==true){
+					recommend = 1;
+				}
+				
+				
+				$.ajax({
+					url: [[@{/admin/product/list/edit/confirm}]],
+					method: "POST",
+					data: { 
+						"id" : productId,
+						"cost" : $("#"+productId+"_cost").val(),
+						"price1" :$("#"+productId+"_price1").val(),
+						"stock" : $("#"+productId+"_stock").val(),
+						"status" : status,
+						"soldNum" : $("#"+productId+"_soldNum").val(),
+						"hot" : hot,
+						"promote" : promote,
+						"frontPage" : frontPage,
+						"recommend" : recommend,
+						"memo" : $("#"+productId+"_memo").val(),
+						},
+				}).done(function(ret){
+					window.location.reload();
+				});
+			}
+		
+			/**
+			查询
+			**/
+			function search(){
+				document.getElementById("searchForm").submit();
+			}
+			//上翻页
+			function prePage(){
+				if($("#hidden_pageNum").val()<=1){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())-1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("searchForm").submit();
+			}
+			//下翻页
+			function nextPage(){
+				
+				if($("#hidden_pageNum").val()>=[[${page.totalPage}]]){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())+1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("searchForm").submit();
+			}
+			//页面条跳转
+			function go(){
+				var pageNum = $("#pageGo").val();
+				if(pageNum<=1){
+					return false;
+				}
+				if(pageNum>[[${page.totalPage}]]){
+					return false;
+				}
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("searchForm").submit();
+			}
+			
+			//编辑查看
+			function edit(productId){
+				var url = [[@{/admin/product/edit/}]]+productId;
+				window.open(url,'newwindow','width=1000,height=800');
+			}
+			/*]]>*/	
+		</script>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">全部産品</div>
+				<a th:href="@{/admin/product/add/}" style="text-decoration: none"><div class="aNav" >添加産品</div></a>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<form id="searchForm" th:action="@{/admin/product/}" th:object="${searchForm}" th:method="post">
+					<div class="search">
+						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
+						<input type="text" th:field="*{q}" placeholder="产品名/条形码/" />
+						<div th:onclick="|search()|"><img src="../../resources/admin/img/icon/icon_rearch.png" alt="" th:src="@{/resources/admin/img/icon/icon_rearch.png}" /></div>
+						&nbsp;|&nbsp;
+						<input th:onclick="|search()|" type="radio" th:name="status" value="-1"  th:checked="${searchForm.status==-1}?1:0" style="width:20px;"/><label for="">&nbsp;全部</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="0"  th:checked="${searchForm.status==0}?1:0" style="width:20px;" /><label for="">&nbsp;在線</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="1"  th:checked="${searchForm.status==1}?1:0" style="width:20px;" /><label for="">&nbsp;離線</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="2"  th:checked="${searchForm.status==2}?1:0" style="width:20px;" /><label for="">&nbsp;缺貨</label>
+						&nbsp;|&nbsp;
+						<input th:onclick="|search()|" type="checkbox" th:name="hot" value="1" th:checked="${searchForm.hot==1}?1:0" style="width:20px;"/><label for="q_hot">&nbsp;热销</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="promote" value="1" th:checked="${searchForm.promote==1}?1:0"  style="width:20px;"/><label for="q_promote">&nbsp;促销</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="frontPage" value="1" th:checked="${searchForm.frontPage==1}?1:0"  style="width:20px;"/><label for="q_frontPage">&nbsp;首页</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="recommend" value="1" th:checked="${searchForm.recommend==1}?1:0"  style="width:20px;"/><label for="q_recommend">&nbsp;推荐</label>
+					</div>
+				</form>
+				<form th:action="@{/admin/product/list/edit/confirm}" th:object="${product}">
+				<div class="apAll">
+					<table  >
+						<thead>
+							<tr >
+								<td >産品展示圖</td>
+								<td width="15%">產品名稱/mpn</td>
+								<td width="5%">成本</td>
+								<td width="5%">价格</td>
+								<td width="5%">庫存</td>
+								<td width="5%">已賣</td>
+								<td width="10%">产品狀態</td>
+								<td width="5%">熱銷</td>
+								<td width="5%">促銷</td>
+								<td width="5%">首頁</td>
+								<td width="5%">推薦</td>
+								<td width="20%">備註</td>
+								<td width="100px;">操作</td>
+							</tr>
+						</thead>
+						<tbody valign="middle">
+							<tr  th:each="productView : ${productViewList}" >
+									<td style="vertical-align: middle;">
+										<img  th:src="@{/} + ${productView.defaultImg.href}" alt="產品縮略圖" width="95px" />
+									</td>
+									<td>
+										<span th:text="${productView.product.productNameCn}"></span><br/>
+										<span th:text="${productView.product.mpn}"></span>
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_cost|" th:name="cost"  type="text" th:value="${productView.product.cost}" style="width: 60px;" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_price1|"  th:name="price" type="text" th:value="${productView.product.price1}" style="width: 60px;" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_stock|" type="number" min="0" th:value="${productView.product.stock}" style="width: 50px;" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_soldNum|" type="number" min="0" th:value="${productView.product.soldNum}" style="width: 50px;" />
+									</td>
+									<td th:class="${productView.product.status==1}? '':colorRed">
+										<input type="radio" th:name="|${productView.product.id}_status|" th:id="|${productView.product.id}_status0|" value="0"  th:checked="${productView.product.status==0}?1:0" /><label th:for="|${productView.product.id}_status0|">&nbsp;離線</label><br />
+										<input type="radio" th:name="|${productView.product.id}_status|" th:id="|${productView.product.id}_status1|" value="1" th:checked="${productView.product.status==1}?1:0"/><label th:for="|${productView.product.id}_status1|">&nbsp;在線</label><br />
+										<input type="radio" th:name="|${productView.product.id}_status|" th:id="|${productView.product.id}_status2|" value="2"  th:checked="${productView.product.status==2}?1:0"/><label th:for="|${productView.product.id}_status2|">&nbsp;缺貨</label>
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_hot|" type="checkbox"  th:value="${productView.product.hot}"  th:checked="${productView.product.hot==1}?1:0" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_promote|" type="checkbox" th:value="${productView.product.promote}"  th:checked="${productView.product.promote==1}?1:0" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_frontPage|" type="checkbox" th:value="${productView.product.frontPage}"  th:checked="${productView.product.frontPage==1}?1:0" />
+									</td>
+									<td>
+										<input th:id="|${productView.product.id}_recommend|" type="checkbox" th:value="${productView.product.recommend}"  th:checked="${productView.product.recommend==1}?1:0" />
+									</td>
+									<td >
+										<textarea th:id="|${productView.product.id}_memo|" style="width:80%;height: 80%"  th:text="${productView.product.memo}" ></textarea>
+									</td>
+									<td style="vertical-align: middle;">
+										<input class="tBtn" type="button" th:onclick="|listEditConfirm('${productView.product.id}')|" value="确认修改" /><br />
+										<input class="tBtn" type="reset"  value="取消" /><br />
+										<input class="tBtn" type="button" th:onclick="|edit('${productView.product.id}')|" name="" value="编辑查看" />
+									</td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				</form>
+
+				<div class="apPage">
+					<br />
+					<br />
+					<br />
+					<br />
+					<div class="pageBtn" id="fontPage" th:onclick="|prePage()|">&lt;上一頁</div>
+					<div class="pageNum" th:text="|${page.pageNum}/${page.totalPage}|">1/5</div>
+					<div class="pageBtn" id="nextPage" th:onclick="|nextPage()|">下一頁&gt;</div>&nbsp;&nbsp;
+					<input type="number" name="" id="pageGo" th:value="${page.pageNum}" ></input>&nbsp;&nbsp;
+					<div class="pageBtn" id="fontPage" th:onclick="|go()|">GO</div>
+					&nbsp;&nbsp;
+				</div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

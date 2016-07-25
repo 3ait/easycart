@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/main.css" th:href="@{/resources/web/css/main.css}" />
+		<script type="text/javascript" src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
+		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+	</head>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+				$.focus("#focus001");
+				
+			   $(window).scroll(function(){
+					//获取窗口已滚动的高度
+					var windowScrollTop=$(window).scrollTop();
+					var oTools=$("#ToTop");
+						//如果大约100PX，就渐显出“回到顶部”，否则即隐藏
+						if(windowScrollTop>100)
+						{
+							oTools.fadeIn();
+							}else{
+									oTools.fadeOut();
+								}
+					});
+					
+				$("#ToTop").click(function(){
+					//点击“回到顶部”，滚动到顶部，并带动画效果
+						$("html,body").animate({scrollTop:0},500);
+					});	
+						});
+			
+			
+			
+	</script>
+	
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		function show(id1,id2){
+			document.getElementById(id1).style.display = "block";
+			document.getElementById(id2).style.display = "none";
+		}
+		/**
+		产品列表替换
+		**/
+		function productList(menu1Id,menu2Id){
+			$("#"+menu1Id).load([[@{/ajax/product/list/}]]+menu2Id);
+		}
+		/*
+		more 链接
+		**/
+		function moreProduct(id){
+			$("#"+id).load([[@{/ajax/product/list}]]);
+		}
+		
+		
+		/*]]>*/	
+	</script>
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+
+		<div id="containerM">
+			<div class="main1">
+				<div class="vain"></div>
+				
+<!--banner-->				
+				<div id="slideShow">
+			<div class="focus" id="focus001">
+				<ul>
+					<li th:each="banner:${bannerList}">
+						<a th:href="${banner.url}" target="_blank"><img style="width: 1200px;" src="../resources/banner01.jpg" th:src="|@{/}${banner.imgHref}|" alt="" /></a>
+					</li>
+				</ul>
+			</div>				
+		</div>
+<!--banner end-->				
+				
+			</div>
+
+			<div class="main2">
+				<div class="White50"></div>
+				<div id="tagHot">
+					<div class="option">
+						<div class="oWord" onmouseover="show('hotProduct','promoteProduct')">熱銷</div>
+						<div class="oLine"></div>
+					</div>
+					<div class="option">
+						<div class="oWord" onmouseover="show('promoteProduct','hotProduct')">促銷</div>
+						<div class="oLine"></div>
+					</div>
+				</div>
+				<div class="pic" id="hotProduct" >
+					<ul>
+						<li th:each="hotProduct:${hotProductList}">
+							<a target="_blank" th:href="|@{/product/}${hotProduct.product.id}|">
+								<img src="#" th:if="${hotProduct.defaultImg.href!=null}" th:src="|@{/}${hotProduct.defaultImg.href}|" alt="picture" />
+							</a>
+							<div class="productName" th:text="${hotProduct.product.productNameCn}">productname</div>
+							<div class="productPrice" >
+								<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${hotProduct.product.price1}|" ></span> 
+								<span th:if="${customer!=null}" th:text="|NZ$:${hotProduct.discountPrice}|" ></span>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+				<div class="pic pic_hidden" id="promoteProduct" >
+					<ul>
+						<li th:each="promoteProduct:${promoteProductList}">
+							<a target="_blank" th:href="|@{/product/}${promoteProduct.product.id}|">
+								<img src="#" th:if="${promoteProduct.defaultImg.href!=null}" th:src="|@{/}${promoteProduct.defaultImg.href}|" alt="picture" />
+							</a>
+							<div class="productName" th:text="${promoteProduct.product.productNameCn}">productname</div>
+							<div class="productPrice" >
+								<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${promoteProduct.product.price1}|" ></span> 
+								<span th:if="${customer!=null}" th:text="|NZ$:${promoteProduct.discountPrice}|" ></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="White30"></div>
+			</div>
+			<!--重复-->
+			<!--乳制品-->
+			
+			<div class="main3" th:each="menuProduct:${menuProductList}">
+				<div class="brandBar">
+					<!-- 
+					<ul>
+						<li><img src="#" /></li>
+						<li><img src="#" /></li>
+						<li><img src="#" /></li>
+						<li><img src="#" /></li>
+						<li><img src="#" /></li>
+					</ul>
+					 -->
+				</div>
+				<div class="White32"></div>
+
+				<div class="shelf">
+					<div class="shelfBar">
+						<div class="shelfPoint">
+							<ul>
+								<li><span class="shelfLogo" th:text="${menuProduct.menu.nameCn}">一级菜单</span></li>
+							</ul>
+						</div>
+						<div class="shelWHite" style="flex: 1;"></div>
+						<!-- tag切换 -->
+						<div class="shelfTag" th:onclick="|productList('${menuProduct.menu.id}','${subMenu.id}')|" th:each="subMenu,loop:${menuProduct.subMenuList}" th:if="${loop.index} &lt; 4" th:text="${subMenu.nameCn}">二级菜单</div>
+						<a th:href="|@{/list/}${menuProduct.menu.nameEn}|"><div class="shelfTag" style="margin-right: 0;" >更多</div></a>
+					</div>
+					<div class="barLine"></div>
+					<div class="pic" th:id="|${menuProduct.menu.id}|" >
+						
+						<ul>
+							<li th:each="productView:${menuProduct.productViewList}" >
+								<div th:if="${productView.product.status==2}" style="position:absolute;margin-left:30px; z-index: 1;border:1px solid red;color: red;padding: 3px;">已售完</div>
+								<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+									<img src="#" th:if="${productView.defaultImg.href!=null}" th:src="|@{/}${productView.defaultImg.href}|" th:alt="${productView.product.productNameEn}" />
+								</a>
+								<div class="productName" th:text="${productView.product.productNameCn}">productname</div>
+								<div class="productPrice" >
+									<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${productView.product.price1}|" ></span> 
+									<span th:if="${customer!=null}" th:text="|NZ$:${productView.discountPrice}|" ></span>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="White30"></div>
+				</div>
+			</div>
+			<!--结束-->
+			
+				<div id="ToTop" style="display: none;">
+				<img src="../resources/web/img/icon/top.png" th:src="@{/resources/web/img/icon/top.png}" />
+			</div>
+			
+			
+		</div>
+		<!-- 引入title -->
+		<div th:include="/web/footer :: footerFragement"></div>
+		<!--div-->
+	</body>
+
+</html>

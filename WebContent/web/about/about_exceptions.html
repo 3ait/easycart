@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}" />
+    		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_aboutus.css" th:href="@{/resources/web/css/page_aboutus.css}"  />
+		
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		<div id="about_container">
+			<div class="brand_pic"><img src="../resources/web/img/brand/brand.png" th:src="@{/resources/web/img/brand/brand.png}" /></div>
+			<div class="line_about"></div>
+			<div class="brand_content">
+				<p>免责条款:本公司所有代购的产品都由厂商来承担产品的质量
+管理,如有任何质量的问题和疑问我们会协助联系厂家和尽快回复.并保留一切解释的权利。</p>
+			</div>
+		</div>
+
+
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+	
+	<body>
+		<div th:fragment="admin_headerFragement">
+
+			<div id="ahContainer">
+				<a th:href="@{/}" style="text-decoration: none;" target="_blank">
+				<div id="ahLogo">
+					<img style="height: 57px;" src="../resources/logo002.png" th:src="@{/resources/logo002.png}" />
+					<img style="height: 45px;" src="../resources/logo001.png" th:src="@{/resources/logo001.png}" />
+				</div>
+				</a>
+
+				<div class="ahNav">
+					<div style="width: 150px; cursor: default;"></div>
+					<a th:href="@{/admin/order/}" style="text-decoration: none;"><div th:class="${categoryLight==1}?'nBtn yellow' : 'nBtn'">訂單管理</div></a>
+					<a th:href="@{/admin/product/}" style="text-decoration: none;"><div th:class="${categoryLight==2}?'nBtn yellow' : 'nBtn'">產品管理</div></a>
+					<a th:href="@{/admin/customer/}" style="text-decoration: none;"><div th:class="${categoryLight==3}?'nBtn yellow' : 'nBtn'" >用戶管理</div></a>
+					<a th:href="@{/admin/category/}" style="text-decoration: none;"><div th:class="${categoryLight==4}?'nBtn yellow' : 'nBtn'">分类管理</div></a>
+					<a th:href="@{/admin/banner/}" style="text-decoration: none;"><div th:class="${categoryLight==5}?'nBtn yellow' : 'nBtn'">广告管理</div></a>
+					<a th:href="@{/admin/companyinfo/}" style="text-decoration: none;"><div th:class="${categoryLight==6}?'nBtn yellow' : 'nBtn'">企業信息</div></a>
+					<div style="flex: 1;cursor: default;"></div>
+					<a th:href="@{/admin/logout/}" style="text-decoration: none;"><div class="nBtn" style="width: 150px;">退出</div></a>
+				</div>
+
+				<div id="line"></div>
+			</div>
+		</div>
+	</body>
+
+</html>

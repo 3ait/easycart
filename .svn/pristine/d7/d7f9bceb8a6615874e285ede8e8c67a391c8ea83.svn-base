@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory >
+    
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/easycart?useUnicode=true&amp;characterEncoding=utf-8</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
+        <!-- 
+        <property name="hibernate.connection.password">3awebsite</property>
+         -->
+        
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+        <!--  是否显示SQL  -->
+	    <property name="hibernate.show_sql">false</property>
+	    <property name="hibernate.format_sql">false</property>
+	    <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+	   
+	    <property name="hibernate.c3p0.acquire_increment">2</property>
+	    <!-- 定时回收空闲连接 -->
+	    <property name="hibernate.c3p0.idle_test_period">120</property>
+	    <property name="hibernate.c3p0.max_size">20</property>
+	    <property name="hibernate.c3p0.max_statements">100</property>
+	    <property name="hibernate.c3p0.min_size">5</property>
+	    <property name="hibernate.c3p0.timeout">5000</property>
+	    
+	    <mapping resource="com/easycart/db/entity/User.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Cart.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Comment.hbm.xml"/>
+	    <mapping resource="com/easycart/db/entity/Company.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Customer.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/FromAddress.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Menu.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/MenuAttr.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Order.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/OrderRecord.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/Product.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/ProductAttr.hbm.xml"/>
+		<mapping resource="com/easycart/db/entity/ProductBrand.hbm.xml"/>
+	    <mapping resource="com/easycart/db/entity/ProductImg.hbm.xml"/>
+	    <mapping resource="com/easycart/db/entity/Reply.hbm.xml"/>
+	    <mapping resource="com/easycart/db/entity/ToAddress.hbm.xml"/>
+	    <mapping resource="com/easycart/db/entity/Banner.hbm.xml"/>
+	    
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/oder_mangement.css" th:href="@{/resources/web/css/oder_mangement.css}"  />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		
+		
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			var flag = true;
+			//展示明细
+			function showDetails(id){
+				if(flag){
+					$("#orderDetail_"+id).css("display", "flex");
+					flag = false;
+				}else{
+					$("#orderDetail_"+id).css("display", "none");
+					flag = true;
+				}
+			}
+			//取消订单
+			function cancelOrder(id){
+				if(confirm("确定？")){
+					$.ajax({
+						url: [[@{/customer/order/cancel/}]]+id,
+						method: "POST",
+						data: { 
+							"id" : id,
+							},
+					}).done(function(ret){
+						window.location.reload();
+					});
+				}
+			}
+			//上翻页
+			function prePage(){
+				if($("#hidden_pageNum").val()<=1){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())-1;
+				$("#hidden_pageNum").val(pageNum);
+				
+				var url = location.protocol + location.pathname;
+				
+				url += "?pageNum="+$("#hidden_pageNum").val();
+				
+				window.location.href = url ;
+			}
+			//下翻页
+			function nextPage(){
+				
+				if($("#hidden_pageNum").val()>=[[${page.totalPage}]]){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())+1;
+				$("#hidden_pageNum").val(pageNum);
+				
+
+
+				var url = location.protocol + location.pathname;
+				url += "?pageNum="+$("#hidden_pageNum").val();
+				
+				window.location.href = url ;
+			}
+			/*]]>*/
+		</script>
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		
+		<div id="containerOM">
+			<div id="section1">我的賬戶</div>
+
+			<div id="section2">
+				<div class="orderLeft">
+					<a th:href="@{/customer/info}"><div class="orderNav">用戶信息</div></a>
+					<div class="orderBar">訂單詳情</div>
+				</div>
+				<div class="orderMid"></div>
+					<div class="orderRight" >
+						<div class="orderList" th:each="orderView,stat : ${orderViewList}">
+							<div class="orderListBar">
+								<div th:text="|訂單號: ${orderView.order.id}|">  741902740917240</div>
+								<span class="detail_click" th:onclick="|showDetails(${orderView.order.id})|" >&nbsp;&nbsp;訂單詳情</span>
+								<div  style="flex:1;" ></div>
+								<div th:text="|更新時間: ${orderView.modifyTime}|"> 更新時間: 2016-5-25 11:23</div>
+							</div>
+							<div class="orderDetail" th:id="|orderDetail_${orderView.order.id}|">
+								<div  >
+									<div style="flex:1;">发件人信息：<br/>
+										<span th:text="${orderView.order.fromName}"></span><br/>
+										<span th:text="${orderView.order.fromPhone}"></span><br/>
+										<span th:text="${orderView.order.fromAddress}"></span><br/>
+									</div>
+									<div style="flex:1;">收件人信息：<br/>
+										<span th:text="${orderView.order.fromName}"></span><br/>
+										<span th:text="${orderView.order.fromPhone}"></span><br/>
+										<span th:text="${orderView.order.fromAddress}"></span><br/>
+									</div>
+									<div>
+										<div th:text="|用户信息：${orderView.order.customerMsg}|" th:if="${orderView.order.customerMsg!=''}"></div>
+										<div th:text="|网站信息：${orderView.order.adminMsg}|" th:if="${orderView.order.adminMsg!=''}"></div>
+									</div>
+								</div>
+							</div>
+							<div th:each="orderRecord,iterStat :${orderView.orderRecordList}">
+								<div class="detail"  >
+									<div class="detailA" >
+										<div class="eachP">
+											<div class="eachInfor">
+												<a target="_blank" th:href="|@{/product/}${orderRecord.product.id}|">
+													<div class="cPic">
+														<img src="#" th:src="@{/} + ${orderView.productViewList[__iterStat.index__].defaultImg.href}" width="130px;" />
+													</div>
+												</a>
+												<a target="_blank" th:href="|@{/product/}${orderRecord.product.id}|">
+													<div class="cInfor" th:text="${orderRecord.product.productNameCn}">产品名称</div>
+												</a>
+											</div>
+											<div style="width: 1px;"></div>
+											<div class="eachPrice">
+												<div class="eachPriceD">單價 (NZ$)<br />
+													<span style="font-size: 12px;" th:text="|$ ${#numbers.formatDecimal(orderRecord.product.price1,1,2)} NZD|">NZ$12.5</span>
+												</div>
+												<div class="eachPriceD">數量<br /><span style="font-size: 12px;" th:text="${orderRecord.num}">1</span></div>
+											</div>
+		
+										</div>
+									</div>
+									<div class="detailB" th:if="${iterStat.index==0}">
+										总金額 <br /><span th:text="|$ ${#numbers.formatDecimal(orderView.order.totalProductPrice,1,2) } NZD|">金额</span> <br />
+										总運費<br /><span th:text="|$ ${#numbers.formatDecimal(orderView.order.totalFreight,1,2)} NZD|">金额</span> <br />
+									</div>
+									<div class="detailB" th:unless="${iterStat.index==0}"></div>
+									<div class="detailC" th:if="${iterStat.index==0}" >
+										<!-- 订单状态（0：下单，1：已付款，2：已发货，3：已收货，4：已完成 5：已取消） -->
+										<span th:if="${orderView.order.status==0}">下单<br /></span>
+										<span th:if="${orderView.order.status==1}">已付款<br /></span>
+										<span th:if="${orderView.order.status==2}">已发货<br /></span>
+										<span th:if="${orderView.order.status==3}">已收货<br /></span>
+										<span th:if="${orderView.order.status==4}">已完成<br /></span>
+										<span th:if="${orderView.order.status==5}">已取消<br /></span>
+									</div>
+									<div class="detailC" th:unless="${iterStat.index==0}" ></div>
+									<div class="detailC" th:if="${iterStat.index==0}" >
+										<th:block th:if="${orderView.order.status==0}">
+											<a th:href="@{/customer/pay/} + ${orderView.order.id}"><span style="color:#89c997;cursor: pointer;color: red;">付款</span><br /></a>
+										</th:block>
+										<th:block th:if="${orderView.order.status==0}">
+											<span class="detail_click" th:onclick="|cancelOrder(${orderView.order.id})|" >取消訂單</span>
+										</th:block>
+									</div>
+									<div class="detailC" th:unless="${iterStat.index==0}" ></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+
+			<div id="section3">
+				<div class="White150"></div>
+				<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
+				<div class="page">
+					<span id="fontPage" th:onclick="|prePage()|">上一頁</span>&nbsp; 
+					<span th:text="|${page.pageNum}/${page.totalPage}|"></span> &nbsp;
+					<span id="nextPage" th:onclick="|nextPage()|">下一頁</span>&nbsp;&nbsp;</div>
+				</div>
+			</div>
+		<!-- 引入title -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

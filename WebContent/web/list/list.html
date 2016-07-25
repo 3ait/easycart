@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/list.css" th:href="@{/resources/web/css/list.css}"/>
+		<script type="text/javascript" src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+
+	</head>
+	<script type="text/javascript"  th:inline="javascript">
+		/*<![CDATA[*/
+		function showList(brandId){
+			$("#productRightList").load([[@{/ajax/brand/}]]+brandId);
+			window.location.href = [[@{/list}]];
+		}
+		//排序
+		function sortby(orderby,order){
+			var url = location.protocol + location.pathname;
+			var _order = "desc";
+			if($("#_order").val()=="DESC"){
+				_order = "asc";
+			}
+			url += "?orderby="+ orderby + "&order="+_order;
+			if(document.getElementById("stockCheck").checked==true){
+				url +=  "&status="+1;
+			}
+			
+			window.location.href = url ;
+		}
+		//显示有货
+		function showStock(obj){
+			var url = location.protocol + location.pathname;
+			if(obj.checked==true){
+				url +=  "?status="+1;
+			}
+			window.location.href = url;
+		}
+		//上翻页
+		function prePage(){
+			if($("#hidden_pageNum").val()<=1){
+				return false;
+			}
+			var pageNum = parseInt($("#hidden_pageNum").val())-1;
+			$("#hidden_pageNum").val(pageNum);
+			
+			
+			var url = location.protocol + location.pathname;
+			url += "?orderby="+ $("#_orderby").val() + "&order="+$("#_order").val() ;
+			url += "&pageNum="+$("#hidden_pageNum").val();
+			if(document.getElementById("stockCheck").checked==true){
+				url +=  "&status="+1;
+			}
+			
+			window.location.href = url ;
+		}
+		//下翻页
+		function nextPage(){
+			
+			if($("#hidden_pageNum").val()>=[[${page.totalPage}]]){
+				return false;
+			}
+			var pageNum = parseInt($("#hidden_pageNum").val())+1;
+			$("#hidden_pageNum").val(pageNum);
+			
+
+
+			var url = location.protocol + location.pathname;
+			url += "?orderby="+ $("#_orderby").val() + "&order="+$("#_order").val() ;
+			url += "&pageNum="+$("#hidden_pageNum").val();
+			if(document.getElementById("stockCheck").checked==true){
+				url +=  "&status="+1;
+			}
+			
+			window.location.href = url ;
+		}
+		/*]]>*/
+	</script>
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		
+		<div class="containerList">
+			<div class="sort">
+				<div class="sortGrade">
+					<a th:href="@{/}">首頁</a>
+					&nbsp;&gt;&nbsp; <a th:href="|@{/list/}${menu1Nav.menu.nameEn}|" ><span style="color: #959595;" th:text="${menu1Nav.menu.nameCn}">一级菜单</span></a>
+					<a th:href="|@{/list/}${menu1Nav.menu.nameEn}?submenu=${menu2Nav.nameEn}|" th:if="${menu2Nav} != null">
+						<span style="color: #959595;" th:text="|&nbsp;&gt;&nbsp; ${menu2Nav.nameCn}|" th:if="${menu2Nav} != null">二级菜单</span>
+					</a>
+				</div>
+				<div class="sortBrand" th:if="${#lists.size(menu2List)} != 0 ">
+					<div class="sortBrandA">分类</div>
+					<div class="sortLine"></div>
+					<div class="sortDetailF">
+							<span class="sortDetail" th:each="menu2:${menu2List}" ><a th:href="|@{/list/}${menu1Nav.menu.nameEn}?submenu=${menu2.nameEn}|" th:text="${menu2.nameCn}">二级菜单</a></span>
+					</div>
+				</div>
+				<div style="margin-top: -1px;" class="sortBrand" th:if="${#lists.size(productBrandList)} != 0 ">
+					<div class="sortBrandA">品牌</div>
+					<div class="sortLine"></div>
+						<div class="sortDetailF">
+							<span class="sortDetail" th:each="productBrand:${productBrandList} ">
+								<a th:href="|@{/list/}${menu1Nav.menu.nameEn}?brandId=${productBrand.id}|">
+									<span  th:text="${productBrand.brandNameCn}">品牌</span>
+								</a>
+							</span>
+						</div>
+				</div>
+			</div>
+			
+			
+			<div class="White25"></div>
+			<div class="listInfor">
+				<!-- 推薦商品 -->
+				<div class="listLeft">
+					<div class="listLeftTop">推薦商品</div>
+					<div class="listLeftLine"></div>
+					
+					
+					<div class="listLeftP" th:each="recommendProductView:${recommendProductViewList}">
+						
+						<div class="ListLeftImg">
+							<a target="_blank" th:href="|@{/product/}${recommendProductView.product.id}|"><img src="../../resources/web/img/product/demo_Img1.png" th:src="|@{/}${recommendProductView.defaultImg.href}|" /></a>
+						</div>
+						<div class="listLeftD">
+							<span><a target="_blank" th:text="${recommendProductView.product.productNameCn}" th:href="|@{/product/}${recommendProductView.product.id}|">产品名称</a></span>
+							<br />
+							<div class="lrvePrice" >
+								<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${recommendProductView.product.price1}|" ></span> 
+								<span th:if="${customer!=null}" th:text="|NZ$:${recommendProductView.discountPrice}|" ></span>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="" style="flex: 1;"></div>
+				<div class="listRight">
+					<div class="listRightBar">
+						<div th:onclick="|sortby('soldNum');|" class="lrBarTitle">銷量<span th:text="${page.order=='DESC' and page.orderby=='soldNum'}?'&uarr;':'&darr;'">&darr;</span></div>
+						<div th:onclick="|sortby('price1');|" class="lrBarTitle">價格<span th:text="${page.order=='DESC' and page.orderby=='price1'}?'&darr;':'&uarr;'">&darr;</span></div>
+						<div th:onclick="|sortby('createTime');|" class="lrBarTitle">上架時間<span th:text="${page.order=='DESC' and page.orderby=='createTime'}?'&darr;':'&uarr;'">&darr;</span></div>
+						<div  class="lrBarTitle"><input id="stockCheck" th:onchange="|showStock(this)|" type="checkbox" th:checked="${searchForm.status==1}?1:0" /> <label for="stockCheck">&nbsp; 顯示有貨</label></div>
+						<div  class="lrBarTitle" style="flex: 1;"></div>
+						
+						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
+						<div class="lrBarTitle" id="fontPage" th:onclick="|prePage()|">上一頁</div>
+						<div class="pageNum" th:text="|${page.pageNum}/${page.totalPage}|">1/5</div>
+						<div class="lrBarTitle" id="nextPage" th:onclick="|nextPage()|">下一頁</div>&nbsp;&nbsp;
+						
+					</div>
+					<!-- 隐藏项
+					-->
+					<input id="_order" th:value="${page.order}" type="hidden"></input>
+					<input id="_orderby" th:value="${page.orderby}" type="hidden"></input>
+					
+					<!-- 产品列表 
+					-->
+					<div id="productRightList" th:include="/web/list/list_fragment :: product_list"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 引入title -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

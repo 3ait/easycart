@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-30 14:51:00 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.ProductImg" table="product_img" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="product" class="com.easycart.db.entity.Product" fetch="select">
+            <column name="product_id" not-null="true" />
+        </many-to-one>
+        <property name="imgType" type="string">
+            <column name="img_type" length="6" not-null="true" />
+        </property>
+        <property name="position" type="java.lang.Integer">
+            <column name="position" />
+        </property>
+        <property name="defaultImg" type="java.lang.Byte">
+            <column name="default_img" />
+        </property>
+        <property name="href" type="string">
+            <column name="href" length="512" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>

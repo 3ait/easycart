@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		          
+		    //表单检查
+		    function checkForm(){
+				if($("#multipartFile").val()=="" || $("#url").val()=="" ){
+					return false;
+				}
+			}
+		    
+		    
+			//更新
+			function updateBanner(id){
+				if(!confirm("确认修改？")){
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/banner/update/}]]+id,
+					method: "GET",
+					data: { 
+						"url" : $("#url_"+id).val(),
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("更新失败");
+				});
+			}
+			//删除
+			function deleteBanner(id){
+				if(!confirm("确认删除？")){
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/banner/delete/}]]+id,
+					method: "GET",
+					data: { 
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("更新失败");
+				});
+			}
+		
+			
+			/*]]>*/	
+		</script>
+		<style type="text/css">
+			.companyInfo{
+				display:flex;
+				flex-direction:column;
+			}
+			.companyInfo div{
+				width: 60%;
+				padding:5px; 
+				display: flex;
+				align-items:center;
+			}
+			.companyInfo div input{
+				width: 80%;
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">首页广告</div>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<div style="height: 30px;"></div>
+					<div class="companyInfo" >
+						<div th:each="banner:${bannerList}">
+							<img src="#" width="200px;" th:src="|@{/}${banner.imgHref}|" />
+							<input th:id="|url_${banner.id}|" th:value="${banner.url}"/>&nbsp;
+							<input style="width:50px;" type="button" value="删除" th:onclick="|deleteBanner(${banner.id})|" />&nbsp;
+							<input style="width:50px;" type="button" value="更新" th:onclick="|updateBanner(${banner.id})|" />
+						</div>
+						<form action="#" th:action="@{/admin/banner/save}" onsubmit="retun checkForm()" method="post" enctype="multipart/form-data">
+							<div>
+								<input id="multipartFile" name="multipartFile" style="width:200px;" type="file"/>
+								<input id="url" name="url" />&nbsp;
+								<div style="width:50px;"></div>&nbsp;
+								<input style="width:50px;" type="submit" th:value="提交"  ></input>
+							</div>
+						</form>
+					</div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

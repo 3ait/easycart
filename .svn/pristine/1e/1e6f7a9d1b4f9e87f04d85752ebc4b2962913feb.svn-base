@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+
+	<body>
+		<div th:fragment="product_list">
+			<div class="listRightVessel" >
+				<div class="lrvEach"  th:each="productView:${productViewList}" >
+					<div class="lrveImg">
+						<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+							<img src="#" th:src="|@{/}${productView.defaultImg.href}|"  />
+						</a>
+					</div>
+					<div class="lrveDetail"><a th:text="${productView.product.productNameCn}" th:href="|@{/product/}${productView.product.id}|">产品名称</a></div>
+					<div class="lrvePrice" th:text="${productView.product.price1}">NZ$ 12.5</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

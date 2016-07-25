@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+    		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_aboutus.css" th:href="@{/resources/web/css/page_aboutus.css}"  />
+
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		<div id="about_container">
+			<div class="brand_pic"><img src="../resources/web/img/brand/brand.png" th:src="@{/resources/web/img/brand/brand.png}" /></div>
+			<div class="line_about"></div>
+			<div class="brand_content">
+				<p>退货条款: 一旦订单生成,除非缺货, 恕不退货. </p>
+			</div>
+		</div>
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

@@ -1,0 +1,164 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	cursor: default;
+}
+
+li {
+	list-style: none;
+}
+
+
+/*header*/
+ a{text-decoration: none;
+color: #313131;
+}
+
+#ahContainer {
+	width: 100%;
+}
+
+#ahLogo {
+	/*background: green;*/
+	height: 60px;
+	width: 100%;
+	padding-top:40px;
+}
+
+.ahNav {
+	display: flex;
+	margin-top: 5px;
+	/*background: red;*/
+}
+
+.nBtn {
+	width: 120px;
+	height: 50px;
+	/*background: yellow;*/
+	font-size: 18px;
+	line-height: 50px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.nBtn:hover {
+	background: #F0C200;
+}
+
+#line {
+	pading-top:-5px;
+	margin-top: -5px;
+	width: 100%;
+	height: 5px;
+	background: #F0C200;
+}
+.yellow{
+	background: #F0C200;
+}
+
+/*footer*/
+
+#afContainer {
+	width: 100%;
+}
+
+.footLine {
+	height: 5px;
+	background: #F0C200;
+	margin-bottom: 40px;
+}
+
+.fCopy {
+	/*background: red;*/
+	font-size: 12px;
+	text-align: center;
+	line-height: 20px;
+}

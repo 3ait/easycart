@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+<div class="pic" th:fragment="product_view_list">
+	<ul>
+		<li th:each="productView:${productViewList}">
+			<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+				<img src="#" th:src="|@{/}${productView.defaultImg.href}|" th:alt="${productView.product.productNameCn}"/>
+			</a>
+			<div class="productName" th:text="${productView.product.productNameCn}">productname</div>
+			<div class="productPrice" th:text="${productView.product.price1}">$12</div>
+			
+		</li>
+	</ul>
+</div>
+</body>
+</html>

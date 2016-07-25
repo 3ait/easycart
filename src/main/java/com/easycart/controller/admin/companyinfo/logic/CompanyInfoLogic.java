@@ -1,0 +1,92 @@
+package com.easycart.controller.admin.companyinfo.logic;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.easycart.controller.admin.companyinfo.CompanyInfoView;
+import com.easycart.controller.admin.companyinfo.UserForm;
+import com.easycart.db.dao.ICompanyDao;
+import com.easycart.db.dao.IUserDao;
+import com.easycart.db.entity.Company;
+import com.easycart.db.entity.User;
+import com.easycart.utils.Md5;
+
+@Component("companyInfoLogic")
+public class CompanyInfoLogic {
+
+	@Autowired
+	IUserDao userDao;
+	@Autowired
+	ICompanyDao companyDao;
+
+	/**d
+	 * 获取公司信息
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public CompanyInfoView getCompanyInfo() {
+		
+		Company company = companyDao.getCompany();
+		if(company == null){
+			company = new Company();
+			company.setId(1);
+			companyDao.save(company);
+		}
+		CompanyInfoView civ = new CompanyInfoView();
+		BeanUtils.copyProperties(company, civ);
+		civ.setCompanyId(company.getId());
+		
+		List<User> userList = userDao.getByCompanyId(company.getId());
+		civ.setUserList(userList);
+		
+		return civ;
+	}
+
+	/**
+	 * 更新公司信息
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void updateCompanyInfo(CompanyInfoView companyInfoView) {
+		
+		Company company = companyDao.getById(companyInfoView.getCompanyId());
+		BeanUtils.copyProperties(companyInfoView, company);
+		companyDao.update(company);
+		
+	}
+
+	/**
+	 * 新增管理员用户
+	 * @param userForm
+	 * @param request
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void saveUser(UserForm userForm, User user) {
+		User u = new User();
+		BeanUtils.copyProperties(userForm, u);
+		u.setCompany(user.getCompany());
+		u.setPassword(Md5.getMd5String(userForm.getPassword()));
+		userDao.save(u);
+	}
+	
+	/**
+	 * 编辑管理员用户
+	 * @param userForm
+	 * @param request
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void updateUser(User user) {
+		User dbUser = userDao.getById(user.getId());
+		dbUser.setStatus(user.getStatus());
+		if(Strings.isNotBlank(user.getPassword())){
+			dbUser.setPassword(Md5.getMd5String(user.getPassword()));
+		}
+		userDao.update(dbUser);
+	}
+
+}

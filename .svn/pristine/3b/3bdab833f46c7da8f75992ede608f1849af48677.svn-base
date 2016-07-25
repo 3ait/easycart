@@ -1,0 +1,333 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost
+Source Server Version : 50713
+Source Host           : localhost:3306
+Source Database       : easycart
+
+Target Server Type    : MYSQL
+Target Server Version : 50713
+File Encoding         : 65001
+
+Date: 2016-07-05 16:51:18
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for banner
+-- ----------------------------
+DROP TABLE IF EXISTS `banner`;
+CREATE TABLE `banner` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `img_href` varchar(1024) DEFAULT NULL,
+  `url` varchar(1024) DEFAULT NULL,
+  `position` int(255) DEFAULT '1' COMMENT '1 首页大图切换',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for cart
+-- ----------------------------
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_num` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `comment_content` varchar(512) NOT NULL,
+  `create_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for company
+-- ----------------------------
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(255) DEFAULT NULL,
+  `company_address` varchar(255) DEFAULT NULL,
+  `company_phone` varchar(255) DEFAULT NULL,
+  `account_name` varchar(255) DEFAULT NULL,
+  `account_number` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for customer
+-- ----------------------------
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(128) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `phone` varchar(128) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `discount` double NOT NULL DEFAULT '1' COMMENT '折扣：0.95=原价*0.95',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for from_address
+-- ----------------------------
+DROP TABLE IF EXISTS `from_address`;
+CREATE TABLE `from_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `from_address` varchar(128) DEFAULT NULL,
+  `from_city` varchar(128) DEFAULT '',
+  `from_province` varchar(128) DEFAULT '',
+  `from_country` varchar(128) DEFAULT '',
+  `from_phone` varchar(45) DEFAULT NULL,
+  `from_name` varchar(45) DEFAULT NULL,
+  `default_address` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `from_address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_cn` varchar(128) NOT NULL,
+  `name_en` varchar(128) NOT NULL,
+  `level` int(11) NOT NULL DEFAULT '0' COMMENT '第几级菜单',
+  `position` int(11) DEFAULT '0',
+  `father_id` int(11) DEFAULT NULL COMMENT '父级菜单',
+  `unite_price` double(10,2) DEFAULT '0.00',
+  `box_weight` double DEFAULT '0',
+  `other_charge` double DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_en` (`name_en`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for menu_attr
+-- ----------------------------
+DROP TABLE IF EXISTS `menu_attr`;
+CREATE TABLE `menu_attr` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `menu_attr_name` varchar(128) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `menu_id` (`menu_id`),
+  CONSTRAINT `menu_attr_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `tracking_num` varchar(128) DEFAULT NULL,
+  `pay_type` varchar(45) DEFAULT NULL,
+  `is_payed` int(11) DEFAULT '0',
+  `total_product_price` double DEFAULT NULL,
+  `total_freight` double DEFAULT NULL,
+  `customer_msg` varchar(512) DEFAULT NULL,
+  `admin_msg` varchar(512) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '订单状态（0：下单，1：已付款，2：已发货，3：已收货，4：已完成 5：已取消）',
+  `create_time` int(11) DEFAULT NULL,
+  `modify_time` int(11) DEFAULT NULL,
+  `from_name` varchar(255) DEFAULT NULL,
+  `from_phone` varchar(255) DEFAULT NULL,
+  `from_address` varchar(255) DEFAULT NULL,
+  `to_name` varchar(255) DEFAULT NULL,
+  `to_phone` varchar(255) DEFAULT NULL,
+  `to_address` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `from_name` (`from_name`),
+  KEY `from_phone` (`from_phone`),
+  KEY `to_name` (`to_name`),
+  KEY `to_phone` (`to_phone`),
+  KEY `order_ibfk_2` (`user_id`),
+  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  CONSTRAINT `order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for order_record
+-- ----------------------------
+DROP TABLE IF EXISTS `order_record`;
+CREATE TABLE `order_record` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) DEFAULT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `num` int(11) NOT NULL,
+  `product_price` double(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_record_ibfk_1` (`customer_id`),
+  KEY `order_record_ibfk_2` (`order_id`),
+  KEY `order_record_ibfk_3` (`product_id`),
+  CONSTRAINT `order_record_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `order_record_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `order_record_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_brand_id` int(11) DEFAULT NULL,
+  `menu_id` int(11) DEFAULT NULL,
+  `product_lable` varchar(128) DEFAULT NULL,
+  `mpn` varchar(128) DEFAULT NULL,
+  `stock` int(11) DEFAULT '0',
+  `product_name_cn` varchar(128) DEFAULT NULL,
+  `product_name_en` varchar(128) DEFAULT NULL,
+  `price1` double NOT NULL DEFAULT '0.99',
+  `price2` double DEFAULT NULL,
+  `price3` double DEFAULT NULL,
+  `price4` double DEFAULT NULL,
+  `cost` double DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1' COMMENT '0 下线 1 上线 2缺货',
+  `hot` tinyint(4) DEFAULT '0' COMMENT '热销产品',
+  `promote` tinyint(4) DEFAULT '0' COMMENT '促销产品',
+  `front_page` tinyint(4) DEFAULT '0' COMMENT '首页显示',
+  `recommend` tinyint(4) DEFAULT '0' COMMENT '推荐产品',
+  `sold_num` int(11) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `modify_time` int(11) DEFAULT NULL,
+  `weight` double DEFAULT '0',
+  `memo` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_ibfk_1` (`product_brand_id`),
+  KEY `menu_id` (`menu_id`),
+  KEY `mpn` (`mpn`),
+  KEY `product_lable` (`product_lable`),
+  KEY `product_name_cn` (`product_name_cn`),
+  KEY `product_name_en` (`product_name_en`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`product_brand_id`) REFERENCES `product_brand` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_attr
+-- ----------------------------
+DROP TABLE IF EXISTS `product_attr`;
+CREATE TABLE `product_attr` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_brand_id` int(11) NOT NULL,
+  `menu_attr_id` int(10) unsigned NOT NULL,
+  `attr_value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `product_brand_id` (`product_brand_id`),
+  KEY `menu_attr_id` (`menu_attr_id`),
+  CONSTRAINT `product_attr_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `product_attr_ibfk_2` FOREIGN KEY (`product_brand_id`) REFERENCES `product_brand` (`id`),
+  CONSTRAINT `product_attr_ibfk_3` FOREIGN KEY (`menu_attr_id`) REFERENCES `menu_attr` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_brand
+-- ----------------------------
+DROP TABLE IF EXISTS `product_brand`;
+CREATE TABLE `product_brand` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_name_cn` varchar(128) DEFAULT NULL,
+  `brand_name_en` varchar(128) DEFAULT NULL,
+  `brand_img_url` varchar(512) DEFAULT NULL,
+  `menu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_brand_ibfk_1` (`menu_id`),
+  CONSTRAINT `product_brand_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_img
+-- ----------------------------
+DROP TABLE IF EXISTS `product_img`;
+CREATE TABLE `product_img` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id,自增',
+  `product_id` int(11) NOT NULL,
+  `img_type` enum('list','detail','desc') NOT NULL,
+  `position` int(11) DEFAULT NULL,
+  `default_img` tinyint(4) DEFAULT '0',
+  `href` varchar(512) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `product_img_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for reply
+-- ----------------------------
+DROP TABLE IF EXISTS `reply`;
+CREATE TABLE `reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comment_id` (`comment_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`),
+  CONSTRAINT `reply_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for to_address
+-- ----------------------------
+DROP TABLE IF EXISTS `to_address`;
+CREATE TABLE `to_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `to_address` varchar(128) DEFAULT NULL,
+  `to_city` varchar(128) DEFAULT '',
+  `to_province` varchar(128) DEFAULT '',
+  `to_country` varchar(128) DEFAULT '',
+  `to_phone` varchar(45) DEFAULT NULL,
+  `to_name` varchar(45) DEFAULT NULL,
+  `default_address` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `to_address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `company_id` (`company_id`),
+  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;

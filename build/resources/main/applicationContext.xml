@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	
+	
+	
+	<!-- 配置Spring上下文的注解
+       	 使Spring支持自动检测组件，如注解的Controller
+		<context:annotation-config />
+	 -->  
+	<mvc:annotation-driven/>
+   	<mvc:default-servlet-handler/>
+	<context:component-scan base-package="com.easycart"></context:component-scan>
+		
+	
+    <!-- 数据库session  -->
+	<bean id="sessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+  		<property name="checkWriteOperations" value="false"></property>
+  		<property name="sessionFactory" ref="sessionFactory"></property>
+ 	</bean>
+	
+ 	<!-- transaction 事物处理 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+	
+	<mvc:interceptors  >
+		<!-- admin 登录拦截器  -->
+			<mvc:interceptor >
+				<mvc:mapping path="/admin/**" />
+				<mvc:exclude-mapping path="/admin/"/>
+				<mvc:exclude-mapping path="/admin/login"/>
+				<bean class="com.easycart.controller.admin.login.interceptor.AdminInterceptor"/>
+			</mvc:interceptor>
+		<!-- customer 登录拦截器  -->
+			<mvc:interceptor >
+				<mvc:mapping path="/customer/**" />
+				<mvc:exclude-mapping path="/customer/"/>
+				<mvc:exclude-mapping path="/customer/login"/>
+				<mvc:exclude-mapping path="/customer/register"/>
+				<mvc:exclude-mapping path="/customer/register/save"/>
+				<mvc:exclude-mapping path="/customer/ajax/**"/>
+				<mvc:exclude-mapping path="/customer/retrieve"/>
+				<bean class="com.easycart.controller.customer.interceptor.CustomerInterceptor"/>
+			</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>

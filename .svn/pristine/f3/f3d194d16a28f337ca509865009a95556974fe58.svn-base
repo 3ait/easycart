@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		
+
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/retrieve_password.css" th:href="@{/resources/web/css/retrieve_password.css}"  />
+		<script src="../../resources/web/js/retrieve_password.js"  th:src="@{/resources/web/js/retrieve_password.js}" type="text/javascript" charset="utf-8"></script>
+		
+
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		
+		<div id="containerRP">
+			<div id="section1">我的賬戶</div>
+
+			<div id="section2">
+				<div class="orderLeft">
+					<div class="orderBar">用戶信息</div>
+					<a th:href="@{/customer/order/}"><div class="orderNav">訂單詳情</div></a>
+				</div>
+
+				<div class="orderRight">
+					<div class="White"></div>
+
+					<div class="rePassword">
+						<div class="rpWay">
+							<div id="rpway1">通過郵箱找回密碼</div>
+							<div id="rpway2">通過手機找回密碼</div>
+						</div>
+
+						<form class="rpWayInfor" action="#" method="post">
+							<div id="rpw1">
+
+								<div class="rpWayInfor1">
+									<div class="White80" style="height: 80px;"></div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">郵箱*</div> <input type="text" maxlength="4" name="" class="rpiInput" value="" />
+
+										</div>
+										<div class="rpiSend">發送驗證碼到郵箱</div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">驗證碼*</div><input type="email" name="" class="rpiInput" value="" /></div>
+										</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">新密碼*</div> <input type="password" maxlength="12" name="" class="rpiInput" value="" /></div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">確認密碼*</div> <input type="password" maxlength="12" name="" class="rpiInput" value="" /></div>
+									</div>
+									<div class="White40" style="height: 40px;">忘记密码？</div>
+									<div class="rpBtn">提交</div>
+
+								</div>
+							</div>
+							<div id="rpw2">
+
+								<div class="rpWayInfor2">
+									<div class="White80" style="height: 80px;"></div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">手機號*</div> <input type="text" maxlength="4" name="" class="rpiInput" value="" />
+
+										</div>
+										<div class="rpiSend">發送驗證碼到手機</div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">驗證碼*</div><input type="text" maxlength="11" name="" class="rpiInput" value="" /></div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">新密碼*</div> <input type="password" maxlength="12" name="" class="rpiInput" value="" /></div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">確認密碼*</div> <input type="password" maxlength="12" name="" class="rpiInput" value="" /></div>
+									</div>
+									<div class="White40" style="height: 40px;"></div>
+									<div class="rpBtn">提交</div>
+
+								</div>
+							</div>
+						</form>
+
+					</div>
+
+					<div class="White"></div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

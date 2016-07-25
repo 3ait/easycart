@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-30 14:51:00 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.Menu" table="menu" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="nameCn" type="string">
+            <column name="name_cn" length="128" not-null="true" />
+        </property>
+        <property name="nameEn" type="string">
+            <column name="name_en" length="128" not-null="true" unique="true" />
+        </property>
+        <property name="level" type="int">
+            <column name="level" not-null="true">
+                <comment>&#181;&#218;&#188;&#184;&#188;&#182;&#178;&#203;&#181;&#165;</comment>
+            </column>
+        </property>
+        <property name="position" type="java.lang.Integer">
+            <column name="position" />
+        </property>
+        <property name="fatherId" type="java.lang.Integer">
+            <column name="father_id">
+                <comment>&#184;&#184;&#188;&#182;&#178;&#203;&#181;&#165;</comment>
+            </column>
+        </property>
+        <property name="unitePrice" type="java.lang.Double">
+            <column name="unite_price" precision="10" />
+        </property>
+        <property name="boxWeight" type="java.lang.Double">
+            <column name="box_weight" precision="22" scale="0" />
+        </property>
+        <property name="otherCharge" type="java.lang.Double">
+            <column name="other_charge" precision="22" scale="0" />
+        </property>
+        <set name="productBrands" table="product_brand" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ProductBrand" />
+        </set>
+        <set name="menuAttrs" table="menu_attr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.MenuAttr" />
+        </set>
+        <set name="products" table="product" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Product" />
+        </set>
+    </class>
+</hibernate-mapping>

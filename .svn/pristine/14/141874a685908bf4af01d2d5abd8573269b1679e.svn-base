@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			//列表直接编辑
+			var flag = false;
+			function listEditConfirm(id){
+				if(!confirm("确认修改？")){
+					return false;
+				}
+				if($("#"+id+"_discount").val()<0.5 || $("#"+id+"_discount").val()>1){
+					alert("请检查折扣设置");
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/customer/list/edit/confirm}]],
+					method: "POST",
+					data: { 
+						"id" : id,
+						"status" : $("#"+id+"_status").val(),
+						"password" : flag? $("#"+id+"_password").val():"",
+						"discount" : $("#"+id+"_discount").val(),
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("更新失败");
+				});
+			}
+		
+			/**
+			查询
+			**/
+			function search(){
+				document.getElementById("customerSearchForm").submit();
+			}
+			//上翻页
+			function prePage(){
+				if($("#hidden_pageNum").val()<=1){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())-1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("customerSearchForm").submit();
+			}
+			//下翻页
+			function nextPage(){
+				
+				if($("#hidden_pageNum").val()>=[[${page.totalPage}]]){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())+1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("customerSearchForm").submit();
+			}
+			//页面条跳转
+			function go(){
+				var pageNum = $("#pageGo").val();
+				if(pageNum<=1){
+					return false;
+				}
+				if(pageNum>[[${page.totalPage}]]){
+					return false;
+				}
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("customerSearchForm").submit();
+			}
+			
+			//切换订单状态
+			function changeColor(obj){
+				if($(obj).val()==1){
+					$(obj).css("background","green");
+				}else{
+					$(obj).css("background","red");
+				}
+			}
+			//点击修改密码
+			function changePassword(_self){
+				$(_self).attr("readonly",false);
+				$(_self).val("");
+				flag = true;
+			}
+			function cancel(){
+				window.location.reload();
+			}
+			
+			/*]]>*/	
+		</script>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">客户列表</div>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<form id="customerSearchForm" th:action="@{/admin/customer/}"  th:method="post">
+					<div class="search">
+						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
+						<input type="text" th:name="q" placeholder="名字/电话" />
+						<div th:onclick="|search()|"><img src="../../resources/admin/img/icon/icon_rearch.png" alt="" th:src="@{/resources/admin/img/icon/icon_rearch.png}" /></div>
+					</div>
+				</form>
+				<div class="apAll">
+					<table  >
+						<thead>
+							<tr >
+								<td width="5%">用户名</td>
+								<td width="5%">电话</td>
+								<td width="5%">邮箱</td>
+								<td width="15%">状态</td>
+								<td width="25%">密码</td>
+								<td width="15%">折扣(原价*折扣)</td>
+								<td width="10%">注册时间</td>
+								<td width="10%">上次登录时间</td>
+								<td >操作</td>
+							</tr>
+						</thead>
+						<tbody valign="middle">
+							<tr  th:each="customer : ${customerList}" >
+									<td >
+										<span th:text="${customer.name}"></span>
+									</td>
+									<td>
+										<span th:text="${customer.phone}"></span>
+									</td>
+									<td>
+										<span th:text="${customer.email}"></span>
+									</td>
+									<td>
+										<select th:id="|${customer.id}_status|" style="height: 30px;">
+											<option value="1" th:selected="${customer.status==1}?1:0">已激活</option>
+											<option value="0" th:selected="${customer.status==0}?1:0">已注销</option>
+										</select>
+									</td>
+									<td>
+										<input style="height: 30px;width:300px;" th:onclick="|changePassword(this)|" th:id="|${customer.id}_password|" type="password" th:value="${customer.password}" readonly="readonly"  />
+									</td>
+									<td >
+										<input th:id="|${customer.id}_discount|" type="number" min="0.5" max="1" step="0.01" th:value="${customer.discount}" />
+									</td>
+									<td>
+										<span th:text="${customer.createTime}"></span>
+									</td>
+									<td>
+										<span th:text="${customer.modifyTime}"></span>
+									</td>
+									<td >
+										<input class="tBtn" type="button" th:onclick="|listEditConfirm('${customer.id}')|" value="确认修改" /><br />
+										<input class="tBtn" type="button" onclick="cancel();" value="取消" /><br />
+									</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="apPage">
+					<br />
+					<br />
+					<br />
+					<br />
+					<div class="pageBtn" id="fontPage" th:onclick="|prePage()|">&lt;上一頁</div>
+					<div class="pageNum" th:text="|${page.pageNum}/${page.totalPage}|">1/5</div>
+					<div class="pageBtn" id="nextPage" th:onclick="|nextPage()|">下一頁&gt;</div>&nbsp;&nbsp;
+					<input type="number" name="" min="1" id="pageGo" th:value="${page.pageNum}" ></input>&nbsp;&nbsp;
+					<div class="pageBtn" id="fontPage" th:onclick="|go()|">GO</div>
+					&nbsp;&nbsp;
+				</div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

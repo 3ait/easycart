@@ -1,0 +1,87 @@
+package com.print.pdf.pdfTemplate;
+
+import org.springframework.stereotype.Component;
+
+import com.easycart.utils.DateHelper;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.print.Courier;
+
+@Component("flywayPDF")
+public class FlywayPDF extends com.print.pdf.PdfTemplate{
+	
+	private static final float width = 24.1f;
+	private static final float length = 15.25f;
+	
+	
+	public FlywayPDF(){
+		super(width, length);
+	}
+	
+	@Override
+	public void pageFormat(PdfWriter pdfwriter,Courier courier) {
+		PdfContentByte canvas = pdfwriter.getDirectContent();
+		canvas.saveState();
+		canvas.beginText();
+		canvas.moveText(this.getPxFromCm(4.1f), this.getPxFromCm(11.7f));
+		
+		float topPostion = 11.6f;
+		float lineHeight = 0.85f;
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(DateHelper.getYYYYMMDD(System.currentTimeMillis()),fontChinese), this.getPxFromCm(7.0f), this.getPxFromCm(topPostion), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getToName(),fontChinese), this.getPxFromCm(13.1f), this.getPxFromCm(topPostion), 0);
+		
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getFromName(),fontChinese), this.getPxFromCm(3.6f), this.getPxFromCm(topPostion-lineHeight), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getFromPhone(),fontChinese), this.getPxFromCm(7.0f), this.getPxFromCm(topPostion-lineHeight), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getToProvince()+courier.getToCity(),fontChinese), this.getPxFromCm(13.1f), this.getPxFromCm(topPostion-lineHeight), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getToCountry(),fontChinese), this.getPxFromCm(16.5f), this.getPxFromCm(topPostion-lineHeight), 0);
+		
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getFromCity(),fontChinese), this.getPxFromCm(3.6f), this.getPxFromCm(topPostion-lineHeight*2), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getFromCountry(),fontChinese), this.getPxFromCm(7.0f), this.getPxFromCm(topPostion-lineHeight*2), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getToCompanyName(),fontChinese), this.getPxFromCm(12.8f), this.getPxFromCm(topPostion-lineHeight*2), 0);
+		
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getFromCompanyName(),fontChinese), this.getPxFromCm(3.6f), this.getPxFromCm(topPostion-lineHeight*3), 0);
+		int addressLength = 18;
+		String toAddress1 =  courier.getToAddress().length()>addressLength?courier.getToAddress().substring(0,addressLength):courier.getToAddress();
+		String toAddress2 =  courier.getToAddress().length()>addressLength?courier.getToAddress().substring(addressLength):"";
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(toAddress1,fontChinese), this.getPxFromCm(12.8f), this.getPxFromCm(topPostion-lineHeight*3), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(toAddress2,fontChinese), this.getPxFromCm(12.8f), this.getPxFromCm(topPostion-lineHeight*4), 0);
+		
+		String fromAddress1 =  courier.getFromAddress().length()>addressLength?courier.getFromAddress().substring(0,addressLength):courier.getFromAddress();
+		String fromAddress2 =  courier.getFromAddress().length()>addressLength?courier.getFromAddress().substring(addressLength):"";
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(fromAddress1,fontChinese), this.getPxFromCm(3.6f), this.getPxFromCm(topPostion-lineHeight*4), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(fromAddress2,fontChinese), this.getPxFromCm(3.6f), this.getPxFromCm(topPostion-lineHeight*5), 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(courier.getToPhone(),fontChinese), this.getPxFromCm(16.0f), this.getPxFromCm(topPostion-lineHeight*5), 0);
+		
+		float f = 0.6f;
+		float detailLineHeight = 0.6f;
+		float detailInitY = topPostion-f-lineHeight*6;
+		if(courier.getDetails()!=null){
+			String[] products = courier.getDetails().split("\\s+");
+			if(products.length<5){
+				for(int i=0;i<products.length;i++){
+					ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(products[i].trim(),fontChinese), this.getPxFromCm(2.4f), this.getPxFromCm(detailInitY-detailLineHeight*i), 0);
+				}
+			}else{
+				for(int i=0;i<products.length;i=i+2){
+					ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(products[i].trim(),fontChinese), this.getPxFromCm(2.4f), this.getPxFromCm(detailInitY-detailLineHeight*(i/2)), 0);
+					if(i+1<products.length)
+						ColumnText.showTextAligned(canvas, Element.ALIGN_BASELINE, new Phrase(products[i+1].trim(),fontChinese), this.getPxFromCm(7f), this.getPxFromCm(detailInitY-detailLineHeight*(i/2)), 0);
+				}
+			}
+		}
+		
+		canvas.endText();
+		canvas.restoreState();
+		
+		/**
+		 * 
+		Image image = Image.getInstance(this.getClass().getResource("/") + "../.."+courier.getBarcodePath());
+		image.scaleToFit(this.getPxFromCm(5.5f), this.getPxFromCm(1.5f));
+		image.setAbsolutePosition(this.getPxFromCm(6f),this.getPxFromCm(13.5f));
+		canvas.addImage(image);
+		 */
+	}
+}

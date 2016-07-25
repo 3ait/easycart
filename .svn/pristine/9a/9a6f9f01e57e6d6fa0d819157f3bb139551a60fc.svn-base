@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			//列表直接编辑
+			function listEditConfirm(orderId){
+				if(!confirm("确认修改？")){
+					return false;
+				}
+				
+				$.ajax({
+					url: [[@{/admin/order/list/edit/confirm}]],
+					method: "POST",
+					data: { 
+						"id" : orderId,
+						"isPayed" :$("#"+orderId+"_isPayed").val(),
+						"status" : $("#"+orderId+"_status").val(),
+						"adminMsg" : $("#"+orderId+"_adminMsg").val(),
+						//"customerMsg" : $("#"+orderId+"_customerMsg").val(),
+						},
+				}).done(function(ret){
+					window.location.reload();
+				});
+			}
+			/**
+			**/
+			function print(orderId){
+				
+				var courierType = $(":radio[name='courierType']:checked").val();
+				var url = [[@{/admin/order/}]]+"print/"+orderId+"/"+courierType;
+				window.open(url,"_blank");
+				
+			}
+			
+			/**
+			查询
+			**/
+			function search(){
+				document.getElementById("orderSearchForm").submit();
+			}
+			//上翻页
+			function prePage(){
+				if($("#hidden_pageNum").val()<=1){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())-1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("orderSearchForm").submit();
+			}
+			//下翻页
+			function nextPage(){
+				
+				if($("#hidden_pageNum").val()>=[[${page.totalPage}]]){
+					return false;
+				}
+				var pageNum = parseInt($("#hidden_pageNum").val())+1;
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("orderSearchForm").submit();
+			}
+			//页面条跳转
+			function go(){
+				var pageNum = $("#pageGo").val();
+				if(pageNum<=1){
+					return false;
+				}
+				if(pageNum>[[${page.totalPage}]]){
+					return false;
+				}
+				$("#hidden_pageNum").val(pageNum);
+				document.getElementById("orderSearchForm").submit();
+			}
+			
+			//编辑查看
+			function edit(productId){
+				var url = [[@{/admin/product/edit/}]]+productId;
+				window.open(url,'newwindow','width=1000,height=800');
+			}
+			//切换订单状态
+			function changeColor(obj){
+				if($(obj).val()==1){
+					$(obj).css("background","green");
+				}else{
+					$(obj).css("background","red");
+				}
+			}
+			
+			/*]]>*/	
+		</script>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">全部订单</div>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<form id="orderSearchForm" th:action="@{/admin/order/}" th:object="${orderSearchForm}" th:method="post">
+					<div class="search">
+						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
+						<input type="text" th:field="*{q}" placeholder="订单号/姓名/电话" />
+						<div th:onclick="|search()|"><img src="../../resources/admin/img/icon/icon_rearch.png" alt="" th:src="@{/resources/admin/img/icon/icon_rearch.png}" /></div>
+						<!-- 
+						//0：下单，1：已付款，2：已发货，3：已收货，4：已完成 5：已取消
+						 -->
+						 <select th:name="status" style="width: 100px;height: 30px;" th:onchange="|search()|">
+						 	<option value="-1">全部订单</option>
+						 	<option value="0" th:selected="${orderSearchForm.status==0}?1:0">新订单</option>
+						 	<option value="1" th:selected="${orderSearchForm.status==1}?1:0">已收款</option>
+						 	<option value="2" th:selected="${orderSearchForm.status==2}?1:0">已发货</option>
+						 	<option value="3" th:selected="${orderSearchForm.status==3}?1:0">已收货</option>
+						 	<option value="4" th:selected="${orderSearchForm.status==4}?1:0">已完成</option>
+						 	<option value="5" th:selected="${orderSearchForm.status==5}?1:0">已取消</option>
+						 </select>
+					</div>
+				</form>
+				<div class="apAll">
+					<table  >
+						<thead>
+							<tr >
+								<td width="5%">订单号</td>
+								<td width="15%">发件人信息</td>
+								<td width="15%">收件人信息</td>
+								<td width="10%">总重/总价</td>
+								<td width="20%">产品名称(MPN)*数量</td>
+								<td >支付状态</td>
+								<td>订单状态</td>
+								<td width="15%">客户留言</td>
+								<td width="15%">管理员备注</td>
+								<td >更新时间</td>
+								<td >操作</td>
+								<td >
+									<input name="courierType" type="radio" checked="checked" value="FlywayPDF" />程光<br/>
+					   				<input name="courierType" type="radio" value="FtdPDF" />付腾达
+								</td>
+							</tr>
+						</thead>
+						<tbody valign="middle">
+							<tr  th:each="orderView : ${productViewList}" >
+									<td >
+										<span th:text="${orderView.order.id}"></span>
+									</td>
+									
+									<td>
+										<span th:text="${orderView.order.fromName}"></span><br/>
+										<span th:text="${orderView.order.fromPhone}"></span><br/>
+										<span th:text="${orderView.order.fromAddress}"></span>
+									</td>
+									<td>
+										<span th:text="${orderView.order.toName}"></span><br/>
+										<span th:text="${orderView.order.toPhone}"></span><br/>
+										<span th:text="${orderView.order.toAddress}"></span>
+									</td>
+									<td>
+										<span th:text="|总重：${orderView.order.totalFreight}|"></span><br/>
+										<span th:text="|总价：${orderView.order.totalProductPrice}|"></span><br/>
+									</td>
+									<td>
+										<span th:each="orderRecord :${orderView.orderRecordList}" ><span th:text="|${orderRecord.product.productNameCn}(${orderRecord.product.mpn})*${orderRecord.num}|"></span><br/></span>
+									</td>
+									<td >
+										<select th:id="|${orderView.order.id}_isPayed|" style="height: 30px;" th:class="${orderView.order.isPayed==0}?colorRed:colorGreen" onchange="changeColor(this)">
+											<option value="0" th:selected="${orderView.order.isPayed==0}?1:0" >未支付</option>
+											<option value="1" th:selected="${orderView.order.isPayed==1}?1:0" >已支付</option>
+										</select>
+									</td>
+									<td >
+										<select th:id="|${orderView.order.id}_status|" th:name="status" style="width: 100px;height: 30px;">
+										 	<option value="0" th:selected="${orderView.order.status==0}?1:0">新订单</option>
+										 	<option value="1" th:selected="${orderView.order.status==1}?1:0">已收款</option>
+										 	<option value="2" th:selected="${orderView.order.status==2}?1:0">已发货</option>
+										 	<option value="3" th:selected="${orderView.order.status==3}?1:0">已收货</option>
+										 	<option value="4" th:selected="${orderView.order.status==4}?1:0">已完成</option>
+										 	<option value="5" th:selected="${orderView.order.status==5}?1:0">已取消</option>
+										 </select>
+									</td>
+									<td th:text="${orderView.order.customerMsg}">
+									</td>
+									<td>
+										<textarea th:id="|${orderView.order.id}_adminMsg|" style="width:80%;height: 80%"  th:text="${orderView.order.adminMsg}" ></textarea>
+									</td>
+									<td>
+										<span th:text="${orderView.modifyTime}"></span>
+									</td>
+									<td style="vertical-align: middle;">
+										<input class="tBtn" type="button" th:onclick="|listEditConfirm('${orderView.order.id}')|" value="确认修改" /><br />
+										<input class="tBtn" type="reset"  value="取消" /><br />
+									</td>
+									<td >
+										<input class="tBtn" type="button" th:onclick="|print('${orderView.order.id}')|" value="打印" />
+									</td>	
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="apPage">
+					<br />
+					<br />
+					<br />
+					<br />
+					<div class="pageBtn" id="fontPage" th:onclick="|prePage()|">&lt;上一頁</div>
+					<div class="pageNum" th:text="|${page.pageNum}/${page.totalPage}|">1/5</div>
+					<div class="pageBtn" id="nextPage" th:onclick="|nextPage()|">下一頁&gt;</div>&nbsp;&nbsp;
+					<input type="number" name="" min="1" id="pageGo" th:value="${page.pageNum}" ></input>&nbsp;&nbsp;
+					<div class="pageBtn" id="fontPage" th:onclick="|go()|">GO</div>
+					&nbsp;&nbsp;
+				</div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

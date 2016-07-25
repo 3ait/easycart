@@ -1,0 +1,385 @@
+package com.easycart.controller.cart;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import com.easycart.controller.BaseController;
+import com.easycart.controller.admin.companyinfo.CompanyInfoView;
+import com.easycart.controller.admin.companyinfo.logic.CompanyInfoLogic;
+import com.easycart.controller.cart.logic.CartLogic;
+import com.easycart.controller.index.MenuView;
+import com.easycart.controller.index.ProductView;
+import com.easycart.controller.index.logic.IndexLogic;
+import com.easycart.db.entity.Cart;
+import com.easycart.db.entity.Customer;
+import com.easycart.db.entity.FromAddress;
+import com.easycart.db.entity.Order;
+import com.easycart.db.entity.ToAddress;
+import com.latipay.config.LatipayConfig;
+
+/**
+ * admin login
+ * @author yaoliang
+ * 24-12-2015
+ */
+@Controller
+@RequestMapping(value="/cart")
+public class CartController extends BaseController{
+	
+	private static Logger logger = LogManager.getLogger(CartController.class);
+
+	
+	@Autowired
+	IndexLogic indexLogic;
+	
+	@Autowired
+	CartLogic cartLogic;
+	
+	@Autowired 
+	CompanyInfoLogic companyInfoLogic;
+	
+	/**
+	 * 展示购物车 || 直接购买
+	 * @return
+	 */
+	@RequestMapping("/")
+	public ModelAndView cart(@RequestParam(required=false, value="pid",defaultValue="-1") int productId,HttpServletRequest request){
+		logger.debug("/");
+		ModelAndView modelAndView = new ModelAndView("web/cart/cart");
+		
+
+		//获取菜单
+		List<MenuView> menuList = indexLogic.getMenus();
+		modelAndView.addObject("menuViewList", menuList);
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(productId,1, request);
+		
+		List<ProductView> productViewList = cartLogic.getProductByIds(cartList);
+		modelAndView.addObject("productViewList",productViewList);
+
+		//购物车产品数量
+		modelAndView.addObject("productInCartNum", super.getCartNum(cartList));
+		modelAndView.addObject("productInCartPrice", super.getCartPrice(cartList));
+		modelAndView.addObject("customer", (Customer)request.getSession().getAttribute(SESSION_CUSTOMER));
+		return modelAndView;
+	}
+	
+	/**
+	 * 订单确认页面
+	 * @return
+	 */
+	@RequestMapping("/confirm/")
+	public ModelAndView confirm(HttpServletRequest request){
+		logger.debug("checkout");
+		ModelAndView modelAndView = new ModelAndView("web/cart/confirm");
+		
+		
+		//获取菜单
+		List<MenuView> menuList = indexLogic.getMenus();
+		modelAndView.addObject("menuViewList", menuList);
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(-1,0, request);
+		if(cartList.size()==0){
+			return new ModelAndView(new RedirectView(request.getServletContext().getContextPath()+ "/cart/"));
+		}
+		
+		List<ProductView> productViewList = cartLogic.getProductByIds(cartList);
+		modelAndView.addObject("productViewList",productViewList);
+		
+		//购物车产品数量
+		modelAndView.addObject("productInCartNum", super.getCartNum(cartList));
+		modelAndView.addObject("productInCartPrice", super.getCartPrice(cartList));
+		
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		//折扣
+		Double discount = 1D;
+		if(customer!=null){
+			//获取发货人地址信息
+			modelAndView.addObject("fromAddressList", cartLogic.getFromAddress(customer.getId()));
+			//获取收货人地址信息
+			modelAndView.addObject("toAddressList", cartLogic.getToAddress(customer.getId()));
+			discount = customer.getDiscount();
+		}
+		
+		
+		Double[] priceAndFreight = cartLogic.getProductTotalPrice(productViewList, discount);
+		//产品总价
+		modelAndView.addObject("productTotalPrice", priceAndFreight[0]);
+		//运费总价
+		modelAndView.addObject("weightTotalPrice", priceAndFreight[1]);
+		
+		//confirm提交页面默认空数据
+		ConfirmView confirmView = new ConfirmView();
+		
+		CompanyInfoView companyInfoView = companyInfoLogic.getCompanyInfo();
+		confirmView.setFromName(companyInfoView.getCompanyName());
+		confirmView.setFromPhone(companyInfoView.getCompanyPhone());
+		confirmView.setFromAddress(companyInfoView.getCompanyAddress());
+		
+		confirmView.setTotalFreight(priceAndFreight[0]);
+		confirmView.setTotalProductPrice(priceAndFreight[1]);
+		modelAndView.addObject("confirmView", confirmView);
+		modelAndView.addObject("customer", (Customer)request.getSession().getAttribute(SESSION_CUSTOMER));
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 订单提交
+	 * @param request
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value="/confirm/submit/",method=RequestMethod.POST)
+	public ModelAndView comfirmSubmit(HttpServletRequest request,
+			@ModelAttribute(value="confirmView") @Valid ConfirmView confirmView,BindingResult br){
+		logger.debug("comfirmSubmit");
+		ModelAndView modelAndView = new ModelAndView("web/cart/checkout");
+		if(null == request.getSession().getAttribute(SESSION_CART)){
+			return new ModelAndView(new RedirectView(request.getContextPath()+"/"));
+		}
+		//获取菜单
+		List<MenuView> menuList = indexLogic.getMenus();
+		modelAndView.addObject("menuViewList", menuList);
+		if(br.hasFieldErrors() ){
+			return new ModelAndView(new RedirectView(request.getContextPath()+"/cart/confirm/"));
+		}
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(-1,0, request);
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		
+		//保存订单数据
+		
+		if(customer!=null){
+			Order order = cartLogic.saveOrder(customer,cartList,confirmView);
+			modelAndView.addObject("orderId", order.getId());
+		}
+		modelAndView.addObject("confirmView", confirmView);
+		//购物车产品数量
+		modelAndView.addObject("productInCartNum", 0);
+		//清除SEssion数据
+		request.getSession().removeAttribute(SESSION_CART);
+		modelAndView.addObject("customer", customer);
+		modelAndView.addObject("companyInfo",companyInfoLogic.getCompanyInfo());
+		
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * checkout 支付
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/checkout/")
+	public ModelAndView checkout(HttpServletRequest request){
+		logger.debug("checkout");
+		ModelAndView modelAndView = new ModelAndView("");
+		
+		
+		//获取菜单
+		List<MenuView> menuList = indexLogic.getMenus();
+		modelAndView.addObject("menuViewList", menuList);
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(-1,0, request);
+		
+		List<ProductView> productViewList = cartLogic.getProductByIds(cartList);
+		modelAndView.addObject("productViewList",productViewList);
+		
+		//购物车产品数量
+		modelAndView.addObject("productInCartNum", super.getCartNum(cartList));
+		modelAndView.addObject("productInCartPrice", super.getCartPrice(cartList));
+		modelAndView.addObject("customer", (Customer)request.getSession().getAttribute(SESSION_CUSTOMER));
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 添加到购物车
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/addToProduct",method=RequestMethod.POST)
+	public int addProductToCart(
+			@RequestParam(required=true,value="productId") int productId,
+			@RequestParam(required=true,value="productNum") int productNum,
+			HttpServletRequest request){
+		logger.debug("addProductToCart");
+		return super.getCartNum(this.getAllProductFromSession(productId,productNum, request));
+	}
+	/**
+	 * 保存发货人地址
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/save/from",method=RequestMethod.POST)
+	public String saveFromAddress(
+			@RequestParam(required=true,value="fromName") String fromName,
+			@RequestParam(required=true,value="fromPhone") String fromPhone,
+			@RequestParam(required=true,value="fromAddress") String fromAddress,
+			HttpServletRequest request){
+		logger.debug("saveFromAddress");
+		String ret = "success";
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		if(customer !=null){
+			FromAddress fa = new FromAddress();
+			fa.setFromName(fromName);
+			fa.setFromPhone(fromPhone);
+			fa.setFromAddress(fromAddress);
+			fa.setCustomer(customer);
+			cartLogic.saveFromAddress(fa);
+		}else{
+			ret = "fail";
+		}
+		return ret;
+	}
+	
+	/**
+	 * 删除购物车产品
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/delete")
+	public int deleteProductFromCart(@RequestParam(value="id") int id,HttpServletRequest request){
+		logger.debug("deleteProductFromCart" );
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(-1,0, request);
+		List<Cart> newList = cartList.stream().filter(c -> c.getProduct().getId()!=id).collect(Collectors.toList());
+		request.getSession().setAttribute(SESSION_CART, newList);
+		
+		return super.getCartNum(newList);
+	}
+	
+	/**
+	 * 调整产品数量
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/product/num")
+	public int changeProductInCartNum(@RequestParam(value="num") int num,@RequestParam(value="id") int id,HttpServletRequest request){
+		logger.debug("changeProductInCartNum" );
+		
+		//获取SESSION数据
+		List<Cart> cartList = this.getAllProductFromSession(-1,0, request);
+		cartList.forEach(cart ->{
+			if(cart.getProduct().getId()==id){
+				cart.setProductNum(num);
+			}
+		});
+		request.getSession().setAttribute(SESSION_CART, cartList);
+		
+		return super.getCartNum(cartList);
+	}
+	
+	/**
+	 * 删除发货人地址
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/delete/from/{id}",method=RequestMethod.GET)
+	public String deleteFromAddress(
+			@PathVariable(value="id") int id,
+			HttpServletRequest request){
+		logger.debug("deleteFromAddress");
+		String ret = "success";
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		if(customer !=null){
+			FromAddress fa = new FromAddress();
+			fa.setCustomer(customer);
+			fa.setId(id);
+			cartLogic.deleteFromAddress(fa);
+		}else{
+			ret = "fail";
+		}
+		return ret;
+	}
+	
+	/**
+	 * 保存收货人地址
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/save/to",method=RequestMethod.POST)
+	public String saveToAddress(
+			@RequestParam(required=true,value="toName") String toName,
+			@RequestParam(required=true,value="toPhone") String toPhone,
+			@RequestParam(required=true,value="toAddress") String toAddress,
+			HttpServletRequest request){
+		logger.debug("saveToAddress");
+		String ret = "success";
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		if(customer !=null){
+			ToAddress ta = new ToAddress();
+			ta.setToName(toName);
+			ta.setToPhone(toPhone);
+			ta.setToAddress(toAddress);
+			ta.setCustomer(customer);
+			cartLogic.saveToAddress(ta);
+		}else{
+			ret = "fail";
+		}
+		return ret;
+	}
+
+	/**
+	 * 删除收货人地址
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/delete/to/{id}",method=RequestMethod.GET)
+	public String deleteToddress(
+			@PathVariable(value="id") int id,
+			HttpServletRequest request){
+		logger.debug("deleteToddress");
+		String ret = "success";
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		if(customer !=null){
+			ToAddress ta = new ToAddress();
+			ta.setCustomer(customer);
+			ta.setId(id);
+			cartLogic.deleteToAddress(ta);
+		}else{
+			ret = "fail";
+		}
+		return ret;
+	}
+	
+	/**
+	 * 获取latipay Md5 info
+	 * getMd5Info
+	 * @return JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ajax/latipay/{id}/{currency}",method=RequestMethod.GET)
+	public LatipayConfig latipay(
+			@PathVariable(value="id") int id,
+			@PathVariable(value="currency") String currency,
+			HttpServletRequest request){
+		logger.debug("latipay");
+		
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		LatipayConfig latipayConfig = cartLogic.getLatiPayConfig(id,customer,currency);
+		
+		return latipayConfig;
+	}
+}

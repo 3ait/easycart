@@ -1,0 +1,299 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	cursor: default;
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	/*letter-spacing: 1px;*/
+}
+
+img {
+	cursor: pointer;
+}
+
+li {
+	list-style: none;
+}
+
+#containerC {
+	width: 1200px;
+	/*height: 5000px;*/
+	/*background: #eeeeee;*/
+	margin: 0 auto;
+}
+
+#section1 {
+	height: 90px;
+	background: white;
+	font-size: 20px;
+	line-height: 90px;
+	padding: 0 15px;
+}
+
+.cartBar {
+	height: 70px;
+	background: #e6e6e6;
+	display: flex;
+	align-items: center;
+}
+
+.cWord {
+	font-size: 16px;
+	color: #535353;
+	/*background: yellow;*/
+	/*align-items: center;*/
+	line-height: 70px;
+}
+
+.block {
+	/*background: olive;*/
+	/*flex: 1;*/
+}
+
+.cartProduct {
+	height: 185px;
+	/*background: green;*/
+	display: flex;
+	/*justify-content: center;*/
+	align-items: center;
+}
+
+.cPic {
+	border: 1px solid #E6E6E6;
+	width: 130px;
+	height: 130px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.cInfor {
+	letter-spacing: 0px;
+	width: 104px;
+	color: #7d7d7d;
+	font-size: 12px;
+	/*background: red;*/
+}
+
+.cPrice {
+	width: 80px;
+	color: #C81623;
+	font-size: 14px;
+	/*background: red;*/
+}
+
+
+/*字体颜色与header不同*/
+
+.cDelet {
+	width: 38px;
+	color: #7d7d7d;
+	font-size: 16px;
+	/*background: red;*/
+	text-align: center;
+	cursor: pointer;
+}
+
+.cQuantity {
+	width: 106px;
+	/*height: 200px;*/
+	display: flex;
+	/*background: red;*/
+}
+
+.plus {
+	width: 20px;
+	height: 18px;
+	border: 1px solid #E6E6E6;
+	text-align: center;
+	line-height: 18px;
+	font-size: 14px;
+	color: #535353;
+}
+
+.minus {
+	width: 20px;
+	height: 18px;
+	border: 1px solid #E6E6E6;
+	text-align: center;
+	line-height: 18px;
+	font-size: 14px;
+	color: #535353;
+}
+
+.number {
+	margin: 0 5px;
+	width: 40px;
+	height: 18px;
+	border: 1px solid #E6E6E6;
+	text-align: center;
+	line-height: 18px;
+	font-size: 14px;
+	color: #535353;
+}
+
+#closeAccount {
+	width: 114px;
+	height: 34px;
+	background: #f0c103;
+	color: white;
+	font-size: 16px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	line-height: 34px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.block {
+	/*height: 50px;*/
+	/*background: red;*/
+}
+
+#section3 {
+	height: 70px;
+}
+
+.detail_quantity {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 98px;
+	height: 20px;
+}
+
+.detail_quantity a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 16px;
+	width: 21px;
+	border: 1px solid #e6e6e6;
+	text-align: center;
+	text-decoration: none;
+}
+
+.detail_quantity a:hover {
+	background-color: #e6e6e6;
+}
+
+.detail_quantity a:active {
+	background-color: white;
+}
+
+.decrease {
+	border-radius: 2px;
+	color: #535353;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.increase {
+	border-radius: 2px;
+	color: #535353;
+	cursor: pointer;
+}
+
+.text-amount {
+	width: 40px;
+	height: 18px;
+	border: 1px solid #e6e6e6;
+	border-radius: 2px;
+	color: #535353;
+	font-size: 14px;
+	text-align: center;
+}
+
+#totalPrice {
+	width: 200px;
+	/*background: green;*/
+	text-align: center;
+	display: inline-block;
+}

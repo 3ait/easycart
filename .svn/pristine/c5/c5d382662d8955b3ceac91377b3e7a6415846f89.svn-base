@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-18 0:30:35 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.OrderRecord" table="order_record" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.easycart.db.entity.Customer" fetch="select">
+            <column name="customer_id" />
+        </many-to-one>
+        <many-to-one name="order" class="com.easycart.db.entity.Order" fetch="select">
+            <column name="order_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="product" class="com.easycart.db.entity.Product" fetch="select">
+            <column name="product_id" not-null="true" />
+        </many-to-one>
+        <property name="num" type="int">
+            <column name="num" not-null="true" />
+        </property>
+        <property name="productPrice" type="double">
+            <column name="product_price" precision="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

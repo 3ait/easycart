@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-30 14:51:00 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.ToAddress" table="to_address" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.easycart.db.entity.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <property name="toAddress" type="string">
+            <column name="to_address" length="128" />
+        </property>
+        <property name="toCity" type="string">
+            <column name="to_city" length="128" />
+        </property>
+        <property name="toProvince" type="string">
+            <column name="to_province" length="128" />
+        </property>
+        <property name="toCountry" type="string">
+            <column name="to_country" length="128" />
+        </property>
+        <property name="toPhone" type="string">
+            <column name="to_phone" length="45" />
+        </property>
+        <property name="toName" type="string">
+            <column name="to_name" length="45" />
+        </property>
+        <property name="defaultAddress" type="java.lang.Integer">
+            <column name="default_address" />
+        </property>
+    </class>
+</hibernate-mapping>

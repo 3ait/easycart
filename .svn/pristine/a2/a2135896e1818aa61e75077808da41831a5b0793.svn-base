@@ -1,0 +1,520 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	cursor: default;
+}
+html body{
+	height: 100%;
+}
+li {
+	list-style: none;
+}
+a{text-decoration: none;}
+
+input {
+	font-size: 18px;
+}
+
+#apContainer {
+	/*padding-left:30px ;*/
+	width: 100%;
+	display: flex;
+	font-size: 18px;
+	height: 100%;
+}
+
+.aside {
+	width: 150px;
+	background: #E7E7E7;
+	padding-top: 40px;
+}
+
+.flex1 {
+	width:20px;
+}
+
+.aNav {
+	width: 150px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	/*background: red;*/
+}
+.aNav:HOVER{
+	background: #FFFFFF;
+	color:#F0C200;
+	cursor: pointer;
+}
+
+section {
+	font-size: 18px;
+	padding: 45px 0 36px 0;
+	width:100%;
+	/*
+	flex: 10;
+	background: red;
+	*/
+	/*height: 1050px;*/
+}
+
+
+/*product new*/
+
+.fPart1 {
+	display: flex;
+	/*background: grey;*/
+	align-items: center;
+	margin-bottom: 20px;
+	pading-top:20px;
+	
+}
+
+.fPart1 span {
+	padding-right: 33px;
+}
+
+.select_ {
+	width: 580px;
+	height: 30px;
+	/*
+	*/
+}
+
+option {
+	height: 30px;
+}
+
+.add {
+	width: 50px;
+	height: 30px;
+	background: #E7E7E7;
+	font-size: 20px;
+	line-height: 34px;
+	text-align: center;
+	margin-left: 20px;
+}
+
+.fPart2 {
+	display: flex;
+	line-height: 30px;
+	/*background: gray;*/
+	margin-bottom: 20px;
+	flex-flow: wrap;
+}
+
+.fAttr {
+	width: 700px;
+	/*background: green;*/
+	padding: 20px 33px 0 85px;
+}
+
+.fAttr span {
+	font-size: 14px;
+	line-height: 30px;
+}
+
+.fAttr input {
+	width: 120px;
+	height: 30px;
+	margin: 0 43px 20px 18px;
+}
+
+.fLine {
+	width: 100%;
+	height: 5px;
+	background: #EEEEEE;
+	margin: 30px auto 0 auto;
+}
+
+.fpart3 input {
+	width: 605px;
+	height: 30px;
+}
+
+.fpart4 {
+	display: flex;
+	/*flex-flow: row;*/
+	padding: 10px 0;
+}
+
+.spanLS {
+	width: 210px;
+	/*background: red;*/
+	letter-spacing: 5px;
+	margin: 10px 5px 0 0;
+}
+
+.fpart4 div {
+	width: 100px;
+	height: 100px;
+	border: 1px solid #EEEEEE;
+	margin-right: 10px;
+}
+
+.fpart4 img {
+	width: 100px;
+	height: 100px;
+	/*background: red;*/
+}
+
+.fPart5 {
+	/*background: green;*/
+	width: 815px;
+}
+
+.fPart5 div {
+	margin-bottom: 20px;
+}
+
+.fPart5L input {
+	height: 30px;
+	width: 185px;
+	margin: 0 40px 0 21px;
+}
+
+.fPart5S span{
+	/*background: red;*/
+}
+.fPart5S input {
+	height: 30px;
+	width: 100px;
+	margin: 0 31px 0 21px;
+}
+
+.fPart5R {
+	/*background: yellow;*/
+	height: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.fPart5R label {
+	margin-top: ;
+}
+
+.fPart5R input {
+	margin: -1px 20px 0 20px;
+}
+
+.fPart5C {
+	/*background: yellow;*/
+	height: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.fPart5C label {
+	margin-top: ;
+}
+
+.fPart5C input {
+	margin: -1px 25px 0 10px;
+}
+
+.fPart5 .buttom{
+	width: 250px;
+	height: 30px;
+	/*background: red;*/
+	display: flex;
+	margin: 20px 27%;
+}
+.fSubmit {
+	cursor: pointer;
+	width: 90px;
+	height: 30px;
+	background: #E7E7E7;
+	border: none;
+	font-size: 16px;
+	display: block;
+	/*margin: 0 37%;*/
+}
+
+
+/*admin_product*/
+
+.search {
+	height: 65px;
+	/*background: red;*/
+	display: flex;
+	align-items: center;
+}
+
+.search input {
+	width: 300px;
+	height: 24px;
+}
+
+.search div {
+	width: 33px;
+	height: 30px;
+	background: #E7E7E7;
+	line-height: 40px;
+	text-align: center;
+	margin: 20px;
+	cursor: pointer;
+	
+}
+.search div:HOVER{
+	background-color: #f7e07f;
+}
+
+table {
+	border:0px; background-color: #E7E7E7;width: 100%;text-align: center;
+}
+table thead {
+	background-color: #f7e07f;
+}
+table thead tr{
+	height: 30px;
+}
+table thead tr td{
+	vertical-align: middle;
+}
+table tbody{
+	valign:middle;
+}
+table tbody tr{
+	background: #FFFFFF;
+}
+table tbody tr:HOVER{
+	background: #E7E7E7;
+}
+table tbody tr td{
+	vertical-align: middle;
+}
+.colorGreen{
+}
+.colorRed{
+	background:orange;
+}
+
+.apAll {
+	font-size: 10px;
+	/*
+	background: gray;
+	*/
+}
+
+.tHeader {
+	display: flex;
+	justify-content:space-between;
+	height: 30px;
+	border: 1px solid #FFFFFF;
+}
+
+.tHeader div {
+	background: #f7e07f;
+	text-align: center;
+	line-height: 30px;
+	border-right: 1px solid #FFFFFF;
+}
+
+.tHeaderLA {
+	width: 65px;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: flex-start;
+	font-size: 10px;
+	line-height: 10px;
+}
+
+.tHeaderLB {
+	width: 65px;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: center;
+	font-size: 10px;
+	line-height: 10px;
+}
+
+.tHeaderLL {
+	width: 90px;
+}
+
+.tHeaderLLL {
+	width: 300px;
+}
+
+.tHeaderS {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+}
+
+.tHeaderS input {
+	display: flex;
+	justify-content: center;
+	width: 36px;
+	height: 20px;
+	font-size: 10px;
+}
+
+.tHeaderS textarea {
+	height: 84px;
+	border: 1px solid #E7E7E7;
+}
+
+form{border-bottom:1px solid #FFFFFF ;}
+
+.tContent {
+	/*
+	margin: 1px 0;
+	background: red;
+	*/
+	display: flex;
+	justify-content:space-between;
+	border: 1px solid #FFFFFF;
+}
+.tContent:HOVER{
+	background: red;
+}
+
+.tContent div {
+	height: 100px;
+	background: #E7E7E7;
+	border-right: 1px solid #FFFFFF;
+}
+
+.tBtnA {
+	border: none;
+	height: 30px;
+	font-size: 12px;
+	line-height: 20px !important;
+	margin-left: 10px;
+}
+
+.tBtn {
+	border: none;
+	height: 30px;
+	font-size: 12px;
+	line-height: 20px !important;
+	margin-left: 10px;
+}
+.tBtn:HOVER{
+	cursor: pointer;
+	background-color: #f7e07f;
+}
+
+
+.apPage {
+	/*background: red;*/
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.pageBtn {
+	padding: 3px 5px;
+	text-align: center;
+	margin: 0 10px;
+	height: 20px;
+	background: #E7E7E7;
+	cursor: pointer;
+}
+.pageBtn:HOVER{
+	background-color: #f7e07f;
+}
+#pageGo {
+	width: 56px;
+}
+.errorclass{
+	border: 1px solid red;
+}
+.colorRed{
+	background:red;
+}
+.colorGreen{
+	background:green;
+}
+

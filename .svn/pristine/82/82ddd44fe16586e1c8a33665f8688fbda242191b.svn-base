@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../resources/admin/css/admin_login.css" th:href="@{/resources/admin/css/admin_login.css}" />
+
+	</head>
+
+	<body>
+		<div id="lContainer">
+			<div id="lLeft">
+				<img style="width: 136px;" src="../resources/logo002.png" th:src="@{/resources/logo002.png}" />
+				<img style="width: 242px; padding-right: 60px;" src="../resources/logo001.png" th:src="@{/resources/logo001.png}" />
+			</div>
+
+			<div id="line"></div>
+
+			<div id="lRight">
+				<div id="lHeader">鹿皇後台管理</div>
+				<div id="lForm">
+					<form th:action="@{/admin/login}" method="post" th:object="${loginForm}">
+
+						<div class="lInput">
+							<span>用戶名:</span><input  type="email" th:field="*{email}" />
+							<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+						</div>
+						<div class="lInput">
+							<span style="margin-right: 16px;">密碼:</span><input type="password" th:field="*{password}" />
+							<!--  -->
+							<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+						</div>
+						<div class="lInput2">
+							<input type="checkbox" name="" id="rememberMe" value="" />記住帳號<label for="rememberMe"></label>
+						</div>
+						<div class="lInput2" th:text="${msg}" style="color:red;">
+							
+						</div>
+						<div class="lInput2" id="lSubmit">
+							<input type="submit" value="Login" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

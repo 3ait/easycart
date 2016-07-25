@@ -1,0 +1,141 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+input,button,select,textarea{
+	outline:none;border: none;
+}
+
+body {
+	cursor: default;
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	/*letter-spacing: 0px;*/
+}
+
+img {
+	cursor: pointer;
+}
+
+li {
+	list-style: none;
+}
+textarea{resize:none}
+
+a{
+    text-decoration: none;
+}
+ol,ul {
+    list-style:none;
+}
+textarea{resize:none}
+button{
+    cursor: pointer;
+}
+#about_container{
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 90px;
+}
+.brand_pic{
+    margin-top: 20px;
+}
+.line_about{
+    width: 1px;
+    height: 245px;
+    background: #aaaaaa;
+    margin-left: 90px;
+    margin-right: 60px;
+}
+.brand_content{
+    width: 690px;
+    margin-top: 10px;
+    color:  #59493f;
+    font-size: 12px;
+    line-height: 24px;
+}

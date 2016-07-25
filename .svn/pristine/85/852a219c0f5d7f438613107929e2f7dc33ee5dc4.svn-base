@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+body {
+    font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+}
+.error_nav{
+	height:140px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.error_nav .nav_logo{
+	width: 220px;
+	display: flex;
+	justify-content: space-between;	
+	align-items: center;
+}
+
+.nav_content{
+	height:400px;
+	background-color:#eeeeee;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color:#f0c103;
+}
+.text_wrap{
+	display: flex;
+  	flex-direction: column;
+  	justify-content: space-between;
+ 	align-items: center;
+}
+

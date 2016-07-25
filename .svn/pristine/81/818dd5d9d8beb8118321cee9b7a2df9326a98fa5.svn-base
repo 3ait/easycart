@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_menu.css" th:href="@{/resources/admin/css/admin_menu.css}"/>
+			<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+			<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+			<script src="../../resources/admin/js/admin_menu.js" th:src="@{/resources/admin/js/admin_menu.js}"></script>
+	</head>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		           
+		//选择一级分类
+		function menu1Select(menu1Id){
+			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/}]]+menu1Id);
+		}
+		//添加
+		function addmenu2(){
+			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/add}]],$('#menu2Form').serialize());
+		}
+		//编辑保存
+		function editSave(){
+			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/edit/save}]],$('#listForm').serialize());
+		}
+		//删除
+		function deleteMenu2(menuId,fatherId){
+			if(confirm("confirm?")){
+				$("#leve2MenuList").load([[@{/admin/category/level2/delete/}]] + menuId+"?fid="+fatherId);
+			}
+		}
+		function edit(obj){
+			$(obj).siblings().children("input").removeAttr("readonly").css("background","#EEEEEE");
+		}
+		/*]]>*/	
+	</script>
+	<body>
+
+		<!-- 引入
+		title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<a th:href="@{/admin/category/}" style="text-decoration: none;"><div class="aNav">一級分類</div></a>
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >二級分類</div>
+				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<div class="sClass1">
+					<select th:onchange="|menu1Select(this.value)|"  > 
+						<option >一級分類名稱</option>
+						<th:block  th:each="menuLevel1:${categoryView.menuList}">
+							<option th:value="${menuLevel1.id}" th:text="${menuLevel1.nameCn}" th:if="${menuLevel1.id==fatherId}" selected="selected">一级菜单</option>
+							<option th:value="${menuLevel1.id}" th:text="${menuLevel1.nameCn}" th:unless="${menuLevel1.id==fatherId}" >一级菜单</option>
+						</th:block>
+					</select>
+				</div>
+				<div id="leve2MenuList">
+				
+				</div>
+				
+			</section>
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+	<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+	</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_checkout.css" th:href="@{/resources/web/css/page_checkout.css}" />		
+       <script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+			 $(document).ready(function(){
+				 
+			 });
+			 	
+			/*]]>*/
+		</script>
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		
+		<div id="container" style="height: 200px; padding-top: 100px;">
+			<div th:if="${respMsg=='success'}" >
+				支付成功，请刷新订单页面
+			</div>
+			<div th:if="${respMsg=='fail'}" >
+				支付失败，请重新支付
+			</div>
+		</div>
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

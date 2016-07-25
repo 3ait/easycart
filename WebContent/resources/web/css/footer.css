@@ -1,0 +1,227 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	cursor: default;
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	/*letter-spacing: 1px;*/
+}
+
+li {
+	list-style: none;
+}
+
+p {
+	font-size: 11px;
+	line-height: 18px;
+	word-spacing: 0px;
+	letter-spacing: 0px;
+	color: #707070;
+}
+
+#footbar {
+	width: 1200px;
+	height: 2px;
+	background: #E6E6E6;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#footer2 {
+	width: 900px;
+	/*height: 245px;*/
+	/*background: oldlace;*/
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+}
+
+#footer2 .White {
+	width: 50px;
+	height: 13px;
+	/*background: olive;*/
+}
+
+.White10 {
+	width: 50px;
+	height: 5px;
+	/*background: yellow;*/
+}
+
+.underLine {
+	width: 43px;
+	height: 2px;
+	background: #a0a0a0;
+}
+
+#footLeft {
+	width: 603px;
+	height: 263px;
+	/*background: blue;*/
+}
+
+#footLeft div ul li {
+	font-size: 14px;
+}
+
+#add {
+	display: flex;
+	line-height: 18px;
+	font-size: 11px;
+}
+
+#add1 {
+	width: 300px;
+	/*background: pink;*/
+}
+
+#add2 {
+	width: 200px;
+	/*background: pink;*/
+}
+
+#add3 {
+	width: 200px;
+	/*height: 180px;*/
+	/*background: pink;*/
+}
+
+.addName {
+	font-size: 12px;
+	color: #c81623;
+}
+
+
+.Aus {
+	font-size: 14px;
+	color: #707070;
+}
+.Aus li a{
+	    color: #707070;
+}
+.auChangColor{margin: 5px 0;	display: inline-block;}
+
+#footMid {
+	width: 75px;
+	/*height: 253px;*/
+	/*background: purple;*/
+}
+
+#footRight {
+	width: 75px;
+	/*height: 253px;*/
+	/*background: yellow;*/
+}
+
+#hr {
+	width: 990px;
+	height: 1px;
+	margin-left: auto;
+	margin-right: auto;
+	background: #E6E6E6;
+}
+
+#copy {
+	width: 350px;
+	height: 20px;
+	/*background: green;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#copy p {
+	text-align: center;
+	font-size: 9px;
+	line-height: 12px;
+}
+
+.auChangColor:hover {
+	cursor: pointer;
+	color: #F0C103;
+	display: inline-block;}

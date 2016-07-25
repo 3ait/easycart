@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		           
+		//选择一级分类
+		function men1Select(menu1Id){
+			$("#menu2_brand").load([[@{/admin/product/add/ajax/menu1/}]]+menu1Id);
+		}
+		
+		//添加
+		function addmenu2(){
+			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/add}]],$('#menu2Form').serialize());
+		}
+		
+		//提交检查
+		function checkInput(){
+			if($("#menu1Id").val().trim()==""){
+				alert("請選擇一級分類");
+				return false;
+			}
+			if($("#menu1Id").val().trim()==""){
+				alert("請選擇二級分類");
+				return false;
+			}
+
+			if(!confirm("確認保存？")){
+				return false;
+			}
+		}
+		
+
+		/*]]>*/	
+	</script>
+	
+	<body>
+		
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+		
+		<div id="apContainer">
+			<aside class="aside">
+				<a th:href="@{/admin/product/}"><div class="aNav" >全部産品</div></a>
+				<a th:href="@{/admin/product/add/}"  style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;">添加産品</div></a>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<form method="post" th:action="@{/}+'admin/product/add/save'" th:object="${productForm}" onsubmit="return checkInput()" enctype="multipart/form-data"  >
+					<div style="height: 20px;">
+					<!-- 占位 -->
+					</div>
+					
+					<div class="fPart1"> 
+						<span>一級分類</span>
+						<select class="select_" th:onchange="|men1Select(this.value)|"  th:name="menu1Id" id="menu1Id">
+							<option value="0">請選擇一級分類</option>
+							<option th:each="menu1 : ${menu1List}" th:value="${menu1.id}" th:text="${menu1.nameCn}" th:if="${menu1.id==menu1Id}" selected="selected">一級菜單</option>
+							<option th:each="menu1 : ${menu1List}" th:value="${menu1.id}" th:text="${menu1.nameCn}" th:unless="${menu1.id==menu1Id}">一級菜單</option>
+						</select>
+					</div>
+					<div id="menu2_brand" th:fragment="menu2_brand" >
+						<div class="fPart1"> 
+							<span>二級分類</span>
+							<select class="select_" th:name="menu2Id">
+								<option value="0">請選擇二級分類</option>
+								<option th:each="menu2 : ${menu2List}" th:value="${menu2.id}" th:text="${menu2.nameCn}" th:if="${menu2.id==menu2Id}" selected="selected">二級菜單</option>
+								<option th:each="menu2 : ${menu2List}" th:value="${menu2.id}" th:text="${menu2.nameCn}" th:unless="${menu2.id==menu2Id}" >二級菜單</option>
+							</select>
+						</div>
+	
+						<div class="fPart1"> 
+							<span style="letter-spacing: 34px; padding: 0;">品牌</span>
+							<select class="select_" th:name="brandId">
+								<option value="0">請選擇品牌</option>
+								<option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandNameCn}" th:if="${brand.id==brandId}" selected="selected">品牌</option>
+								<option th:each="brand : ${brandList}" th:value="${brand.id}" th:text="${brand.brandNameCn}" th:unless="${brand.id==brandId}">品牌</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="fPart1"> 
+						<span>産品名稱（中文）</span><input style="width:500px;height: 30px;" type="text" th:field="*{productNameCn}" placeholder="1-200个字符" th:class="${#fields.hasErrors('productNameCn')}? errorclass"/>
+					</div>
+					<div class="fPart1"> 
+						<span>産品名稱（英文）</span><input style="width:500px;height: 30px;" type="text" th:field="*{productNameEn}" placeholder="1-200个字符"  th:class="${#fields.hasErrors('productNameEn')}? errorclass"/>
+					</div>
+					<div class="fPart1"> 
+						<span>産品备注</span><input style="width:500px;height: 30px;" type="text" th:field="*{memo}" placeholder="1-200个字符"  th:class="${#fields.hasErrors('memo')}? errorclass"/>
+					</div>
+					
+					<div class="fpart4">
+						<span class="spanLS">産品展示圖(3张)</span>&nbsp;
+						<input type="file" id="listImgs" th:name="listImgs" multiple="multiple" />
+					</div>
+					<div class="fpart4">
+						<span class="spanLS">産品描述图</span>&nbsp;
+						<input type="file" id="descImgs" th:name="descImgs" multiple="multiple"  />
+					</div>
+
+					<div class="fPart5">
+						<div class="fPart5L">
+							<span class="spanLS">産品關鍵詞</span><input type="text" placeholder="1-200个字符"  th:field="*{productLable}" th:class="${#fields.hasErrors('productLable')}? errorclass" />
+							<span class="spanLS">産品條形碼</span><input type="text" placeholder="1-100个字符"  th:field="*{mpn}" th:class="${#fields.hasErrors('mpn')}? errorclass" />
+						</div>
+						<div class="fPart5S">
+							<span>成本</span><input type="text" th:field="*{cost}"  placeholder="数值"  th:class="${#fields.hasErrors('cost')}? errorclass"/>KG
+							<span>單價</span><input type="text" th:field="*{price1}" placeholder="数值"  th:class="${#fields.hasErrors('price1')}? errorclass"/>$
+						</div>
+						<div class="fPart5S">
+							<span >重量</span><input type="text" th:field="*{weight}" placeholder="数值"  th:class="${#fields.hasErrors('weight')}? errorclass"/>
+							<span>庫存</span><input type="text" th:field="*{stock}"  placeholder="数值" th:class="${#fields.hasErrors('stock')}? errorclass"/>
+							<span>已賣</span><input type="text" th:field="*{soldNum}"  placeholder="数值" th:class="${#fields.hasErrors('soldNum')}? errorclass"/>
+						</div>
+						<div class="fPart5R">
+							<span style="margin-right: 15px;">産品狀態</span>
+							<input type="radio" th:name="status" id="stats0"  th:checked="${productForm.status==0}?1:0" th:value="0" /><label for="stats0">離線</label>
+							<input type="radio" th:name="status" id="stats1" th:checked="${productForm.status==1}?1:0"  th:value="1"  /><label for="stats1">在線</label>
+							<input type="radio" th:name="status" id="stats2" th:checked="${productForm.status==2}?1:0"  th:value="2"  /><label for="stats2">缺貨</label>
+						</div>
+
+						<div class="fPart5C" >
+							<input type="checkbox" id="hot" th:name="hot" th:value="1" th:checked="${productForm.hot==1}?1:0"   /><label for="hot">熱銷</label>&nbsp;
+							<input type="checkbox" id="promote" th:name="promote" th:value="1" th:checked="${productForm.promote==1}?1:0"  /><label for="promote">促銷</label>&nbsp;
+							<input type="checkbox" id="frontPage" th:name="frontPage" th:value="1" th:checked="${productForm.frontPage==1}?1:0" /><label for="frontPage">首頁</label>&nbsp;
+							<input type="checkbox" id="recommend" th:name="recommend" th:value="1" th:checked="${productForm.recommend==1}?1:0"  /><label for="recommend">推薦</label>&nbsp;
+				
+						</div>
+
+					</div>
+
+					<input style="margin:0 0 20px 27%;" class="fSubmit" type="submit" value="保存" />
+				</form>
+
+			</section>
+			<div class="flex1"></div>
+		</div>
+
+	<!-- 引入title -->
+	<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>

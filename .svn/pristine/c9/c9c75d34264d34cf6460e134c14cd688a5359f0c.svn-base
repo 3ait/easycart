@@ -1,0 +1,255 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	cursor: default;
+}
+
+li {
+	list-style: none;
+}
+
+input {
+	padding: 0;
+	/*outline: none;*/
+	font-size: 18px;
+}
+
+#apContainer {
+	width: 100%;
+	display: flex;
+	font-size: 18px;
+}
+
+.aside {
+	width: 150px;
+	height: 1050px;
+	background: #E7E7E7;
+	padding-top: 40px;
+}
+
+.flex1 {
+	flex: 1;
+}
+
+.aNav {
+	width: 150px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	/*background: red;*/
+}
+.aNav:HOVER{
+	background: #FFFFFF;
+	color:#F0C200;
+	cursor: pointer;
+}
+section {
+	font-size: 12px;
+	padding-top: 45px;
+	flex: 10;
+	/*background: red;*/
+	/*height: 1050px;*/
+}
+
+.tHeader {
+	display: flex;
+	height: 30px;
+	border: 1px solid #FFFFFF;
+}
+
+.tHeader div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #f7e07f;
+	border-right: 1px solid #FFFFFF;
+}
+
+.tHeaderL {
+	width: 150px;
+}
+
+.tHeaderLL {
+	width: 200px;
+}
+
+.tHeaderS {
+	/*width: 75px;*/
+	width: 95px;
+}
+
+form {
+	border: 1px solid #FFFFFF;
+}
+
+.tContent {
+	margin-left:1px ;
+	display: flex;
+}
+
+.tContent div {
+	display: flex;
+	justify-content: center;
+	/*background: red;*/
+	border-right: 1px solid #FFFFFF;
+}
+
+.tContent input {
+	height: 28px;
+	border: none;
+	background: #d7d7d7;
+}
+
+.tContentL {
+	width: 150px;
+}
+.fieldError {
+	border: 1px solid red;
+}
+
+.tContentLL {
+	width: 200px;
+}
+
+.tContentS {
+	width: 95px;
+}
+
+.tBtn {
+	border: none;
+	width: 40px;
+	height: 30px;
+	font-size: 10px;
+	margin-left: 20px;
+}
+
+.tBtnA {
+	border: none;
+	width: 40px;
+	height: 30px;
+	font-size: 10px;
+	margin-left: 20px;
+}
+
+#newFormC input[class="tContentL"] {
+	width: 148px;
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+}
+
+#newFormC input[class="tContentS"] {
+	width: 93px;
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+}
+
+#newFormC input[class="tContentLL"] {
+	width: 198px;
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+}
+
+#newFormC input[type=button] {
+	background: #E7E7E7;
+}
+
+
+/*
+#newA input {background: red !important;}*/
+
+.sClass1 {
+	margin: 15px 0 20px 0;
+}
+
+.sClass1 select {
+	width: 300px;
+	height: 30px;
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}" />
+		<script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/user_info.css" th:href="@{/resources/web/css/user_info.css}" />
+		<script src="../../resources/web/js/user_info.js" th:src="@{/resources/web/js/user_info.js}" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+
+		<div id="containerRP">
+			<div id="section1">我的賬戶</div>
+
+			<div id="section2">
+				<div class="orderLeft">
+					<div class="orderBar">用戶信息</div>
+					<a th:href="@{/customer/order/}">
+						<div class="orderNav">訂單詳情</div>
+					</a>
+				</div>
+
+				<div class="orderRight">
+					<div class="White"></div>
+
+					<div class="rePassword">
+						<div class="rpWay">
+							<div id="rpway1">用戶個人信息</div>
+							<!--<div id="rpway2">通過手機找回密碼</div>-->
+						</div>
+
+						<form class="rpWayInfor" action="#" method="post">
+							<div id="rpw1">
+								<div class="rpWayInfor1">
+									<div class="White20" style="height: 20px;"></div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">姓名</div> <input type="text" maxlength="5" name="" class="rpiInput" value="" readonly="readonly" />
+										</div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">手機號</div> <input type="text" maxlength="11" name="" class="rpiInput" value="" readonly="readonly" />
+										</div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">用戶郵箱</div> <input type="email" name="" class="rpiInput" value="" readonly="readonly" /></div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">密碼</div><input type="password" maxlength="12" name="" class="rpiInput" value="" readonly="readonly" /></div>
+									</div>
+									<div class="rpiDetail">
+										<div class="rpiLabel">
+											<div class="rpiLabelC">新密碼</div> <input type="password" maxlength="12" name="" class="rpiInput" value="" readonly="readonly" /></div>
+									</div>
+
+									<div class="White40" style="height: 40px;"></div>
+									<div class="rpBtnF">
+										<div class="rpBtn" id="edit">修改</div>
+										<div style="flex: 1;"></div>
+										<div class="rpBtn" id="submit">提交</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="White"></div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

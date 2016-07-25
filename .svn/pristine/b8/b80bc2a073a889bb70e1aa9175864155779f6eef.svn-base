@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-18 0:30:35 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.Customer" table="customer" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="email" type="string">
+            <column name="email" length="128" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="128" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="128" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="128" not-null="true" />
+        </property>
+        <property name="status" type="byte">
+            <column name="status" not-null="true" />
+        </property>
+        <property name="discount" type="java.lang.Double">
+            <column name="discount" precision="22" scale="0">
+                <comment>&#213;&#219;&#191;&#219;&#163;&#186;0.95=&#212;&#173;&#188;&#219;*0.95</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="create_time" length="19" />
+        </property>
+        <property name="modifyTime" type="timestamp">
+            <column name="modify_time" length="19" />
+        </property>
+        <set name="orders" table="order" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Order" />
+        </set>
+        <set name="orderRecords" table="order_record" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.OrderRecord" />
+        </set>
+        <set name="toAddresses" table="to_address" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ToAddress" />
+        </set>
+        <set name="carts" table="cart" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Cart" />
+        </set>
+        <set name="fromAddresses" table="from_address" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.FromAddress" />
+        </set>
+    </class>
+</hibernate-mapping>

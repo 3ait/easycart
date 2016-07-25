@@ -1,0 +1,172 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+}
+
+li {
+	list-style: none;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+#lContainer {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	background: #fdf2b6;
+}
+
+#lLeft {
+	margin-top: -100px;
+	width: 58%;
+	height: 320px;
+	/*background: green;*/
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#line {
+	width: 2px;
+	height: 320px;
+	background: #d4b10b;
+}
+
+#lHeader {
+	font-size: 24px;
+	margin-bottom: 25px;
+}
+
+#lRight {
+	width: 41%;
+	height: 320px;
+	/*background: white;*/
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	padding-top: 50px;
+}
+
+.lInput {
+	margin-bottom: 20px;
+}
+
+input {
+	font-size: 18px;
+}
+
+.lInput input {
+	height: 40px;
+	width: 240px;
+	margin-left: 25px;
+}
+
+.lInput2 {
+	/*background: red;*/
+	margin-bottom: 20px;
+}
+
+.lInput2 input {
+	/*padding-left: 53px;*/
+	font-size: 18px;
+	margin-left: 78px;
+}
+
+input[type=submit] {
+	width: 94px;
+	height: 39px;
+	background: #FFFFFF;
+	border: none;
+}

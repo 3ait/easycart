@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>about us</title>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_aboutus.css" th:href="@{/resources/web/css/page_aboutus.css}"  />
+
+
+</head>
+<body>
+<!-- 引入title -->
+<!--<div th:include="../web/header :: hearderFragement"></div>-->
+<div th:include="/web/header :: hearderFragement"></div>
+    <div id="about_container">
+        <div class="brand_pic"><img src="../resources/web/img/brand/brand.png" th:src="@{/resources/web/img/brand/brand.png}"/></div>
+        <div class="line_about"></div>
+        <div class="brand_content">
+            <p>鹿皇土產始建於１９９4年，主要銷售紐西蘭本地的天然美容護膚品，保健食品，羊毛皮制品及工藝品，而今已經迎來了第１5個年頭，是唯一的一家在紐西蘭擁有5間分店和澳洲開有分部的紐西蘭大型特產禮品連鎖店．經過１5年的努力，縱然面對激烈的價格競爭，我們仍然堅持高品質，這是鹿皇一直以來對顧客的尊重和承諾．"鹿皇土產"店名雖然帶點土味,但他保留了紐西蘭純朴的風格,今天，〝鹿皇土產〝已經成為很多本地華人朋友特別是老華僑都相當熟悉的紐西蘭特產禮品連鎖店的金字招牌，十多年來，我們親切，誠實的銷售態度是有口皆碑的，更與廣大客戶成為了朋友．</p>
+            <br/>
+            <p>為什麼說〝比質量，比便宜，鹿皇土產最具實力！〝呢？其原因是我們的連鎖店建店時間達１5年，與本地最大的供應商已經建立了長達１5年的緊密聯系，可以取得紐西蘭本地的第一手貨源，加上我們實力宏厚，訂貨量大，所以獲得廠價直銷的價格，以及本地著名名牌的代理權，節省了中間分銷商及多次運輸的費用，所以客人可以買到新鮮又便宜的本地貨品．目前我們經營的產品有Good Health,Comvita, MegaMax ,Bio Active,HealthPlus,The Cosmetica,    la Reine, EasiYo,   I care,Windward ,Bowron ,Health &amp; Beauty and Superwarm等眾多本地知名品牌.</p>
+            <br/>
+            <p>一直以來，鹿皇土產都致力於紐西蘭本地制造的特產品，堅持高品質，堅持為客戶提供正確，忠實的咨詢，絕不誤導，因為我們深信單靠虛張聲勢或能言善辯的技巧，而沒有好的產品的支持，是不會獲得客戶長久的信賴的，我們深信有智慧之人士是具有分辨能力的，會選擇你真正所要的產品，而不會被不真實的咨詢所誤導．</p>
+            <br/>
+            <p>鹿皇土產一貫對產品質量要求嚴謹，務求品質天然，成分保証，品質穩定，目前我們的產品除了在紐西蘭市場上佔有領先地位，同時也遠銷到澳洲，美國，中國，韓國，香港, 新加坡,日本，馬來西亞等海外國家，深受歡迎．在此，鹿皇土產將一如既往，努力把紐西蘭最好的產品帶給你的親友，帶給全世界！</p>
+        </div>
+    </div>
+<!-- 引入title -->
+<div th:include="/web/footer :: footerFragement"></div>
+
+</body>
+</html>

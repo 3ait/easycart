@@ -1,0 +1,49 @@
+package com.easycart.utils;
+
+import com.easycart.utils.DateHelper;
+
+public class IdentifyCode {
+
+	//创建时间
+	private int createTime = DateHelper.getTime();
+	//当前时间+15分钟
+	private int expireTime = DateHelper.getTime() + 60;
+	//短信验证码
+	private String identifyCode;
+	//是否验证
+	private boolean verify = false;
+	
+	public IdentifyCode(){
+	}
+	
+	public IdentifyCode(String identifyCode){
+		this.identifyCode = identifyCode;
+	}
+	
+	public int getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(int createTime) {
+		this.createTime = createTime;
+	}
+	public int getExpireTime() {
+		return expireTime;
+	}
+	public void setExpireTime(int expireTime) {
+		this.expireTime = expireTime;
+	}
+	public String getIdentifyCode() {
+		return identifyCode;
+	}
+	public void setIdentifyCode(String identifyCode) {
+		this.identifyCode = identifyCode;
+	}
+	public boolean isVerify() {
+		return verify;
+	}
+	public void setVerify(boolean verify) {
+		this.verify = verify;
+	}
+	
+	
+}

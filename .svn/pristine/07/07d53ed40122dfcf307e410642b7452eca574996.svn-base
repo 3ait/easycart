@@ -1,0 +1,110 @@
+package com.easycart.controller.admin.order.logic;
+
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.easycart.controller.admin.order.OrderSearchForm;
+import com.easycart.controller.admin.order.OrderView;
+import com.easycart.db.dao.IOrderDao;
+import com.easycart.db.dao.IOrderRecordDao;
+import com.easycart.db.entity.Order;
+import com.easycart.db.entity.OrderRecord;
+import com.easycart.utils.DateHelper;
+import com.easycart.utils.Page;
+import com.print.Courier;
+import com.print.pdf.IPDF;
+import com.print.pdf.PdfCreaterFactory;
+
+@Component("orderLogic")
+public class OrderLogic {
+
+	@Autowired
+	IOrderDao orderDao;
+	
+	@Autowired
+	IOrderRecordDao orderRecordDao;
+	
+	/**
+	 * 获取订单列表
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<OrderView> getOrderViewList(OrderSearchForm orderSearchForm,Page page){
+		
+		List<OrderView> list = new ArrayList<>();
+		orderDao.list(orderSearchForm,page).forEach(o ->{
+			OrderView ov = new OrderView();
+			ov.setOrder(o);
+			ov.setOrderRecordList(orderRecordDao.getByOrderId(o.getId()));
+			ov.setModifyTime(DateHelper.getMMDDYYYYHHMMSS(o.getModifyTime()));
+			list.add(ov);
+		});
+		
+		return list;
+	}
+	
+	/**
+	 * 获取订单数量
+	 * @param orderSearchForm
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public int getOrderCount(OrderSearchForm orderSearchForm,Page page){
+		
+		return orderDao.listCount(orderSearchForm,page);
+	}
+
+	/**
+	 * 更新订单
+	 * @param order
+	 * void
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void updateOrder(Order order) {
+
+		Order o = orderDao.getById(order.getId());
+		o.setIsPayed(order.getIsPayed());
+		o.setStatus(order.getStatus());
+		o.setCustomerMsg(order.getCustomerMsg());
+		o.setAdminMsg(order.getAdminMsg());
+		o.setModifyTime(DateHelper.getTime());
+		orderDao.update(o);
+	}
+	
+	/**
+	 * 生成PDF
+	 * @param pdfType FlywayPDF
+	 * @param os
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void createPDF(int orderId,String pdfType ,OutputStream os){
+		IPDF pdf = PdfCreaterFactory.pdfCreate(pdfType);
+		List<Courier> courierList = new ArrayList<>();
+		
+		Order order = orderDao.getById(orderId);
+		Courier courier = new Courier();
+		courier.setFromName(order.getFromName());
+		courier.setFromPhone(order.getFromPhone());
+		courier.setFromAddress(order.getFromAddress());
+		
+		courier.setToName(order.getToName());
+		courier.setToPhone(order.getToPhone());
+		courier.setToProvince(order.getToPhone());
+		courier.setToAddress(order.getToAddress());
+		
+		List<OrderRecord> list = orderRecordDao.getByOrderId(orderId);
+		StringBuffer sb = new StringBuffer();
+		list.forEach(or -> sb.append(or.getProduct().getProductNameCn()).append("*").append(or.getNum()).append(" "));
+		courier.setDetails(sb.toString());
+		courierList.add(courier);
+		
+		pdf.pdfOutputStream(courierList, os);
+	}
+}

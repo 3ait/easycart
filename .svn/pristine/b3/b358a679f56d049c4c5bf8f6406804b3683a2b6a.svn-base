@@ -1,0 +1,237 @@
+
+li {
+	list-style: none;
+}
+
+.containerSign {
+	/*background: rgba(0, 0, 0, 0.7);*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.signFrame {
+	width: 600px;
+	height: 540px;
+	background: #FFFFFF;
+	/*background: red;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: -5px 0 5px rgba(0, 0, 0, .1), 0 5px 5px rgba(0, 0, 0, .1), 5px 0 5px rgba(0, 0, 0, .1);
+}
+
+.rePassword {
+	width: 500px;
+	height: 500px;
+	padding-top: 55px;
+	/*background: green;*/
+}
+
+
+/*
+ * loginLabel
+ * 
+ * */
+
+.rpWay {
+	display: flex;
+	color: #626262;
+}
+
+#rpway1 {
+	border-bottom: 5px solid #F0C103;
+	flex: 1;
+	height: 34px;
+	font-size: 14px;
+	line-height: 34px;
+	text-align: center;
+	color: #F0C103;
+}
+
+#rpway2 {
+	border-bottom: 5px solid #E6E6E6;
+	flex: 1;
+	height: 34px;
+	font-size: 14px;
+	line-height: 34px;
+	text-align: center;
+}
+
+#rpway3 {
+	border-bottom: 5px solid #F0C103;
+	/*flex: 1;*/
+	/*justify-content: center;*/
+	margin: 0 auto;
+	height: 34px;
+	font-size: 14px;
+	line-height: 34px;
+	text-align: center;
+	/*background: red;*/
+	width: 250px;
+	color: #F0C103;
+}
+
+.LoginLabel {
+	/*display: none;*/
+	display: block;
+}
+.findPLabel{
+	display: none;
+	/*display: block;*/
+}
+
+
+
+.rpWayInfor {
+	/*background: yellowgreen;*/
+	width: 100%;
+	height: 480px;
+	font-size: 12px;
+	color: #626262;
+}
+
+.rpWayInfor1 {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+.rpiDetail {
+	height: 62px;
+	width: 380px;
+	border-bottom: 2px solid #E6E6E6;
+	line-height: 87px;
+	display: flex;
+	align-items: center;
+	/*background:red;*/
+}
+
+.rpiLabel {
+	width: 290px;
+	/*background: gray;*/
+	height: 62px;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+}
+.countrySelectDiv {
+	width: 290px;
+	/*background: gray;*/
+	height: 62px;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+}
+.countrySelect{
+	height: 25px;
+}
+
+.rpiLabelC {
+	height: 30px;
+	line-height: 30px;
+	/*background: yellow;*/
+	width: 70px;
+	/*transition: 1s;*/
+}
+.red{
+	color:red;
+}
+.rpiInput {
+	font-size: 16px;
+	outline: none;
+	border: none;
+	width: 270px;
+	/*height: 45px;*/
+	height: 0px;
+	padding: 0;
+	/*display: none;*/
+	/*background: red;*/
+	transition: 0.2s;
+}
+
+#rpiSend {
+	border: none;
+	outline: none;
+	width: 95px;
+	height: 40px;
+	background: #E6E6E6;
+	font-size: 12px;
+	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+}
+#find_rpiSend {
+	border: none;
+	outline: none;
+	width: 95px;
+	height: 40px;
+	background: #E6E6E6;
+	font-size: 12px;
+	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+.rpBtn {
+	width: 115px;
+	height: 35px;
+	background: #F0C103;
+	color: #FFFFFF;
+	line-height: 35px;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.rpWayInfor2 {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	/*background: red;*/
+}
+
+#rpw1 {
+	/*display: none;*/
+	display: block;
+}
+
+#rpw2 {
+	display: none;
+	/*display: block;*/
+}
+
+.rpF {
+	font-size: 12px;
+	color: #F0C103;
+	height: 32px;
+	line-height: 32px;
+}
+
+#rpw3 {
+	/*background: red;*/
+	display: none;
+	/*display: block;*/
+}
+
+.backLogin {
+	height: 40px;
+	/*background: green;*/
+	width: 360px;
+	padding: 10px;
+	font-size: 12px;
+	/*text-align: center;*/
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	color: #626262;
+}
+
+.backLogin span {
+	cursor: pointer;
+}

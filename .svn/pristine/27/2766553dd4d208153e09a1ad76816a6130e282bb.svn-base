@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_menu.css" th:href="@{/resources/admin/css/admin_menu.css}"/>
+			<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+			<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+			<script src="../../resources/admin/js/admin_menu.js" th:src="@{/resources/admin/js/admin_menu.js}"></script>
+	</head>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		           
+		//选择一级分类
+		function menu1Select(menu1Id){
+			$("#brandList").load([[@{/admin/category/brand/ajax/}]]+menu1Id);
+		}
+		//添加
+		function addBrand(){
+			if($("#menu1Select").val()=="0"){
+				alert("请选择分类");
+				return false;
+			}else{
+				$("#brandList").load([[@{/admin/category/brand/ajax/add}]],$('#brandForm').serialize());
+			}
+		}
+		//删除
+		function brandDelete(brandId,menuId){
+			if(confirm("confirm?")){
+				$("#brandList").load([[@{/admin/category/brand/delete/}]] + brandId + "?mid="+menuId);
+			}
+		}
+		/*]]>*/	
+	</script>
+	<body>
+
+		<!-- 引入
+		title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<a th:href="@{/admin/category/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">一級分類</div></a>
+				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">二級分類</div></a>
+				<div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >品牌</div>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				<div class="sClass1">
+					<select id="menu1Select" th:onchange="|menu1Select(this.value)|"  > 
+						<option value="0" >一級分類名稱</option>
+						<th:block  th:each="menuLevel1:${categoryView.menuList}">
+							<option th:value="${menuLevel1.id}" th:text="${menuLevel1.nameCn}" th:if="${menuLevel1.id==fatherId}" selected="selected">一级菜单</option>
+							<option th:value="${menuLevel1.id}" th:text="${menuLevel1.nameCn}" th:unless="${menuLevel1.id==fatherId}" >一级菜单</option>
+						</th:block>
+					</select>
+				</div>
+				<div id="brandList">
+					<div th:fragment="brand_list">
+						<div class="tHeader">
+							<div class="tHeaderLL">品牌名稱（中）</div>
+							<div class="tHeaderLL">品牌名稱（英）</div>
+						</div>
+						<form id="listForm"  method="post" th:object="${categoryView}">
+							<div class="tContent" th:each="brand,stat : *{brandFormList}"  >
+								
+								<div class="tHeaderLL">
+									<input class="tContentLL" type="text" name="" value="" th:field="*{brandFormList[__${stat.index}__].brandNameCn}"  readonly="readonly"/>
+								</div>
+								
+								<div class="tHeaderLL">
+									<input class="tContentLL" type="text" name="" value="" th:field="*{brandFormList[__${stat.index}__].brandNameEn}" readonly="readonly"/>
+								</div>
+								
+								<input class="tBtn" type="button" th:onclick="|brandDelete('*{brandFormList[__${stat.index}__].id}','*{brandFormList[__${stat.index}__].menu.id}')|" value="删除" />
+							</div>
+						</form>
+						
+						<form id="brandForm" method="post" th:object="${brandForm}" onsubmit="return addBrand();">
+							<input type="hidden" th:name="menu.id"  th:value="${menuId}"/>
+							<div id="newFormC" class="tContent">
+						
+								<div class="tHeaderLL" id="newA">
+									<input class="tContentLL" type="text" th:field="*{brandNameCn}" placeholder="必填项" />
+								</div>
+								<div class="tHeaderLL">
+									<input class="tContentLL" type="text" th:field="*{brandNameEn}" placeholder="必填项"  />
+								</div>
+								<input class="tBtn" type="button" th:onclick="" name="alter" value="保存" />
+								<input class="tBtn" type="reset" name="resiteBtn" value="重置" />
+								
+							</div>
+						</form>
+						
+					</div>
+				</div>
+				
+			</section>
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+	<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+	</body>
+
+</html>

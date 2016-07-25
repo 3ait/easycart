@@ -1,0 +1,218 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+	cursor: default;
+}
+
+li {
+	list-style: none;
+}
+
+.containerAO {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.aMain {
+	width: 1050px;
+	height: 450px;
+	/*background: green;*/
+	margin: 0 75px;
+	position: relative;
+}
+
+.aSearch {
+	/*background: red;*/
+	height: 70px;
+	width: 900px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	cursor: pointer;
+}
+
+.aSearch input {
+	width: 300px;
+	height: 40px;
+	margin-right: 23px;
+	font-size: 18px;
+}
+
+.aSearch div {
+	width: 40px;
+	height: 40px;
+	background: #E7E7E7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.aLabel {
+	width: 900px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #F0C200;
+}
+
+.aLabelA {
+	height: 50px;
+	width: 75px;
+	line-height: 50px;
+	font-size: 12px;
+	text-align: center;
+	border-right: 1px solid #FFFFFF;
+}
+
+.aBtn {
+	width: 38px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	background: #E7E7E7;
+	border-radius: 5px;
+	font-size: 10px;
+	margin: 15px;
+	cursor: pointer;
+}
+
+.aDetail {
+	width: 1050px;
+	height: 50px;
+	/*background: red;*/
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.aList {
+	width: 900px;
+	height: 50px;
+	/*background: red;*/
+	background: #E7E7E7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.alBtn {
+	width: 40px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	background: #E7E7E7;
+	border-radius: 5px;
+	font-size: 10px;
+	margin: 9px;
+	cursor: pointer;
+}
+
+.aPage {
+	width: 900px;
+	height: 25px;
+	margin: 72px 0px;
+	/*background: red;*/
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	bottom: 5px;
+}
+
+.aPageA {
+	font-size: 12px;
+	width: 100px;
+	line-height: 25px;
+	background: #E7E7E7;
+	text-align: center;
+	margin: 0 5px;
+	cursor: pointer;
+}

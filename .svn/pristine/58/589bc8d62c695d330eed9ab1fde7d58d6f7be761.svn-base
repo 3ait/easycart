@@ -1,0 +1,189 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+body {
+	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+}
+
+li {
+	list-style: none;
+}
+
+.containerAL {
+	width: 1200px;
+	height: 700px;
+	/*background: gray;*/
+	margin: 0 auto;
+}
+
+.alHeader {
+	height: 245px;
+	width: 100%;
+	/*background: red;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#logo2 {
+	height: 100px;
+	width: 188px;
+}
+
+#logo1 {
+	height: 85px;
+	width: 348px;
+}
+
+.alMian {
+	width: 600px;
+	height: 370px;
+	/*background: yellow;*/
+	margin: 0 auto;
+}
+
+.almBar {
+	font-size: 18px;
+	background: #f0c200;
+	height: 42px;
+	text-align: center;
+	line-height: 42px;
+}
+
+.almForm {
+	height: 290px;
+	background: #e7e7e7;
+}
+
+.almInfor {
+	/*background: red;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.almLabel {
+	font-size: 18px;
+}
+
+.almInput {
+	width: 250px;
+	height: 40px;
+	border: 1px solid #F0C200;
+	outline: none;
+	font-size: 18px;
+}
+
+.almR {
+	font-size: 18px;
+	/*background: green;*/
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/*#checkbox{width: 14px;height: 14px;border: 1px solid #F0C200;}*/
+
+
+/*#checkbox input{width: 14px;height: 14px;opacity: 0;}*/
+
+.almBtn {
+	width: 100px;
+	height: 40px;
+	background: #F0C200;
+	font-size: 18px;
+	margin: 15px auto;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+}

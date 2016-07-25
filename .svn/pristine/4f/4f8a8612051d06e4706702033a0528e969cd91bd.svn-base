@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-5 16:37:29 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.Order" table="order" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.easycart.db.entity.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="com.easycart.db.entity.User" fetch="select">
+            <column name="user_id" />
+        </many-to-one>
+        <property name="trackingNum" type="string">
+            <column name="tracking_num" length="128" />
+        </property>
+        <property name="payType" type="string">
+            <column name="pay_type" length="45" />
+        </property>
+        <property name="isPayed" type="java.lang.Integer">
+            <column name="is_payed" />
+        </property>
+        <property name="totalProductPrice" type="java.lang.Double">
+            <column name="total_product_price" precision="22" scale="0" />
+        </property>
+        <property name="totalFreight" type="java.lang.Double">
+            <column name="total_freight" precision="22" scale="0" />
+        </property>
+        <property name="customerMsg" type="string">
+            <column name="customer_msg" length="512" />
+        </property>
+        <property name="adminMsg" type="string">
+            <column name="admin_msg" length="512" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status">
+                <comment>
+                &#182;&#169;&#181;&#165;&#215;&#180;&#204;&#172;&#163;&#168;0&#163;&#186;&#207;&#194;&#181;&#165;&#163;&#172;1&#163;&#186;&#210;&#209;&#184;&#182;&#191;&#238;&#163;&#172;2&#163;&#186;&#210;&#209;&#183;&#162;&#187;&#245;&#163;&#172;3&#163;&#186;&#210;&#209;&#202;&#213;&#187;&#245;&#163;&#172;4&#163;&#186;&#210;&#209;&#205;&#234;&#179;&#201;
+                5&#163;&#186;&#210;&#209;&#200;&#161;&#207;&#251;&#163;&#169;</comment>
+            </column>
+        </property>
+        <property name="createTime" type="java.lang.Integer">
+            <column name="create_time" />
+        </property>
+        <property name="modifyTime" type="java.lang.Integer">
+            <column name="modify_time" />
+        </property>
+        <property name="fromName" type="string">
+            <column name="from_name" />
+        </property>
+        <property name="fromPhone" type="string">
+            <column name="from_phone" />
+        </property>
+        <property name="fromAddress" type="string">
+            <column name="from_address" />
+        </property>
+        <property name="toName" type="string">
+            <column name="to_name" />
+        </property>
+        <property name="toPhone" type="string">
+            <column name="to_phone" />
+        </property>
+        <property name="toAddress" type="string">
+            <column name="to_address" />
+        </property>
+        <set name="orderRecords" table="order_record" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="order_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.OrderRecord" />
+        </set>
+    </class>
+</hibernate-mapping>

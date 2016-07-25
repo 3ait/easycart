@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-5 16:37:29 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.easycart.db.entity.Product" table="product" catalog="easycart" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="menu" class="com.easycart.db.entity.Menu" fetch="select">
+            <column name="menu_id" />
+        </many-to-one>
+        <many-to-one name="productBrand" class="com.easycart.db.entity.ProductBrand" fetch="select">
+            <column name="product_brand_id" />
+        </many-to-one>
+        <property name="productLable" type="string">
+            <column name="product_lable" length="128" />
+        </property>
+        <property name="mpn" type="string">
+            <column name="mpn" length="128" />
+        </property>
+        <property name="stock" type="java.lang.Integer">
+            <column name="stock" />
+        </property>
+        <property name="productNameCn" type="string">
+            <column name="product_name_cn" length="128" />
+        </property>
+        <property name="productNameEn" type="string">
+            <column name="product_name_en" length="128" />
+        </property>
+        <property name="price1" type="double">
+            <column name="price1" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="price2" type="java.lang.Double">
+            <column name="price2" precision="22" scale="0" />
+        </property>
+        <property name="price3" type="java.lang.Double">
+            <column name="price3" precision="22" scale="0" />
+        </property>
+        <property name="price4" type="java.lang.Double">
+            <column name="price4" precision="22" scale="0" />
+        </property>
+        <property name="cost" type="java.lang.Double">
+            <column name="cost" precision="22" scale="0" />
+        </property>
+        <property name="status" type="java.lang.Byte">
+            <column name="status">
+                <comment>0 &#207;&#194;&#207;&#223; 1 &#201;&#207;&#207;&#223; 2&#200;&#177;&#187;&#245;</comment>
+            </column>
+        </property>
+        <property name="hot" type="java.lang.Byte">
+            <column name="hot">
+                <comment>&#200;&#200;&#207;&#250;&#178;&#250;&#198;&#183;</comment>
+            </column>
+        </property>
+        <property name="promote" type="java.lang.Byte">
+            <column name="promote">
+                <comment>&#180;&#217;&#207;&#250;&#178;&#250;&#198;&#183;</comment>
+            </column>
+        </property>
+        <property name="frontPage" type="java.lang.Byte">
+            <column name="front_page">
+                <comment>&#202;&#215;&#210;&#179;&#207;&#212;&#202;&#190;</comment>
+            </column>
+        </property>
+        <property name="recommend" type="java.lang.Byte">
+            <column name="recommend">
+                <comment>&#205;&#198;&#188;&#246;&#178;&#250;&#198;&#183;</comment>
+            </column>
+        </property>
+        <property name="soldNum" type="java.lang.Integer">
+            <column name="sold_num" />
+        </property>
+        <property name="createTime" type="java.lang.Integer">
+            <column name="create_time" />
+        </property>
+        <property name="modifyTime" type="java.lang.Integer">
+            <column name="modify_time" />
+        </property>
+        <property name="weight" type="java.lang.Double">
+            <column name="weight" precision="22" scale="0" />
+        </property>
+        <property name="memo" type="string">
+            <column name="memo" length="1024" />
+        </property>
+        <set name="replies" table="reply" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Reply" />
+        </set>
+        <set name="comments" table="comment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Comment" />
+        </set>
+        <set name="productImgs" table="product_img" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ProductImg" />
+        </set>
+        <set name="orderRecords" table="order_record" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.OrderRecord" />
+        </set>
+        <set name="carts" table="cart" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.Cart" />
+        </set>
+        <set name="productAttrs" table="product_attr" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="com.easycart.db.entity.ProductAttr" />
+        </set>
+    </class>
+</hibernate-mapping>

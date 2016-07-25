@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>checkout</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_checkout.css" th:href="@{/resources/web/css/page_checkout.css}"  />
+
+    <script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../resources/web/js/page_checkout.js"  th:src="@{/resources/web/js/page_checkout.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+    <script  th:inline="javascript" >
+    /*<![CDATA[*/
+	$(function() {
+		$("#latipayForm").css("display", "none");
+        $("#subtitle2").click(function() {
+	        $("#latipayForm").css("display", "block");
+	        $("#subtitle2").css("color", "#F0C103")
+	        $("#shortline2").css("background-color", "#F0C103");
+	        $("#subtitle1").css("color", "#535353");
+	        $("#bank_info").css("display", "none");
+	        $("#shortline1").css("background-color", "#e6e6e6");
+	        
+	        currencyChange();
+    	});
+        
+        $("#subtitle1").click(function() {
+            $("#latipayForm").css("display", "none");
+            $("#subtitle2").css("color", "#535353")
+            $("#shortline2").css("background-color", "#e6e6e6");
+            $("#subtitle1").css("color", "#F0C103");
+            $("#bank_info").css("display", "block");
+            $("#shortline1").css("background-color", "#F0C103");
+
+        });
+       
+	});
+	    /**
+	    
+	    **/
+	    function currencyChange(){
+	    	$.ajax({
+	    		url:[[@{/cart/ajax/latipay/}]]+$("#originOrderId").val()+ "/" +$("#currency").val(),
+	    		method:"get",
+	    		data:{
+	    		}
+	    	}).done(function(ret){
+	    		$("#amount").val(ret.amount);;
+	    		$("#itemName").val(ret.itemName);;
+	    		$("#orderId").val(ret.orderId);;
+	    		$("#version").val(ret.version);;
+	    		$("#merchantCode").val(ret.merchantCode);;
+	    		$("#frontUrl").val(ret.frontUrl);;
+	    		$("#quantity").val(ret.quantity);;
+	    		$("#md5info").val(ret.md5info);;
+	    	});
+	    }
+	
+	    /**
+	     * 支付检查
+	     */
+	    function check(){
+	    	if($("#currency").val()==""){
+	    		$("#currency").focuson();
+	    		return false;
+	    	}
+	    }
+
+
+    /*]]>*/
+    </script>
+</head>
+
+<body>
+<!-- 引入title -->
+<div th:include="/web/header :: hearderFragement"></div>
+
+	<div id="container">
+	    <h2 class="title">收銀台</h2>
+	    <div class="line"></div>
+	    <div class="c_info">
+	        <span class="c_text">應付總額:</span>
+	        <span class="c_amount" th:text="|$ ${confirmView.totalFreight + confirmView.totalProductPrice} NZD|">NZ$13.99</span>
+	    </div>
+	
+	    <div class="content">
+	    	<input type="hidden" id="originOrderId" th:value="${orderId}"></input>
+	        <div id="transfer">
+	            <h3 id="subtitle1">線下轉帳</h3>
+	            <div id="shortline1"></div>
+	            <div id="bank_info">
+	            	账户名称<span th:text="${companyInfo.accountName}"></span><br />
+	            	帳號:<span th:text="${companyInfo.accountNumber}"></span>
+	            </div>
+	        </div>
+	        <div id="online">
+	            <h3 id="subtitle2">在线支付</h3>
+	            <div id="shortline2"></div>
+	            <!-- 
+	            
+	            <form id="latipayForm" action="https://merchant.latipay.co.nz/api/show.action" method="POST" onsubmit="return check();" target="_blank">
+	            
+					订单号：<input type="text" id="orderId" name="orderId"   readonly="readonly"/><br />
+					总金额：<input type="text" id="amount" name="amount" readonly="readonly"/> <br />
+					
+					<input type="hidden" id="itemName" name="itemName"  readonly="readonly"/><br />
+					<input type="hidden" id="currency" name="currency"  value="NZD" /><br />
+					<input type="hidden" id="version" name="version"  /><br />
+		            <input type="hidden" id="merchantCode" name="merchantCode" /><br />
+					<input type="hidden" id="frontUrl" name="frontUrl"  /><br />
+					<input type="hidden" id="quantity" name="quantity"  /><br />
+					<input type="hidden" id="md5info" name="md5info" /><br />
+					
+					<input type="hidden" id="backUrl" name="backUrl" th:value="${latipayConfig.}"/>
+					<input type="hidden" name="idName" value="<%=idName%>"/>
+					<input type="hidden" name="idNumber" value="<%=idNumber%>"/>
+					<input type="hidden" name="email" value="<%=email%>"/>
+					<input type="hidden" name="phone" value="<%=phone%>"/>
+	            	<button type="submit" class="confirm_button">確認支付</button>
+	            </form>
+	             -->
+	        </div>
+	    </div>
+	</div>
+
+<!-- 引入footer -->
+<div th:include="/web/footer :: footerFragement"></div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+
+	<body>
+		<div th:fragment="product_list">
+			<div class="listRightVessel" >
+				<div class="lrvEach"  th:each="productView:${productViewList}" >
+					<div th:if="${productView.product.status==2}" style="position:absolute;margin-left:30px; z-index: 1;border:1px solid red;color: red;padding: 3px;">已售完</div>
+					<div class="lrveImg">
+						<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+							<img src="#" th:src="|@{/}${productView.defaultImg.href}|" th:alt="${productView.product.productNameEn}" />
+						</a>
+					</div>
+					<div class="lrveDetail"><a th:text="${productView.product.productNameCn}" th:href="|@{/product/}${productView.product.id}|">产品名称</a></div>
+					<div class="lrvePrice" >
+						<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${productView.product.price1}|" ></span> 
+						<span th:if="${customer!=null}" th:text="|NZ$:${productView.discountPrice}|" ></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

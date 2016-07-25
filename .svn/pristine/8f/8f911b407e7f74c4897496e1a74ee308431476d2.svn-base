@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_aboutus.css" th:href="@{/resources/web/css/page_aboutus.css}" />
+
+	</head>
+
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
+		<div id="about_container">
+			<div class="brand_pic"><img src="../resources/web/img/brand/brand.png" th:src="@{/resources/web/img/brand/brand.png}" /></div>
+			<div class="line_about"></div>
+			<div class="brand_content">
+				<p>运费细则 :我们会根据海关的要求有时侯需要分拆你的定 单,请务必根据定单签收. 如果海关通知需要上传身份证复印件,请配合。</p>
+				<p>破损赔偿条例</p>
+				<p>在长途运输中货物有时难免发生破损，特别是蜂蜜,奶粉等易 破损物品，在破损情况下，为了帮您争取到最大利益，请务必做到以下3点：
+				</p>
+				<p>1 一定要收件人本人签收（提醒收件人不要因为怕麻烦而让 门卫，保安，朋友等代收）。
+				</p>
+				<p>2 一定要当场验货，先验货后签收，如果快递员拒绝验 货，请先签收并且将包裹破损物件照相发至我们邮箱。
+				</p>
+				<p>3 验货后发现有破损，当面和快递员核实，并且让快递员在 底单上写明情况。收件人务必要保留此底单。
+				</p>
+				<p> 以上3点非常重要，如遵守此条例发现货物破损，10个工作 日内将能得到全额赔偿。否则快递公司将拒绝受理赔偿。
+				</p>
+			</div>
+		</div>
+
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
+	</body>
+
+</html>

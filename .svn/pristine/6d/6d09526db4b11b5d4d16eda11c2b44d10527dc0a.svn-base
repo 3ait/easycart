@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+        <meta charset="UTF-8" />
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+        <link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+        <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_product.css" th:href="@{/resources/web/css/page_product.css}"  />
+        <script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+        <script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+        <script th:inline="javascript">
+           	/*<![CDATA[*/
+            $(document).ready(function () {
+                $(".detail_quantity a").click(function () {
+                    var count = $(this).attr("data");
+                    $("#itemAmount").val(function () {
+                        var value = $(this).val();
+                        count == "-" ? value-- : value++;
+                        if (value > 1) {
+                            $(".detail_quantity .decrease").removeClass("no-decrease");
+                            return value;
+                        }else if (value = 1) {
+                            $(".item-amount .decrease").addClass("no-decrease");
+                            var value = 1;
+                            return value;
+                        }
+                    })
+                });
+                
+                
+            })
+            function showBigImg(imgSrc){
+            	
+            	var bigImg = document.getElementById("bigImg");
+            	$("#bigImg").attr("src",[[@{/}]]+imgSrc);
+            	//$("#bigImg").attr("src",[[@{/}]]+imgSrc.replace('list','detail'));
+            	/*
+            	bigImg.style.transition = "all .001s";
+            	bigImg.style.opacity = 0;
+            	window.setTimeout(function(){
+	            	$("#bigImg").attr("src",[[@{/}]]+imgSrc.replace('list','detail'));
+	            	bigImg.style.opacity = 1;
+            	}, 1);
+            	*/
+            	
+            }
+            
+            /**
+            *	添加到购物车
+            **/
+			function addToCart(obj,productId){
+                $.ajax({
+                    url:[[@{/}]]+ "cart/ajax/addToProduct",
+                    method:"post",
+                    data:{
+                        'productId':productId,
+                        'productNum':$("#itemAmount").val(),
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {  
+                    	//#3这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus); // paser error;
+                    },
+                
+                }).done(function(ret){
+                   /* $.each(ret,function(i,n){
+						alert(n.productNum);
+                	}); */
+                	$("#productInCartNum").html(ret);
+                	var x = $(obj).next();
+                    $(x).css("display","block");
+                    $(x).fadeOut(1000);
+                })
+				
+			}
+            /**
+            *	直接购买
+            **/
+			function goCart(productId){
+				window.location.href = [[@{/}]]+ "cart/?pid="+productId;
+			}
+           	/*]]>*/
+        </script>
+
+
+</head>
+
+<body>
+    <!-- 引入title -->
+    <div th:include="/web/header :: hearderFragement"></div>
+
+
+
+    <!--开始main-->
+    <div id="container">
+        <div class="nav">
+            <h2 class="nav_home"><a th:href="@{/}">首頁&nbsp;</a></h2>
+            &nbsp;>&nbsp;<h3 class="nav_change"><a th:href="|@{/list/}${menu1Nav.menu.nameEn}|" ><span style="color: #959595;" th:text="${menu1Nav.menu.nameCn}">一级菜单</span></a></h3>
+            <h3 class="nav_change">
+            	<a th:href="|@{/list/}${menu1Nav.menu.nameEn}?submenu=${menu2Nav.nameEn}|">
+            		<span style="color: #959595;" th:text="|&nbsp;&gt;&nbsp; ${menu2Nav.nameCn}|" th:if="${menu2Nav} != null">二级菜单</span>
+            	</a>
+            </h3>
+        </div>
+        <div class="product">
+            <div class="pic_mix">
+                <div class="big_group">
+                    <ul class="bigPic">
+                        <li>
+                            <img id="bigImg" th:src="@{/}+${productView.defaultImg.href}"  th:unless="${#strings.isEmpty(productView.defaultImg.href)}" class="big_pic" ></img>
+                        </li>
+                    </ul>
+                </div>
+                <div class="small_group">
+                    <ul class="smallGroup">
+                        <li class="smallPic" th:each="productImg:${productView.productImgList}" >
+                            <img th:src="|@{/}${productImg.href}|"  class="small_pic" th:onmouseover="|showBigImg('${productImg.href}')|" ></img>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="product_detail">
+                    <div class="detail_text">
+                        <p class="detail_title" th:text="${productView.product.productNameCn}">nameCn</p>
+                        <p class="detail_title"  th:text="${productView.product.productNameEn}">nameEn</p>
+                        
+						<p th:class="${customer!=null}?priceDeleted:detail_price" th:text="|原价：NZ$:${productView.product.price1}|" ></p> 
+						<p class="detail_price" th:if="${customer!=null}" th:text="|会员价：NZ$:${productView.discountPrice}|" ></p>
+
+                        <p class="detail_rmb">约合人民币:&nbsp;&nbsp;￥105.75</p>
+                        <p class="detail_cur">当前汇率:&nbsp;&nbsp;1新西兰元&nbsp;=&nbsp;4.50人民币</p>
+                    </div>
+                    <div class="effect">
+                        <p class="others"><span th:text="${productView.product.productLable}">produtLable</span></p>
+                        <p class="others">商品编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${productView.product.id}">brandNameCn</span></p>
+                        <!-- 
+                        <p class="others">品牌:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${productView.product.productBrand.brandNameCn}">brandNameCn</span></p>
+                         -->
+                        <p class="others" >商品重量:&nbsp;&nbsp;&nbsp;<span th:text="|${productView.product.weight}千克|">270.00克</span></p>
+                        <p class="others" >条型码:&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${productView.product.mpn}">mpn</span></p>
+                    </div>
+                    <div class="amount">
+                        <span class="detail_number">数量:&nbsp;</span>
+                        <div class="detail_quantity">
+                            <a  onclick="return false;" class="decrease no-decrease" data="-">-</a>
+                         	<input type="text" value="1" readonly="readonly" id="itemAmount" class="text-amount"></input>
+                            <a onclick="return false;" class="increase" data="+">+</a>
+                        </div>
+                        <span class="detail_stock"  th:text="|&nbsp;库存:(${productView.product.stock})|">(7)</span>
+                    </div>
+                    
+                    <div class="detail_submit">
+                        <button type="submit" class="cart_button" th:onclick="|addToCart(this,${productView.product.id})|" >加入購物車</button>
+                        <img th:src="@{/resources/web/img/icon/cart.png}" style="display: none;" alt=""/>
+                        <button type="button" class="order_button" th:onclick="|goCart(${productView.product.id})|" >立即購買</button>
+                    </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bigDetail">
+                <h2 class="subTitle">商品詳情</h2>
+                <div class="shortline"></div>
+                <div class="line"></div>
+                <div class="pic_ori" th:each="productImg:${productView.descImgs}">
+                    <img class="oriPic" th:src="@{/}+${productImg.href}" alt="" />
+                    <br/>
+                    <p th:text="${productImg.description}"></p>
+                </div>
+            </div>
+            
+            <div class="recommend" >
+                <h2 class="r_subTitle">推薦商品</h2>
+                <div class="r_line"></div>
+                <div class="r_detail" th:each="recommendProductView:${recommendProductViewList}">
+                    <div class="r_pic">
+                        <a target="_blank" th:href="|@{/product/}${recommendProductView.product.id}|">
+                        	<img th:src="@{/}+${recommendProductView.defaultImg.href}" alt="alt" class="r_small" />
+                       	</a>
+                    </div>
+                    <div class="r_text">
+                        <div class="r_title" th:text="${recommendProductView.product.productNameCn}">产品名称</div>
+                        <div class="r_price" >
+							<div th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${recommendProductView.product.price1}|" ></div> 
+							<div th:if="${customer!=null}" th:text="|NZ$:${recommendProductView.discountPrice}|" ></div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 引入title -->
+    <div th:include="/web/footer :: footerFragement"></div>
+</body>
+</html>

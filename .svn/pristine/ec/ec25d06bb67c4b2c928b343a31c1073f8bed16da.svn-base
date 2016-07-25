@@ -1,0 +1,104 @@
+package com.easycart.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.easycart.controller.cart.CartController;
+import com.easycart.controller.index.logic.IndexLogic;
+import com.easycart.db.entity.Cart;
+import com.easycart.db.entity.Product;
+import com.easycart.db.entity.User;
+
+@Controller
+public abstract class BaseController {
+
+	public static final String SESSION_USER = "user";
+	public static final String SESSION_CUSTOMER = "sessionCustomer";
+	public static final String SESSION_CART = "sessionCart";
+	public static final String ADMIN_CATEGORY_LIGHT = "categoryLight";
+	
+	private static Logger logger = LogManager.getLogger(CartController.class);
+	
+	@Autowired
+	IndexLogic indexLogic;
+	
+	/**
+	 * 
+	 * 设置激活菜单选项
+	 * @param String viewName
+	 * @param byte menuIndex 1:订单查询 2：生成订单
+	 */
+	public ModelAndView getModelAndView(String viewName,byte menuIndex){
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		modelAndView.addObject("menuIndex", menuIndex);
+		return modelAndView;
+	}
+	
+	public User getSessionUser(HttpServletRequest request){
+		return (User) request.getSession().getAttribute(SESSION_USER);
+	}
+	
+	/**
+	 * 添加一个产品到session,返回全部产品
+	 * @param productId
+	 * @param productNum
+	 * @param request List<Cart> 
+	 * @return
+	 */
+	
+	public List<Cart> getAllProductFromSession(int productId,int productNum, HttpServletRequest request){
+		logger.info("addProductToSession");
+		
+		List<Cart> cartList = (List<Cart>) request.getSession().getAttribute(SESSION_CART);
+		
+		Product product = indexLogic.getProductById2(productId);
+		if(cartList!=null){
+			List<Cart> cList = cartList.stream().filter(c -> c.getProduct().getId()==productId).collect(Collectors.toList());
+			if(cList.size()==1){
+				cList.get(0).setProductNum(cList.get(0).getProductNum()+productNum);
+			}else{
+				if(product!=null){
+					Cart cart = new Cart();
+					cart.setProduct(product);
+					cart.setProductNum(productNum);
+					cartList.add(cart);
+				}
+			}
+		}else{
+			cartList = new ArrayList<>();
+			if(product!=null){
+				Cart cart = new Cart();
+				cart.setProduct(product);
+				cart.setProductNum(productNum);
+				cartList = new ArrayList<>();
+				cartList.add(cart);
+			}
+		}
+		request.getSession().setAttribute(SESSION_CART, cartList);
+		return cartList;
+	}
+	/**
+	 * 获取购物车产品数量
+	 * @return
+	 */
+	public int getCartNum(List<Cart> cartList){
+		return  cartList.stream().map(Cart::getProductNum).reduce(0, (num1,num2)->(num1+num2));
+	}
+	
+	/**
+	 * 获取购物车产品总价格
+	 * @return
+	 */
+	public double getCartPrice(List<Cart> cartList){
+		return  cartList.stream().map(cart -> cart.getProduct().getPrice1()*cart.getProductNum()).reduce(0D, (num1,num2)->(num1+num2));
+	}
+}

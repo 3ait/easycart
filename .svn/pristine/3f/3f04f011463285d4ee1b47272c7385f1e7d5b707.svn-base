@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Confirm</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_confirm.css" th:href="@{/resources/web/css/page_confirm.css}"  />
+
+    <script src="../../resources/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../resources/web/js/page_confirm.js"  th:src="@{/resources/web/js/page_confirm.js}" type="text/javascript" charset="utf-8"></script>
+	
+    <script th:inline="javascript">
+    	/*<![CDATA[*/
+        $(document).ready(function () {
+        	$(".r_info").click();
+        	$(".s_info").click();
+        });
+		function returnCart(){
+			window.location.href = [[@{/cart/}]];
+		}
+		/**
+		**/
+		function checkForm(){
+			if($("#fromName").val()==""){
+				$("#fromName").prev().css("color","red");
+				$("#fromName").click();
+				return false;
+			}
+			var reg = new RegExp("^[0-9]+$");
+			if($("#fromPhone").val()=="" || !reg.test($("#fromPhone").val())){
+				$("#fromPhone").prev().css("color","red");
+				$("#fromPhone").focus();
+				return false;
+			}
+			if($("#fromAddress").val()==""){
+				$("#fromAddress").prev().css("color","red");
+				$("#fromAddress").focus();
+				return false;
+			}
+			if($("#toName").val()==""){
+				$("#toName").prev().css("color","red");
+				$("#toName").focus();
+				return false;
+			}
+			if($("#toPhone").val()=="" || !reg.test($("#toPhone").val())){
+				$("#toPhone").prev().css("color","red");
+				$("#toPhone").focus();
+				return false;
+			}
+			if($("#toAddress").val()==""){
+				$("#toAddress").prev().css("color","red");
+				$("#toAddress").focus();
+				return false;
+			}
+		}
+		/**
+		保存发货人地址
+		**/
+		function saveFrom(){
+			if($("#fromName").val()==""){
+				$("#fromName").prev().css("color","red")
+				return false;
+			}
+			if($("#fromPhone").val()==""){
+				$("#fromPhone").prev().css("color","red")
+				return false;
+			}
+			if($("#fromAddress").val()==""){
+				$("#fromAddress").prev().css("color","red")
+				return false;
+			}
+			$.ajax({
+				url:[[@{/cart/ajax/save/from}]],
+				method:"post",
+				data:{
+					"fromName":$("#fromName").val(),
+					"fromPhone":$("#fromPhone").val(),
+					"fromAddress":$("#fromAddress").val(),
+				}
+			}).done(function(ret){
+				if(ret=="success"){
+					window.location.reload(true);
+				}else{
+					alert("登陆后才能保存地址。");
+				}
+			});
+		}
+		
+		/**
+		删除发货人地址
+		**/
+		function delteFromAddress(fromAddressId){
+			if(confirm("确定删除？")){
+				$.ajax({
+					url:[[@{/cart/ajax/delete/from/}]]+fromAddressId,
+					method:"get",
+					data:{
+					}
+				}).done(function(ret){
+					if(ret="success"){
+						window.location.reload(true);
+					}else{
+						alert("删除失败。");
+					}
+				});
+			}
+		}
+		
+		/**
+		保存收货人地址
+		**/
+		function saveTo(){
+			if($("#toName").val()==""){
+				$("#toName").prev().css("color","red")
+				return false;
+			}
+			if($("#toPhone").val()==""){
+				$("#toPhone").prev().css("color","red")
+				return false;
+			}
+			if($("#toAddress").val()==""){
+				$("#toAddress").prev().css("color","red")
+				return false;
+			}
+			$.ajax({
+				url:[[@{/cart/ajax/save/to}]],
+				method:"post",
+				data:{
+					"toName":$("#toName").val(),
+					"toPhone":$("#toPhone").val(),
+					"toAddress":$("#toAddress").val(),
+				}
+			}).done(function(ret){
+				if(ret=="success"){
+					window.location.reload(true);
+				}else{
+					alert("登陆后才能保存地址。");
+				}
+			});
+		}
+		
+		/**
+		删除收货人地址
+		**/
+		function delteToAddress(toAddressId){
+			if(confirm("确定删除？")){
+				$.ajax({
+					url:[[@{/cart/ajax/delete/to/}]]+toAddressId,
+					method:"get",
+					data:{
+					}
+				}).done(function(ret){
+					if(ret="success"){
+						window.location.reload(true);
+					}else{
+						alert("删除失败。");
+					}
+				});
+			}
+		}
+		/**
+		发货人切换地址
+		**/
+		function changeFromForm(fromAddressId){
+			$(".s_info").click();
+			$("#fromName").val($("#fromName_"+fromAddressId).html());
+			$("#fromPhone").val($("#fromPhone_"+fromAddressId).html());
+			$("#fromAddress").val($("#fromAddress_"+fromAddressId).html());
+		}
+		/**
+		收货人切换地址
+		**/
+		function changeToForm(toAddressId){
+			$(".r_info").click();
+			$("#toName").val($("#toName_"+toAddressId).html());
+			$("#toPhone").val($("#toPhone_"+toAddressId).html());
+			$("#toAddress").val($("#toAddress_"+toAddressId).html());
+		}
+		
+		/*]]>*/
+    </script>
+</head>
+<body>
+	<!-- 引入title -->
+	 <div th:include="/web/header :: hearderFragement"></div>
+	
+	 <form th:action="@{/cart/confirm/submit/}" th:object="${confirmView}" method="post" onsubmit="return checkForm()">
+	    <div id="container">
+	        <div id="product">
+	            <div class="title">
+	                <h2 class="cateTitle">確認商品訂單</h2>
+	            </div>
+	            <div class="subtitle">
+	                <span style="width:400px;text-align: center;">商品信息</span>
+	                <span style="flex:1;text-align: center;">單價($NZD)</span>
+	                <span style="flex:1;text-align: center;">數量</span>
+	                <span style="flex:1;text-align: center;">重量</span>
+	                <span style="flex:1;text-align: center;">金額(NZ$)</span>
+	            </div>
+	            <div class="detail" th:each="productView:${productViewList}">
+	                <div class="img_div">
+	                	<div class="img_detail">
+		                	<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
+		                    	<img width="122px;" src="img/img130.png" th:src="@{/}+${productView.defaultImg.href}" />
+		                    </a>
+	                	</div>
+	                	<a style="text-align: center;width: 200px;" target="_blank" th:href="|@{/product/}${productView.product.id}|">
+		               	 <span  th:text="${productView.product.productNameCn}">产品名称</span>
+		                </a>
+	                </div>
+	                
+	                <div style="flex:1;text-align: center;color:red;" >
+						<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${productView.product.price1}|" ></span> 
+						<span th:if="${customer!=null}" th:text="|NZ$:${productView.discountPrice}|" ></span>
+					</div>
+	                
+	                <span style="flex:1;text-align: center;"  th:text="${productView.num}">數量</span>
+	                <span style="flex:1;text-align: center;" th:text="|${productView.product.weight}KG * ${productView.num}|">重量</span>
+	                <span style="flex:1;text-align: center;"  th:text="${#numbers.formatDecimal(productView.discountPrice*productView.num, 1, 'DEFAULT', 2, 'DEFAULT')}">金額(NZ$)</span>
+	            </div>
+	           
+	            <div class="others">
+	                <div class="freight">
+	                    <div class="standard">
+	                        <h3 class="freight_standard">運費標準</h3><br/>
+	                        <div class="shortline"></div><br/>
+	                        <div class="wool_freight" th:each="menuView:${menuViewList}" th:text="|${menuView.menu.nameCn}:$ ${menuView.menu.unitePrice} NZD/KG  包裝重量：${menuView.menu.boxWeight}KG|">
+	                        		
+	                        </div>
+	                        <br/>
+	                    </div>
+	                    <div class="calculate">
+	                        <h3 class="freight_calculate">運費計算</h3><br/>
+	                        <div class="shortline"></div><br/>
+	                        <div class="freight_formula">運費&nbsp;＝&nbsp;(商品重量&nbsp;*&nbsp;數量&nbsp;+&nbsp;包裝重量)&nbsp;*&nbsp;運費單價</div>
+	                        <div class="additional">不足1kg按1kg計算,&nbsp;超過1kg,&nbsp;按照实际重量。</div>
+	                        
+	                    </div>
+	                </div>
+	                <div class="notes">
+	                    <textarea class="input_notes" rows="4" cols="50" maxlength="200" placeholder="&nbsp;(請輸入100字以內的留言)&nbsp;" th:field="*{customerMessage}">
+	                    </textarea>
+	                    <input type="submit" class="submit_notes" value="備註"/>
+	                </div>
+	            </div>
+	        </div>
+	
+	
+	        <div id="address">
+	            <div class="title">
+	                <h2 class="cateTitle">確認收發商品地址</h2>
+	            </div>
+	            <div class="addMix">
+	                <div class="send">
+	                    <div class="send_first">
+	                        <h3 class="send_title">發貨人地址</h3>
+	                        <div>
+	                               <div class="addDefault">
+		                                  <input type="radio" name="fromRadio" checked="checked" value="default" id="add_default"  /><label for="add_default">默認店鋪地址</label>
+	                               </div>
+	                               <div class="addEdit" th:each="fromAddress:${fromAddressList}">
+	                                   <input  type="radio" name="fromRadio" value="default" id="add_new"   th:onclick="|changeFromForm(${fromAddress.id})|"/>
+	                              	   <label th:id="|fromName_${fromAddress.id}|" th:text="${fromAddress.fromName}" >fromName</label><br/>
+	                               		<label th:id="|fromPhone_${fromAddress.id}|" th:text="${fromAddress.fromPhone}">from phone</label><br/>
+	                              		<label th:id="|fromAddress_${fromAddress.id}|" th:text="${fromAddress.fromAddress}">from Address</label>
+	                                    <label class="add_delete" th:onclick="|delteFromAddress(${fromAddress.id})|">删除</label>
+	                               </div>
+	                        </div>
+	                        <div class="longline"></div>
+	                        <div class="send_add">
+	                            <div class="sendPlus">+</div>
+	                            <h4 class="sendNew">創建新的發貨人地址111</h4>
+	                        </div>
+	                        <div class="send_newadd">
+	                            <div class="sendForm">
+	                                <div class="s_info">
+	                                    <div class="sInfo">發貨人姓名*</div><input type="text" class="sInput" th:field="*{fromName}"/>
+	                                </div>
+	                                <div class="s_info">
+	                                    <div class="sInfo">發貨人電話*</div><input type="text" class="sInput" th:field="*{fromPhone}"/>
+	                                </div>
+	                                <div class="s_info">
+	                                    <div class="sInfo">發貨人地址*</div><textarea  class="sInput" th:field="*{fromAddress}" ></textarea>
+	                                 </div>
+	                            </div>
+	                            <div class="s_saveblock">
+	                                <div class="s_save">
+	                                    <button type="button" class="send_button" onclick="saveFrom()">保存發貨人信息</button>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="receive">
+	                    <div class="receive_first">
+	                        <h3 class="receive_title">收貨人地址</h3>
+	                        <div >
+                                <div class="addrDefault" th:each="toAddress:${toAddressList}">
+                                    <input type="radio" name="add" checked="checked" value="default" id="add_rdefault" th:onclick="|changeToForm(${toAddress.id})|"/>
+                                    <label th:id="|toName_${toAddress.id}|" th:text="${toAddress.toName}">ToName</label><br/>
+                              		<label th:id="|toPhone_${toAddress.id}|" th:text="${toAddress.toPhone}">To phone</label><br/>
+                              		<label th:id="|toAddress_${toAddress.id}|" th:text="${toAddress.toAddress}">To Address</label>
+                                    <label class="add_fdelete" th:onclick="|delteToAddress(${toAddress.id})|">删除</label>
+                                </div>
+	                        </div>
+	                        <div class="longline"></div>
+	                        <div class="receive_add">
+	                            <div class="receivePlus">+</div>
+	                            <h4 class="receiveNew">創建新的收貨人地址</h4>
+	                        </div>
+	                        <div class="receive_newadd">
+	                            <div class="receiveForm">
+	                                <div class="r_info">
+	                                    <div class="rInfo">收貨人姓名*</div><input type="text" class="rInput" th:field="*{toName}"/>
+	                                </div>
+	                                <div class="r_info">
+	                                    <div class="rInfo">收貨人電話*</div><input type="text" class="rInput" th:field="*{toPhone}"/>
+	                                </div>
+	                                <div class="r_info">
+	                                    <div class="rInfo" >收貨人地址*</div><textarea class="rInput" th:field="*{toAddress}"  ></textarea>
+	                                </div>
+	                            </div>
+	                            <div class="r_saveblock">
+	                                <div class="r_save">
+	                                    <button type="button" class="receive_button" onclick="saveTo()">保存收貨人信息</button>
+	                                    <!-- 
+	                                    <button type="reset" class="receive_button">取消</button>
+	                                     -->
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	
+	        <div id="submit">
+	            <div class="ptotal">
+	                <ul class="total_text">
+	                    <li>
+	                    	<span>商品總額:</span>
+	                    </li>
+	                    <li>
+	                    	<span>運費:</span>
+	                    </li>
+	                    <li>
+	                    	<span>訂單總額:</span>
+	                    </li>
+	                </ul>
+	                <ul class="total_sum">
+	                    <li>
+	                    	<span th:text="|$ ${#numbers.formatDecimal((productTotalPrice),1,2)} NZD|">$23.50&nbsp;NZD</span>
+	                    </li>
+	                    <li>
+	                    	<span th:text="|$ ${#numbers.formatDecimal(weightTotalPrice,1,2)} NZD|">$23.50&nbsp;NZD</span>
+	                    </li>
+	                    <li>
+	                    	<span th:text="'$' + ${#numbers.formatDecimal(productTotalPrice + weightTotalPrice,1,2)} +' NZD'">$47.00&nbsp;NZD</span>
+	                    </li>
+	                </ul>
+	
+	            </div>
+	            <div class="line_3"></div>
+	            <div class="ptotal_amount">
+	                <div class="p_Amount">共計&nbsp;<span class="p_amount" th:text="${productInCartNum}">0</span>&nbsp;件商品,&nbsp;&nbsp;應付總額:</div>
+	                <div class="p_price" th:text="'$' + ${#numbers.formatDecimal((productTotalPrice + weightTotalPrice),0,2)} +' NZD'">NZ$289.55</div>
+	            </div>
+	            <div class="ptotal">
+		            <label style="color: red;" th:if="${customer==null}">重要提示：您尚未登陆，系统将自动创建用户名和密码均为发件人电话的账户，请牢记</label>
+            	</div>
+	            <div class="t_submit">
+	                <button type="button" class="cart_button" onclick="returnCart()">返回購物車</button>
+	                <button type="submit" class="order_button"  >提交訂單</button>
+	            </div>
+	            <div class="t_submit">
+		            
+            	</div>
+	        </div>
+	    </div>
+	    <input type="hidden" th:field="*{totalFreight}"></input>
+	    <input type="hidden" th:field="*{totalProductPrice}"></input>
+    </form>
+	<!-- 引入title -->
+	<div th:include="/web/footer :: footerFragement"></div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava{
+	options.encoding = 'UTF-8'
+}
+compileTestJava{
+	options.encoding = 'UTF-8'
+}
+
+version = '1.0'
+
+war {
+	webAppDirName = "WebContent"
+	baseName = 'easycart'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.9'
+    compile 'org.springframework:spring-test:4.2.0.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-test:1.2.8.RELEASE'
+	compile 'org.springframework.boot:spring-boot:1.2.8.RELEASE'
+	//compile 'org.springframework.boot:spring-boot-starter:1.2.8.RELEASE'  
+	//webdriver
+	//compile 'org.seleniumhq.selenium:selenium-java:2.47.2'
+	
+	 //
+    compile fileTree(dir:'lib',include:'*.jar')
+    
+    compile 'commons-collections:commons-collections:3.2'
+    compile 'commons-beanutils:commons-beanutils:1.6'
+    compile 'commons-lang:commons-lang:2.2'
+    compile 'commons-fileupload:commons-fileupload:1.3.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    
+
+	//DB
+    compile 'mysql:mysql-connector-java:5.1.6'
+    compile 'org.javassist:javassist:3.15.0-GA'
+    compile 'org.hibernate:hibernate-core:4.3.11.Final'
+    compile 'org.hibernate:hibernate-c3p0:4.3.11.Final'
+    compile 'com.mchange:c3p0:0.9.5'
+    compile 'org.hibernate:hibernate-validator:5.2.0.Final'
+    
+    
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    //compile 'org.apache.lucene:lucene-core:4.10.4'
+	//compile 'org.apache.lucene:lucene-queryparser:4.10.4'
+    //compile 'jstl:jstl:1.2'
+	
+	//spring
+	compile 'org.springframework:spring-context:4.1.0.RELEASE'
+	compile 'org.springframework:spring-webmvc:4.1.0.RELEASE'
+    compile 'org.springframework:spring-orm:4.1.0.RELEASE'
+    
+    //email
+	compile 'org.springframework:spring-context-support:4.1.0.RELEASE'
+	compile 'javax.mail:mail:1.5.0-b01'
+	
+    
+    //template
+    compile 'org.thymeleaf:thymeleaf:2.1.4.RELEASE'
+	compile 'org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE'
+
+	//log
+	compile 'org.apache.logging.log4j:log4j-core:2.4.1'
+	
+    //PDF
+    compile 'com.itextpdf:itextpdf:5.5.7'
+	compile 'com.itextpdf:itext-asian:5.2.0'
+	
+	//been to json
+	compile 'net.sf.json-lib:json-lib:2.4:jdk15'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.6.4'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
+	
+	//latipay
+	compile 'commons-codec:commons-codec:1.9'
+}
+
+
+task copy(type:Copy,dependsOn:["copyClass","copyLib"]){
+	into "WebContent/WEB-INF/classes"
+	from "build/resources/main"
+	from "build/classes/main"
+}
+
+task copyClass(type:Copy,dependsOn:["compileJava","processResources"]){
+	into "WebContent/WEB-INF/classes"
+	from "build/resources/main"
+	from "build/classes/main"
+}
+
+task copyLib(type:Copy){
+	into "WebContent/WEB-INF/lib"
+	from configurations.runtime
+	from "lib"
+}
+
+
+task deleteAll(type:Delete){
+	delete "WebContent/WEB-INF/lib"
+	delete "WebContent/WEB-INF/classes"
+}
+
+
+

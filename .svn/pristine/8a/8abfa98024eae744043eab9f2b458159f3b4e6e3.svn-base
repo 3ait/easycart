@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+			<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_menu.css" th:href="@{/resources/admin/css/admin_menu.css}"/>
+			<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+			<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+			<script src="../../resources/admin/js/admin_menu.js" th:src="@{/resources/admin/js/admin_menu.js}"></script>
+	</head>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		function delcategory(menuId){
+			if(confirm("confirm?")){
+				var url = [[@{/admin/category/level1/delete/}]] + menuId;
+				window.location.href = url;
+				
+			}
+		}
+		function checkform(){
+			if($("#new_nameCn").val()==""){
+				$("#new_nameCn").focus();
+				return false;
+			}
+			if($("#new_nameEn").val()==""){
+				$("#new_nameEn").focus();
+				return false;
+			}
+			if($("#new_position").val()==""){
+				$("#new_position").focus();
+				return false;
+			}
+			if($("#new_unitePrice").val()==""){
+				$("#new_unitePrice").focus();
+				return false;
+			}
+			if($("#new_boxWeight").val()==""){
+				$("#new_boxWeight").focus();
+				return false;
+			}
+			if($("#new_otherCharge").val()==""){
+				$("#new_otherCharge").focus();
+				return false;
+			}
+			
+		}
+		/*]]>*/	
+	</script>
+	<body>
+
+		<!-- 引入
+		title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<div class="aNav"  style="background: #FFFFFF;color:#F0C200;">一級分類</div>
+				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;"><div class="aNav">二級分類</div></a>
+				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
+			</aside>
+			<div style="width: 20px;"></div>
+			<section>
+				<div style="height: 20px;"></div>
+				<div class="tHeader">
+					<div class="tHeaderL">分類名稱（中）</div>
+					<div class="tHeaderL">分類名稱（英）</div>
+					<div class="tHeaderL">展示順序</div>
+					<div class="tHeaderS">运费單價</div>
+					<div class="tHeaderS">包裝盒重量</div>
+					<div class="tHeaderS">其他費用</div>
+				</div>
+				
+				<form th:action="@{/}+'/admin/category/level1/edit/save'" method="post" th:object="${categoryView}">
+					<div class="tContent" th:each="menuLevel1,stat : *{menuList}"  >
+						<input type="hidden" th:field="*{menuList[__${stat.index}__].id}" />
+						<input type="hidden" th:field="*{menuList[__${stat.index}__].level}" />
+						<input type="hidden" th:field="*{menuList[__${stat.index}__].fatherId}" />
+						
+						<div class="tHeaderL">
+							<input class="tContentL"  type="text" th:field="*{menuList[__${stat.index}__].nameCn}"  th:errorclass="fieldError" readonly="readonly" />
+						</div>
+						<div class="tHeaderL">                           
+							<input class="tContentL" type="text" th:field="*{menuList[__${stat.index}__].nameEn}"  readonly="readonly"/>
+						</div>
+						<div class="tHeaderL">
+							<input class="tContentL" type="text" th:field="*{menuList[__${stat.index}__].position}"  readonly="readonly"/>
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" th:field="*{menuList[__${stat.index}__].unitePrice}"  readonly="readonly"/>
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" th:field="*{menuList[__${stat.index}__].boxWeight}"  th:errorclass="fieldError"  readonly="readonly"/>
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" th:field="*{menuList[__${stat.index}__].otherCharge}"   readonly="readonly"/>
+						</div>
+						<input class="tBtnA" type="button" name="alter" value="修改" />
+						<input class="tBtn" type="submit" name="confirm" value="確認" />
+						<input class="tBtn" type="button" th:onclick="|delcategory('*{menuList[__${stat.index}__].id}')|" value="删除" />
+					</div>
+				</form>
+
+				<form th:action="@{/}+'admin/category/level1/add'" method="post" th:object="${menuForm}" onsubmit="checkform();" >
+						<input type="hidden" th:name="level" value="1" />
+						<input type="hidden" th:field="*{fatherId}"  value="0"/>
+					<div id="newFormC" class="tContent">
+						<div class="tHeaderL">
+							<input class="tContentL" type="text" id="new_nameCn" th:name="*{nameCn}"  placeholder="必填且不重复"  value="" />
+						</div>
+						<div class="tHeaderL">
+							<input class="tContentL" type="text" id="new_nameEn" th:name="*{nameEn}"  placeholder="必填且不重复"  value="" />
+						</div>
+						<div class="tHeaderL">
+							<input class="tContentL"  type="text" id="new_position" th:name="*{position}" value="" />
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" id="new_unitePrice" th:name="*{unitePrice}" placeholder="数值"  value="" />
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" id="new_boxWeight" th:name="*{boxWeight}" placeholder="数值"  value="" />
+						</div>
+						<div class="tHeaderS">
+							<input class="tContentS" type="text" id="new_otherCharge" th:name="*{otherCharge}" placeholder="数值"  value="" />
+						</div>
+						<input class="tBtn" type="submit" name="alter" value="保存" />
+						<input class="tBtn" type="reset" name="resiteBtn" value="重置" />
+					</div>
+				</form>
+
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+	<!-- 引入title -->
+	<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+	</body>
+
+</html>
