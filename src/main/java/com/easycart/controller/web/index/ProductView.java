@@ -1,0 +1,65 @@
+package com.easycart.controller.web.index;
+
+import java.util.List;
+
+import com.easycart.db.entity.Product;
+import com.easycart.db.entity.ProductImg;
+
+/**
+ * 
+ * @author yaoliang
+ *
+ */
+public class ProductView{
+	
+	private Product product;
+	//根据用户折扣计算出来
+	private Double discountPrice;
+	private ProductImg defaultImg;
+	private List<ProductImg> productImgList;
+	private List<ProductImg> descImgs;
+	
+	//购买产品数量
+	private int num;
+	
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public List<ProductImg> getProductImgList() {
+		return productImgList;
+	}
+	public void setProductImgList(List<ProductImg> productImgList) {
+		this.productImgList = productImgList;
+	}
+	public ProductImg getDefaultImg() {
+		return defaultImg;
+	}
+	public void setDefaultImg(ProductImg defaultImg) {
+		this.defaultImg = defaultImg;
+	}
+	public List<ProductImg> getDescImgs() {
+		return descImgs;
+	}
+	public void setDescImgs(List<ProductImg> descImgs) {
+		this.descImgs = descImgs;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public Double getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(Double discountPrice) {
+		this.discountPrice = discountPrice;
+	}
+	
+	
+
+	
+}

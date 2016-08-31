@@ -1,0 +1,198 @@
+package com.easycart.controller.web.index.logic;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.easycart.controller.BaseLogic;
+import com.easycart.controller.admin.product.SearchForm;
+import com.easycart.controller.web.index.MenuProduct;
+import com.easycart.controller.web.index.MenuView;
+import com.easycart.controller.web.index.ProductView;
+import com.easycart.db.dao.IMenuDao;
+import com.easycart.db.dao.IProductDao;
+import com.easycart.db.entity.Customer;
+import com.easycart.db.entity.Menu;
+import com.easycart.db.entity.Product;
+import com.easycart.utils.Page;
+
+@Component("indexLogic")
+public class IndexLogic extends BaseLogic{
+
+	@Autowired
+	IMenuDao menuDao;
+	
+	@Autowired
+	IProductDao productDao;
+	
+	/**
+	 * 获取title菜单选项
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<MenuView> getMenus(){
+		
+		List<Menu> menus = menuDao.getAllMenu();
+		
+		List<MenuView> menuViewList = new ArrayList<>();
+		List<Menu> menu2List = new ArrayList<>();
+		menus.forEach(menu -> {
+			if(menu.getLevel()==1){
+				MenuView menuView = new MenuView();
+				menuView.setMenu(menu);
+				menuViewList.add(menuView);
+			}else if(menu.getLevel()==2){
+				menu2List.add(menu);
+			}
+		});
+		
+		menuViewList.stream().forEach(menuView ->{
+			menuView.setSubMenuList(menu2List.stream().filter(subMenu -> subMenu.getFatherId().equals(menuView.getMenu().getId())).collect(Collectors.toList()));
+		});
+		
+		return menuViewList;
+	}
+	
+	/**
+	 * 获取热销产品
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getHotProduct(Page page,Customer customer){
+		return this.getProductViewList(productDao.getHotProduct(page),customer);
+	}
+	
+	/**
+	 * 获取推荐商品
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getRecomandProduct(Page page,Customer customer) {
+		return this.getProductViewList(productDao.getPromoteProduct(page),customer);
+	}
+	
+	/**
+	 * 获取促销产品
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getPromoteProduct(Page page,Customer customer){
+		
+		List<ProductView> list = this.getProductViewList(productDao.getPromoteProduct(page),customer);
+		return list;
+	}
+	
+	/**
+	 * 获取首页产品列表
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<MenuProduct> getFrontPageProductByMenu(List<MenuView> menuList, Page page,Customer customer) {
+		
+		List<MenuProduct> menuProductList = new ArrayList<>();
+		
+		menuList.stream().forEach(menu -> {
+			MenuProduct menuProduct = new MenuProduct();
+			menuProduct.setMenu(menu.getMenu());
+			menuProduct.setSubMenuList(menu.getSubMenuList());
+			menuProduct.setProductViewList(this.getProductViewList(productDao.getProductByMenu1Id(menu.getMenu().getId(), page),customer));
+			menuProductList.add(menuProduct);
+		});
+		
+		return menuProductList;
+	}
+	
+	/**
+	 * 根据一级菜单获取产品
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getProductByMenu1(int menuId,Page page,Customer customer) {
+		return this.getProductViewList(productDao.getProductByMenu1Id(menuId, page),customer);
+	}
+	
+	/**
+	 * 根据一级菜单，二级菜单,品牌获取产品
+	 * @param menu1Id
+	 * @param menu2Id
+	 * @param brandId
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getProduct(SearchForm searchForm, Page page,Customer customer) {
+		
+		return this.getProductViewList(productDao.getProdcut(searchForm, page),customer);
+	}
+	
+	
+	/**
+	 * 获取产品明细
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public ProductView  getProductById(int productId,Customer customer) {
+		return this.getProductView(productDao.getById(productId),customer);
+	}
+	
+	/**
+	 * 获取产品信息
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public Product  getProductById2(int productId) {
+		return productDao.getById(productId);
+	}
+	
+	/**
+	 * 根据二级菜单获取产品
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getProductByMenu2(int menuId,Page page,Customer customer) {
+		return this.getProductViewList(productDao.getProductByMenu2Id(menuId, page),customer);
+	}
+	
+	/**
+	 * 根据brand获取产品
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView>  getProductsByBrandId(int brandId,Page page,Customer customer) {
+		return this.getProductViewList(productDao.getProductsByBrandId(brandId, page),customer);
+	}
+	
+	/**
+	 * 商品查询
+	 * @param q
+	 * @param page
+	 * @return
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public List<ProductView> searchProduct(SearchForm searchForm, Page page,Customer customer) {
+		return this.getProductViewList(productDao.getProdcut(searchForm, page),customer);
+	}
+	
+	/**
+	 * 获取产品数量
+	 * @param searchForm
+	 * @param page
+	 * @return
+	 */
+	public int getProductCount(SearchForm searchForm, Page page) {
+		return productDao.getProdcutCount(searchForm, page);
+	}
+
+}

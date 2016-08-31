@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			//密码是否修改
+			var flag = false;
+			function listEditConfirm(id){
+				if(!confirm("confirm？")){
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/companyinfo/user/edit/save}]],
+					method: "POST",
+					data: { 
+						"userId" : id,
+						"status" : $("#"+id+"_status").val(),
+						"password" : flag? $("#"+id+"_password").val():"",
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("confirm fail");
+				});
+			}
+		
+			function submitConfirm(){
+				if(!confirm("confirm？")){
+					return false;
+				}
+				
+			}
+			
+			function changePass(_self){
+				$(_self).attr("readonly",false);
+				$(_self).val("");
+				flag = true;
+			}
+			
+			function deleteUser(id){
+				if(!confirm("confirm？")){
+					return false;
+				}
+				$.ajax({
+					url: [[@{/admin/companyinfo/user/delete}]],
+					method: "POST",
+					data: { 
+						"userId" : id,
+						},
+				}).done(function(ret){
+					window.location.reload();
+				}).fail(function(ret){
+					alert("confirm fail");
+				});
+			}
+			
+			function userCheck(){
+				if($("#email").val()==""){
+					$("#email").focus();
+					return false;
+				}
+				if($("#password").val()==""){
+					$("#password").focus();
+					return false;
+				}
+				if($("#status").val()=="-1"){
+					$("#status").focus();
+					return false;
+				}
+			}
+			/*]]>*/	
+		</script>
+		<style type="text/css">
+			.companyInfo{
+				display:flex;
+				flex-direction:column;
+			}
+			.companyInfo div{
+				width: 50%;
+				padding:5px; 
+				display: flex;
+				align-items:center;
+			}
+			.companyInfo div input{
+				width: 80%;
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<a th:href="@{/admin/companyinfo/}"><div class="aNav">Company Info</div></a>
+				<a th:href="@{/admin/companyinfo/user/}"><div class="aNav" style="background: #FFFFFF;color:#427AB8;">Admin User</div></a>
+			</aside>
+			<div class="flex1"></div>
+			<section>
+				
+				<div class="apAll">
+					<table  >
+						<thead>
+							<tr >
+								<td >Email</td>
+								<td >password</td>
+								<td >status</td>
+								<td >operation</td>
+							</tr>
+						</thead>
+						<tbody valign="middle">
+						
+								<tr th:each="user : ${userList}">
+									<td >
+										<span th:text="${user.email}"></span>
+									</td>
+									<td>
+										<input type="password" th:id="|${user.id}_password|" th:onclick="|changePass(this)|" th:value="${user.password}" style="width: 400px;height: 30px;" readonly="readonly"/>
+									</td>
+									<td>
+											<select th:id="|${user.id}_status|"  style="width:100px;height: 30px;">
+												<th:block th:if="${userSession.status==2}">
+											    	<option value ="2" th:selected="${user.status==2}?1:0">SuperAdmin</option>
+												</th:block>
+											    <option value ="1" th:selected="${user.status==1}?1:0">Admin</option>
+											    <option value ="0" th:selected="${user.status==0}?1:0">invalid</option>
+											</select>
+									</td>
+									<td >
+										<input class="tBtn" type="button" th:onclick="|listEditConfirm('${user.id}')|" value="Confirm" /><br />
+										<th:block th:if="${userSession.status==2}">
+											<input class="tBtn" type="button"  th:onclick="|deleteUser('${user.id}')|"  value="Delete" /><br />
+										</th:block>
+									</td>
+								</tr>
+							<th:block th:if="${userSession.status==2}">
+								<tr>
+									<form th:action="@{/admin/companyinfo/user/add}" th:object="${user}" th:onsubmit="|return userCheck()|">
+										<td>
+											<input type="email" style="width: 400px;height: 30px;" th:name="email" placeholder="Email"></input>
+										</td>
+										<td>
+											<input style="width: 400px;height: 30px;" th:name="password" placeholder="Password"></input>
+										</td>
+										<td>
+											<select style="width:100px;height: 30px;" th:name="status" th:value="status">
+											    <option value ="2">SuperAdmin</option>
+											    <option value ="1">Admin</option>
+											    <option value ="0">invalid</option>
+											</select>
+										</td>
+										<td>
+											<input class="tBtn" type="submit"  value="add" /><br />
+										</td>
+									</form>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				<div style="height: 30px;"></div>
+			</section>
+
+			<div class="flex1"></div>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+</html>
