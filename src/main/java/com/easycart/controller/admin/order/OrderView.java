@@ -2,7 +2,7 @@ package com.easycart.controller.admin.order;
 
 import java.util.List;
 
-import com.easycart.controller.index.ProductView;
+import com.easycart.controller.web.index.ProductView;
 import com.easycart.db.entity.Order;
 import com.easycart.db.entity.OrderRecord;
 

@@ -147,11 +147,14 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 			DetachedCriteria criteria = DetachedCriteria.forClass(Product.class);
 			criteria.add(Restrictions.eq("promote", (byte)1));
 			
-			if(page.getOrder().equalsIgnoreCase("asc")){
-				criteria.addOrder(Order.asc(page.getOrderby()));
-			}else{
-				criteria.addOrder(Order.desc(page.getOrderby()));
-			}
+//			if(page.getOrder().equalsIgnoreCase("asc")){
+//				criteria.addOrder(Order.asc(page.getOrderby()));
+//			}else{
+//				criteria.addOrder(Order.desc(page.getOrderby()));
+//			}
+			
+			criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
+			
 			list = (List<Product>) hibernateTemplate.findByCriteria(criteria,page.getSt(),page.getRows());
 			list.forEach(p -> hibernateTemplate.initialize(p.getProductImgs()));
 		} catch (Exception e) {
@@ -185,7 +188,7 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 		List<Product> list = null;
 		try {
 			DetachedCriteria criteria = DetachedCriteria.forClass(Product.class);
-			
+			criteria.createAlias("menu", "menu");
 			Disjunction disjunction = Restrictions.disjunction();
 			if(StringHelper.isNotEmpty(searchForm.getQ())){
 				disjunction.add(Restrictions.like("productNameCn", searchForm.getQ(), MatchMode.ANYWHERE));
@@ -195,7 +198,12 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 			}
 			criteria.add(disjunction);
 			
-			
+			if(searchForm.getMenu1Id()!=-1){
+				criteria.add(Restrictions.eq("menu.fatherId", searchForm.getMenu1Id()));
+			}
+			if(searchForm.getMenu2Id()!=-1){
+				criteria.add(Restrictions.eq("menu.id", searchForm.getMenu2Id()));
+			}
 			if(searchForm.getStatus()!=-1){
 				criteria.add(Restrictions.eq("status", searchForm.getStatus()));
 			}
@@ -232,7 +240,7 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 		int ret = 0;
 		try {
 			DetachedCriteria criteria = DetachedCriteria.forClass(Product.class);
-			
+			criteria.createAlias("menu", "menu");
 			Disjunction disjunction = Restrictions.disjunction();
 			if(StringHelper.isNotEmpty(searchForm.getQ())){
 				disjunction.add(Restrictions.like("productNameCn", searchForm.getQ(), MatchMode.ANYWHERE));
@@ -241,7 +249,12 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 				disjunction.add(Restrictions.like("mpn", searchForm.getQ(), MatchMode.ANYWHERE));
 			}
 			criteria.add(disjunction);
-			
+			if(searchForm.getMenu1Id()!=-1){
+				criteria.add(Restrictions.eq("menu.fatherId", searchForm.getMenu1Id()));
+			}
+			if(searchForm.getMenu2Id()!=-1){
+				criteria.add(Restrictions.eq("menu.id", searchForm.getMenu2Id()));
+			}
 			
 			if(searchForm.getStatus()!=-1){
 				criteria.add(Restrictions.eq("status", searchForm.getStatus()));

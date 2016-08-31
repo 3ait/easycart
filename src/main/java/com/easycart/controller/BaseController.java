@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.easycart.controller.cart.CartController;
-import com.easycart.controller.index.logic.IndexLogic;
+import com.easycart.controller.web.index.logic.IndexLogic;
 import com.easycart.db.entity.Cart;
 import com.easycart.db.entity.Customer;
 import com.easycart.db.entity.Product;
@@ -29,7 +28,7 @@ public abstract class BaseController {
 	public static final String SESSION_CART = "sessionCart";
 	public static final String ADMIN_CATEGORY_LIGHT = "categoryLight";
 	
-	private static Logger logger = LogManager.getLogger(CartController.class);
+	private static Logger logger = LogManager.getLogger(BaseController.class);
 	
 	@Autowired
 	IndexLogic indexLogic;

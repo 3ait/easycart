@@ -79,7 +79,11 @@
 	             * confirm
 	            **/
 				function confirmOrder(){
-					window.location.href = [[@{/cart/confirm/}]];
+			 		if($("#toArea").val()==""){
+			 			$("#toArea").focus();
+			 			return;
+			 		}
+					window.location.href = [[@{/cart/confirm/}]] + $("#toArea").val();
 				}
 			 	
 			 	/**
@@ -160,11 +164,23 @@
 				</div>
 
 				<div class="cartBar">
-					<div class="block" style="flex:4;"></div>
+					<div class="block" style="width: 380px;padding-left: 20px;">
+						发送地区：
+						<select id="toArea" name="toArea" style="height: 25px;">
+	                		<option value="">--Option--</option>
+	                		<option value="china">China</option>
+	                		<option value="hongkong">Hongkong</option>
+	                		<option value="newzeland">New Zealand</option>
+	                	</select>
+					</div>
 					<div class="block" style="flex:73;"></div>
 					<div class="cWord">共&nbsp;<span style="color:#C81623;" id="productNum" th:text="|${productInCartNum}|">110</span> 件商品</div>
-					<div class="block" style="flex:14.3;"></div>
-					<div class="cWord" style="width: 380px;">合計： <span style="color:#C81623;" id="totalPrice" th:text="|$${productInCartPrice} NZD|">NZ$:0.00</span> (不含運費)</div>
+					<div class="block" style="flex:14.3;">
+						
+					</div>
+					<div class="cWord" style="width: 380px;">合計： <span style="color:#C81623;" id="totalPrice" th:text="|$${productInCartPrice} NZD|">NZ$:0.00</span> (不含運費)
+					</div>
+					
 					<div id="closeAccount" th:onclick="|confirmOrder()|">結算</div>
 					<div class="block" style="flex:7.1;"></div>
 				</div>

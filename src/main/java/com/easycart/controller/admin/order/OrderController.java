@@ -1,6 +1,11 @@
 package com.easycart.controller.admin.order;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +28,10 @@ import com.easycart.controller.admin.order.logic.OrderLogic;
 import com.easycart.db.entity.Order;
 import com.easycart.db.entity.User;
 import com.easycart.utils.Page;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 /**
  * order
@@ -112,6 +121,25 @@ public class OrderController extends BaseController{
 		
 		logger.debug("print");
 		orderLogic.createPDF(orderId, courierType, response.getOutputStream());
+		
+		response.getOutputStream().flush();
+	}
+	/**
+	 * 打印订单明细
+	 * @param orderId
+	 * @param courierType
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws DocumentException 
+	 */
+	@RequestMapping(value="print/detail/{orderId}",produces="application/pdf;")
+	public void printDetail(@PathVariable(value="orderId") Integer orderId,HttpServletRequest request,
+			HttpServletResponse response) throws IOException, DocumentException{
+		
+		logger.debug("printDetail");
+		
+		orderLogic.createOrderDetailPDF(orderId, response.getOutputStream());
 		
 		response.getOutputStream().flush();
 	}

@@ -15,7 +15,6 @@
 			if(confirm("confirm?")){
 				var url = [[@{/admin/category/level1/delete/}]] + menuId;
 				window.location.href = url;
-				
 			}
 		}
 		function checkform(){
@@ -49,19 +48,19 @@
 	</script>
 	<body>
 
-		<!-- 引入
-		title -->
+		<!-- 引入 title -->
 		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
 
 		<div id="apContainer">
 			<aside class="aside">
-				<div class="aNav"  style="background: #FFFFFF;color:#F0C200;">一級分類</div>
+				<a th:href="@{/admin/category/}" style="text-decoration: none;"><div class="aNav"  style="background: #FFFFFF;color:#F0C200;">一級分類</div></a>
 				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;"><div class="aNav">二級分類</div></a>
 				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
 			</aside>
 			<div style="width: 20px;"></div>
 			<section>
 				<div style="height: 20px;"></div>
+				
 				<div class="tHeader">
 					<div class="tHeaderL">分類名稱（中）</div>
 					<div class="tHeaderL">分類名稱（英）</div>
@@ -69,6 +68,8 @@
 					<div class="tHeaderS">运费單價</div>
 					<div class="tHeaderS">包裝盒重量</div>
 					<div class="tHeaderS">其他費用</div>
+					<div class="tHeaderL">香港运费</div>
+					<div class="tHeaderL">新西兰运费</div>
 				</div>
 				
 				<form th:action="@{/}+'/admin/category/level1/edit/save'" method="post" th:object="${categoryView}">
@@ -95,6 +96,14 @@
 						<div class="tHeaderS">
 							<input class="tContentS" type="text" th:field="*{menuList[__${stat.index}__].otherCharge}"   readonly="readonly"/>
 						</div>
+						
+						<div class="tHeaderL">
+							<input class="tHeaderL"  th:value="|${categoryView.menuList[__${stat.index}__].unitePrice} + 40|" readonly="readonly"></input>
+						</div>
+						<div class="tHeaderL">
+							<input class="tHeaderL"  th:value="|${categoryView.menuList[__${stat.index}__].unitePrice} + 5|" readonly="readonly"></input>
+						</div>
+						
 						<input class="tBtnA" type="button" name="alter" value="修改" />
 						<input class="tBtn" type="submit" name="confirm" value="確認" />
 						<input class="tBtn" type="button" th:onclick="|delcategory('*{menuList[__${stat.index}__].id}')|" value="删除" />

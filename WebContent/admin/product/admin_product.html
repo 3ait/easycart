@@ -71,6 +71,10 @@
 			function search(){
 				document.getElementById("searchForm").submit();
 			}
+			function men1Select(menu1Id){
+				$("#menu2div").load([[@{/admin/product/ajax/menu1/}]]+menu1Id,function(){});
+				search();
+			}
 			//上翻页
 			function prePage(){
 				if($("#hidden_pageNum").val()<=1){
@@ -130,6 +134,17 @@
 						<input type="text" th:field="*{q}" placeholder="產品名/條形碼" />
 						<div th:onclick="|search()|"><img src="../../resources/admin/img/icon/icon_rearch.png" alt="" th:src="@{/resources/admin/img/icon/icon_rearch.png}" /></div>
 						&nbsp;|&nbsp;
+						<select class="select_" th:onchange="|men1Select(this.value)|" th:name="menu1Id" id="menu1Id" style="width: 200px;">
+							<option value="-1">--Main Category--</option>
+							<option th:each="menu1 : ${menu1List}" th:value="${menu1.id}" th:text="${menu1.nameEn}" th:selected="${menu1.id==searchForm.menu1Id}?1:0">Main Category</option>
+						</select>
+						&nbsp;&nbsp;
+						<div id="menu2div" th:fragment="menu2_brand">
+							<select class="select_" th:name="menu2Id" style="width: 200px;" th:onchange="|search()|">
+								<option value="-1">--Sub Category--</option>
+								<option th:each="menu2 : ${menu2List}" th:value="${menu2.id}" th:text="${menu2.nameEn}" th:selected="${menu2.id==menu2Id}?1:0">Sub Category</option>
+							</select>
+						</div>
 						<input th:onclick="|search()|" type="radio" th:name="status" value="-1"  th:checked="${searchForm.status==-1}?1:0" style="width:20px;"/><label for="">&nbsp;全部</label>
 						<input th:onclick="|search()|" type="radio" th:name="status" value="0"  th:checked="${searchForm.status==0}?1:0" style="width:20px;" /><label for="">&nbsp;離線</label>
 						<input th:onclick="|search()|" type="radio" th:name="status" value="1"  th:checked="${searchForm.status==1}?1:0" style="width:20px;" /><label for="">&nbsp;在線</label>

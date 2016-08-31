@@ -7,12 +7,26 @@
 		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
 		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
 		<script src="../../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<!-- 插入编辑框 -->
+	    <link rel="Stylesheet" type="text/css" href="style/jHtmlArea.css" th:href="@{/resources/textarea/style/jHtmlArea.css}"/>
+	    <script type="text/javascript" src="scripts/jHtmlArea-0.8.js" th:src="@{/resources/textarea/scripts/jHtmlArea-0.8.js}"></script>
+	    <style type="text/css">
+	        /* body { background: #ccc;} */
+	        div.jHtmlArea .ToolBar ul li a.custom_disk_button 
+	        {
+	            background: url(images/disk.png) no-repeat;
+	            background-position: 0 0;
+	        }
+	        div.jHtmlArea { border: solid 1px #ccc; }
+	    </style>
+	    <!-- 插入编辑框 -->
+		
 		<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 			//密码是否修改
 			var flag = false;
 			function listEditConfirm(id){
-				if(!confirm("確認修改？")){
+				if(!confirm("确认修改？")){
 					return false;
 				}
 				$.ajax({
@@ -26,12 +40,12 @@
 				}).done(function(ret){
 					window.location.reload();
 				}).fail(function(ret){
-					alert("更新失败");
+					alert("confirm fail");
 				});
 			}
 		
 			function submitConfirm(){
-				if(!confirm("確認修改？")){
+				if(!confirm("confirm？")){
 					return false;
 				}
 				
@@ -68,14 +82,18 @@
 				display:flex;
 				flex-direction:column;
 			}
-			.companyInfo div{
+			.companyInfo .companyInfor_row{
 				width: 50%;
 				padding:5px; 
 				display: flex;
 				align-items:center;
 			}
+			.companyInfor_row{
+				display:flex;
+				justify-content:space-between;
+			}
 			.companyInfo div input{
-				width: 80%;
+				width: 500px;
 				height: 30px;
 			}
 		</style>
@@ -88,92 +106,111 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">企業信息</div>
+				<a th:href="@{/admin/companyinfo/}"><div class="aNav" style="background: #FFFFFF;color:#427AB8;">Company Info</div></a>
+				<a th:href="@{/admin/companyinfo/user/}"><div class="aNav" >Admin User</div></a>
 			</aside>
 			<div class="flex1"></div>
 			<section>
-				<form action="#" th:action="@{/admin/companyinfo/company/save}" onsubmit="submitConfirm()">
+				<form action="#" th:action="@{/admin/companyinfo/company/save}" onsubmit="submitConfirm()" th:object="${companyInfoView}" method="post" >
 					<div class="companyInfo">
-						<input type="hidden" th:field="*{companyInfoView.companyId}" />
-						<div>
-							<label>公司名称：</label><input type="text" th:field="*{companyInfoView.companyName}"/>
+						<input type="hidden" th:value="${companyInfoView.companyId}" th:name="companyId" />
+						<div class="companyInfor_row">
+							<label>Company Name:</label><input type="text" th:name="companyName" th:value="${companyInfoView.companyName}"/>
 						</div>
-						<div>
-							<label>公司電話：</label><input type="text" th:field="*{companyInfoView.companyPhone}"/>
+						<div class="companyInfor_row">
+							<label>Company Phone:</label><input type="text" th:name="companyPhone" th:value="${companyInfoView.companyPhone}"/>
 						</div>
-						<div>
-							<label>總店地址：</label><input type="text" th:field="*{companyInfoView.companyAddress}"/>
+						<div class="companyInfor_row">
+							<label>Account Name:</label><input type="text" th:name="accountName" th:value="${companyInfoView.accountName}"/>
 						</div>
-						<div>
-							<label>账户名称：</label><input type="text" th:field="*{companyInfoView.accountName}"/>
+						<div class="companyInfor_row">
+							<label>Account Number:</label><input type="text" th:name="accountNumber" th:value="${companyInfoView.accountNumber}"/>
 						</div>
-						<div>
-							<label>账户信息：</label><input type="text" th:field="*{companyInfoView.accountNumber}"/>
+						<div class="companyInfor_row">
+							<label>Keywords:</label><input type="text" th:name="keywords" th:value="${companyInfoView.keywords}"/>
 						</div>
-					</div>
-					<div style="padding-left: 42%;">
-					<br />
-						<input type="submit" th:value="提交"  ></input>
+						<div class="companyInfor_row">
+							<label>Mobile:</label><input type="text" th:name="mobile" th:value="${companyInfoView.mobile}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Company Address:</label><input type="text" th:name="companyAddress" th:value="${companyInfoView.companyAddress}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Email:</label><input type="text" th:name="email" th:value="${companyInfoView.email}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Email Password:</label><input type="password" th:name="emailPassword" th:value="${companyInfoView.emailPassword}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Email SMTP:</label><input type="text" th:name="emailSmtp"  th:value="${companyInfoView.emailSmtp}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Exchange Rate:</label><input type="text" th:name="exchangeRate"  th:value="${companyInfoView.exchangeRate}"/>
+						</div>
+						<div class="companyInfor_row">
+							<label>Description:</label>
+							<!-- 编辑框 -->
+							<div>
+							    <script type="text/javascript">    
+							
+							        $(function() {
+							
+							            $("#txtDefaultHtmlArea").htmlarea(); // Initialize jHtmlArea's with all default values
+							
+							            $("#txtCustomHtmlArea").htmlarea({
+							                // Override/Specify the Toolbar buttons to show
+							                toolbar: [
+							                    ["bold", "italic", "underline", "|", "forecolor"],
+							                    ["p", "h1", "h2", "h3", "h4", "h5", "h6"],
+							                    ["link", "unlink", "|", "image"],                    
+							                    [{
+							                        // This is how to add a completely custom Toolbar Button
+							                        css: "custom_disk_button",
+							                        text: "Save",
+							                        action: function(btn) {
+							                            // 'this' = jHtmlArea object
+							                            // 'btn' = jQuery object that represents the tag for the Toolbar Button
+							                            alert('SAVE!\n\n' + this.toHtmlString());
+							                        }
+							                    }]
+							                ],
+							
+							                // Override any of the toolbarText values - these are the Alt Text / Tooltips shown
+							                // when the user hovers the mouse over the Toolbar Buttons
+							                // Here are a couple translated to German, thanks to Google Translate.
+							                toolbarText: $.extend({}, jHtmlArea.defaultOptions.toolbarText, {
+							                        "bold": "fett",
+							                        "italic": "kursiv",
+							                        "underline": "unterstreichen"
+							                    }),
+							
+							                // Specify a specific CSS file to use for the Editor
+							                css: "style//jHtmlArea.Editor.css",
+							
+							                // Do something once the editor has finished loading
+							                loaded: function() {
+							                    //// 'this' is equal to the jHtmlArea object
+								                    //alert("jHtmlArea has loaded!");
+								                    //this.showHTMLView(); // show the HTML view once the editor has finished loading
+								                }
+								            });
+								        });
+								    </script>
+								    <textarea id="txtDefaultHtmlArea" th:name="description" th:utext="${companyInfoView.description}" style="width: 500px; height: 300px;" draggable="false">
+									</textarea>
+							   </div>
+							   <!-- 编辑框结束 -->
+							
+							
+						</div>
+						<div class="companyInfor_row">
+							<label></label><input style="width: 100px;" type="submit" th:value="提交"  ></input>
+						</div>
 					</div>
 				</form>
 				
 				
-				<br />
-				<div class="apAll">
-					<table  >
-						<thead>
-							<tr >
-								<td >登錄郵箱</td>
-								<td >密碼</td>
-								<td >狀態</td>
-								<td >操作</td>
-							</tr>
-						</thead>
-						<tbody valign="middle">
-						
-							<tr  th:each="user : ${companyInfoView.userList}" >
-								<td >
-									<span th:text="${user.email}"></span>
-								</td>
-								<td>
-									<input type="password" th:id="|${user.id}_password|" th:onclick="|changePass(this)|" th:value="${user.password}" style="width: 400px;height: 30px;" readonly="readonly"/>
-								</td>
-								<td>
-									<select th:id="|${user.id}_status|"  style="width:100px;height: 30px;">
-									    <option value ="-1" >用户狀態</option>
-									    <option value ="1" th:selected="${user.status==1}?1:0">使用中</option>
-									    <option value ="0" th:selected="${user.status==0}?1:0">不可用</option>
-									</select>
-								</td>
-								<td >
-									<input class="tBtn" type="button" th:onclick="|listEditConfirm('${user.id}')|" value="确认修改" /><br />
-									<input class="tBtn" type="button"  onclick="cancel()"  value="取消" /><br />
-								</td>
-							</tr>
-							<tr>
-								<form th:action="@{/admin/companyinfo/user/save}" th:object="${user}" th:onsubmit="|return userCheck()|">
-									<td>
-										<input type="email" style="width: 400px;height: 30px;" th:field="*{email}"></input>
-									</td>
-									<td>
-										<input style="width: 400px;height: 30px;" th:field="*{password}"></input>
-									</td>
-									<td>
-										<select style="width:100px;height: 30px;" th:field="*{status}">
-										    <option value ="-1">用户狀態</option>
-										    <option value ="1">使用中</option>
-										    <option value ="0">不可用</option>
-										</select>
-									</td>
-									<td>
-										<input class="tBtn" type="submit"  value="新增" /><br />
-									</td>
-								</form>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-<div style="height: 30px;"></div>
+				
 			</section>
 
 			<div class="flex1"></div>

@@ -54,5 +54,23 @@ public class UserDao extends HibernateTemplateDaoSupport<User> implements IUserD
 
 		return list;
 	}
+
+
+	@Override
+	public List<User> getUserList(User user) {
+		List<User> list = null;
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+			if(user.getStatus()==(byte)1){
+				criteria.add(Restrictions.eq("status", user.getStatus()));
+			}
+			list = (List<User>) hibernateTemplate.findByCriteria(criteria);
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+		return list;
+	}
 	
 }

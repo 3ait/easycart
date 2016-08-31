@@ -13,23 +13,31 @@ import com.easycart.controller.admin.order.OrderSearchForm;
 import com.easycart.controller.admin.order.OrderView;
 import com.easycart.db.dao.IOrderDao;
 import com.easycart.db.dao.IOrderRecordDao;
+import com.easycart.db.dao.impl.CustomerDao;
 import com.easycart.db.entity.Customer;
 import com.easycart.db.entity.Order;
 import com.easycart.db.entity.OrderRecord;
 import com.easycart.utils.DateHelper;
 import com.easycart.utils.Page;
+import com.mail.logic.RoyalDeerMailLogic;
 import com.print.Courier;
 import com.print.pdf.IPDF;
 import com.print.pdf.PdfCreaterFactory;
+import com.print.pdf.pdfTemplate.HtmlPDF;
 
 @Component("orderLogic")
 public class OrderLogic {
 
 	@Autowired
 	IOrderDao orderDao;
-	
 	@Autowired
 	IOrderRecordDao orderRecordDao;
+	@Autowired
+	HtmlPDF htmlPDF;
+	@Autowired
+	RoyalDeerMailLogic royalDeerMailLogic;
+	@Autowired
+	CustomerDao customerDao;
 	
 	/**
 	 * 获取订单列表
@@ -80,7 +88,7 @@ public class OrderLogic {
 	}
 	
 	/**
-	 * 生成PDF
+	 * 生成快递单PDF
 	 * @param pdfType FlywayPDF
 	 * @param os
 	 */
@@ -107,6 +115,18 @@ public class OrderLogic {
 		courierList.add(courier);
 		
 		pdf.pdfOutputStream(courierList, os);
+	}
+	
+	/**
+	 * 生成订单明细PDF
+	 * @param pdfType FlywayPDF
+	 * @param os
+	 */
+	@Transactional(rollbackOn=Exception.class)
+	public void createOrderDetailPDF(int orderId,OutputStream os){
+		Order order = orderDao.getById(orderId);
+		Customer customer = customerDao.getById(order.getCustomer().getId());
+		htmlPDF.pdfOutputStream(royalDeerMailLogic.mailContent(order,customer, null),os);
 	}
 	
 	/**

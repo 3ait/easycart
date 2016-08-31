@@ -26,20 +26,19 @@ public class QuickPayConf {
 
 	private final static String REMOTE_FRONT_END_IP = "http://202.82.58.122:5555";
 	private final static String REMOTE_BACK_END_IP = "http://202.82.58.122:5555";
-	private final static String LOCAL_FRONT_END_IP = "http://localhost:8080";
-	private final static String LOCAL_BACK_END_IP = "http://localhost:8080";
+	private final static String LOCAL_FRONT_END_IP = "http://royaldeer.co.nz";
+	private final static String LOCAL_BACK_END_IP = "http://royaldeer.co.nz";
 
 	/* 前台交易测试环境 */
-	// private final static String UPOP_BASE_URL = REMOTE_FRONT_END_IP +
-	// "/DPGW/MerchantSrv/";
+	// private final static String UPOP_BASE_URL = REMOTE_FRONT_END_IP + "/DPGW/MerchantSrv/";
 
 	/* 前台交易PM环境（准生产环境） */
 	// private final static String UPOP_BASE_URL =
 	// "https://www.epay.lxdns.com/UpopWeb/api/";
 
 	/* 前台交易生产环境 */
-	private final static String UPOP_BASE_URL = "https://unionpaysecure.com/api/";
-
+//	private final static String UPOP_BASE_URL = "https://unionpaysecure.com/api/";
+	private final static String UPOP_BASE_URL = "https://dopp.dynamicg.com" + "/DPGW/MerchantSrv/";
 	/* 后台交易测试环境 */
 	private final static String UPOP_BSPAY_BASE_URL = REMOTE_BACK_END_IP + "/DPGW/MerchantSrv/";
 
@@ -83,9 +82,10 @@ public class QuickPayConf {
 	// 商户名称
 	public final static String merName = "Ahura Consulting Ltd";
 
-	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "项目名/cart/unionpay/ret";
+//	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "/web/cart/unionpay/ret";
+	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "/web/cart/unionpay/ret";
 
-	public final static String merBackEndUrl = LOCAL_BACK_END_IP + "项目名/cart/unionpay/ret";
+	public final static String merBackEndUrl = LOCAL_BACK_END_IP + "/web/cart/unionpay/ret";
 
 	// 加密方式
 	public final static String signType = "MD5";

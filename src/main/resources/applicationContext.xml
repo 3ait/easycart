@@ -26,7 +26,7 @@
 	 -->  
 	<mvc:annotation-driven/>
    	<mvc:default-servlet-handler/>
-	<context:component-scan base-package="com.easycart"></context:component-scan>
+	<context:component-scan base-package="com"></context:component-scan>
 		
 	
     <!-- 数据库session  -->
@@ -61,7 +61,7 @@
 				<mvc:exclude-mapping path="/customer/register/save"/>
 				<mvc:exclude-mapping path="/customer/ajax/**"/>
 				<mvc:exclude-mapping path="/customer/retrieve"/>
-				<bean class="com.easycart.controller.customer.interceptor.CustomerInterceptor"/>
+				<bean class="com.easycart.controller.web.customer.interceptor.CustomerInterceptor"/>
 			</mvc:interceptor>
 	</mvc:interceptors>
 

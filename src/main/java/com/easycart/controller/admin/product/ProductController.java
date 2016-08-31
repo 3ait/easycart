@@ -46,7 +46,12 @@ public class ProductController extends BaseController{
 		
 		ModelAndView mv = new ModelAndView("admin/product/admin_product");
 		mv.addObject(ADMIN_CATEGORY_LIGHT, light);
+		
 		mv.addObject("searchForm", searchForm);
+		//获取一级菜单分类
+		mv.addObject("menu1List" ,productLogic.getMenu1());
+		mv.addObject("menu2List",productLogic.getMenu2ByFatherId(searchForm.getMenu1Id()));
+		mv.addObject("menu2Id",searchForm.getMenu2Id());
 		
 		if(br.hasFieldErrors()){
 			return mv;
@@ -207,6 +212,19 @@ public class ProductController extends BaseController{
 		}
 		
 		return ret;
+	}
+	
+	/**
+	 * 查询条件选择一级菜单
+	 * @return
+	 */
+	@RequestMapping("/ajax/menu1/{menu1Id}")
+	public ModelAndView formMenu1Select(@PathVariable(value="menu1Id") int menu1Id){
+		logger.debug("formMenu1Select");
+		ModelAndView model = new ModelAndView("admin/product/admin_product :: menu2_brand");
+		model.addObject("menu2List",productLogic.getMenu2ByFatherId(menu1Id));
+		model.addObject("menu2", -1);
+		return model;
 	}
 	
 	

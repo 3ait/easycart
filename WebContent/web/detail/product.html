@@ -129,9 +129,10 @@
                         <div th:if="${productView.product.status==2}" style="border:1px solid red;color: red;padding: 3px;">已售完</div><br/>
 						<p th:class="${customer!=null}?priceDeleted:detail_price" th:text="|原价：NZ$:${productView.product.price1}|" ></p> 
 						<p class="detail_price" th:if="${customer!=null}" th:text="|会员价：NZ$:${productView.discountPrice}|" ></p>
-
+						<!-- 
                         <p class="detail_rmb">约合人民币:&nbsp;&nbsp;￥105.75</p>
-                        <p class="detail_cur">当前汇率:&nbsp;&nbsp;1新西兰元&nbsp;=&nbsp;4.50人民币</p><br/>
+                        <p class="detail_cur">当前汇率:&nbsp;&nbsp;1新西兰元&nbsp;≈&nbsp;4.90人民币</p><br/>
+						 -->
                     </div>
                     <div class="effect">
                         <p class="others"><span th:text="${productView.product.productLable}">produtLable</span></p>

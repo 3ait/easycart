@@ -32,9 +32,9 @@ public class SearchForm {
 	@Max(1)
 	private byte recommend = -1;
 	
-	private int menu1Id;
-	private int menu2Id;
-	private int brandId;
+	private int menu1Id = -1;
+	private int menu2Id = -1;
+	private int brandId = -1;
 	
 	public String getQ() {
 		return q;

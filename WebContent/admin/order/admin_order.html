@@ -30,13 +30,21 @@
 				});
 			}
 			/**
+			打印快递单
 			**/
 			function print(orderId){
 				
 				var courierType = $(":radio[name='courierType']:checked").val();
-				var url = [[@{/admin/order/}]]+"print/"+orderId+"/"+courierType;
+				var url = [[@{/admin/order/print/}]]+orderId+"/"+courierType;
 				window.open(url,"_blank");
+			}
+			/**
+			打印订单明细
+			**/
+			function printDetail(orderId){
 				
+				var url = [[@{/admin/order/print/detail/}]]+orderId;
+				window.open(url,"_blank");
 			}
 			
 			/**
@@ -196,7 +204,8 @@
 										<input class="tBtn" type="reset"  value="取消" /><br />
 									</td>
 									<td >
-										<input class="tBtn" type="button" th:onclick="|print('${orderView.order.id}')|" value="打印" />
+										<input class="tBtn" type="button" th:onclick="|printDetail('${orderView.order.id}')|" value="订单明细" />
+										<input class="tBtn" type="button" th:onclick="|print('${orderView.order.id}')|" value="打印快递单" />
 									</td>	
 							</tr>
 						</tbody>

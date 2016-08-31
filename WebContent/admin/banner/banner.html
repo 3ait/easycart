@@ -16,11 +16,9 @@
 					return false;
 				}
 			}
-		    
-		    
 			//更新
 			function updateBanner(id){
-				if(!confirm("确认修改？")){
+				if(!confirm("confirm？")){
 					return false;
 				}
 				$.ajax({
@@ -28,16 +26,18 @@
 					method: "GET",
 					data: { 
 						"url" : $("#url_"+id).val(),
+						"title" : $("#title_"+id).val(),
+						"type" : $("#type_"+id).val(),
 						},
 				}).done(function(ret){
 					window.location.reload();
 				}).fail(function(ret){
-					alert("更新失败");
+					alert("Update failed");
 				});
 			}
 			//删除
 			function deleteBanner(id){
-				if(!confirm("确认删除？")){
+				if(!confirm("confirm？")){
 					return false;
 				}
 				$.ajax({
@@ -48,7 +48,7 @@
 				}).done(function(ret){
 					window.location.reload();
 				}).fail(function(ret){
-					alert("更新失败");
+					alert("Update failed");
 				});
 			}
 		
@@ -61,13 +61,12 @@
 				flex-direction:column;
 			}
 			.companyInfo div{
-				width: 60%;
 				padding:5px; 
 				display: flex;
 				align-items:center;
 			}
-			.companyInfo div input{
-				width: 80%;
+			.companyInfo input{
+				width: 300px;
 				height: 30px;
 			}
 		</style>
@@ -80,7 +79,7 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<div class="aNav" style="background: #FFFFFF;color:#F0C200;">首页广告</div>
+				<div class="aNav" style="background: #FFFFFF;color:#427AB8;">Advertising </div>
 			</aside>
 			<div class="flex1"></div>
 			<section>
@@ -89,15 +88,23 @@
 						<div th:each="banner:${bannerList}">
 							<img src="#" width="200px;" th:src="|@{/}${banner.imgHref}|" />
 							<input th:id="|url_${banner.id}|" th:value="${banner.url}"/>&nbsp;
-							<input style="width:50px;" type="button" value="删除" th:onclick="|deleteBanner(${banner.id})|" />&nbsp;
-							<input style="width:50px;" type="button" value="更新" th:onclick="|updateBanner(${banner.id})|" />
+							<input th:id="|title_${banner.id}|" th:value="${banner.title}"/>&nbsp;
+							<select th:id="|type_${banner.id}|"  style="height: 30px;">
+								<option value="indexBanner" th:selected="${banner.type=='indexBanner'}?1:0">Index Banner</option>
+							</select>&nbsp;
+							<input style="width:65px;" type="button" value="update" th:onclick="|updateBanner(${banner.id})|" />&nbsp;
+							<input style="width:65px;" type="button" value="delete" th:onclick="|deleteBanner(${banner.id})|" />&nbsp;
 						</div>
-						<form action="#" th:action="@{/admin/banner/save}" onsubmit="retun checkForm()" method="post" enctype="multipart/form-data">
+						
+						<form action="#" th:action="@{/admin/banner/save}" onsubmit="retun checkForm()" method="post" th:object="${banner}" enctype="multipart/form-data">
 							<div>
 								<input id="multipartFile" name="multipartFile" style="width:200px;" type="file"/>
-								<input id="url" name="url" />&nbsp;
-								<div style="width:50px;"></div>&nbsp;
-								<input style="width:50px;" type="submit" th:value="提交"  ></input>
+								<input id="url" name="url" placeholder="URL" />&nbsp;
+								<input id="title" name="title" placeholder="Title" />&nbsp;
+								<select th:id="type" style="height: 30px;">
+									<option value="indexBanner">Index Banner</option>
+								</select>&nbsp;
+								<input style="width:65px;" type="submit" th:value="submit" ></input>
 							</div>
 						</form>
 					</div>

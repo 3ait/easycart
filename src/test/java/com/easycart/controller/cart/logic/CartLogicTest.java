@@ -1,10 +1,10 @@
 package com.easycart.controller.cart.logic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.easycart.controller.index.ProductView;
+import com.easycart.controller.web.cart.ToArea;
+import com.easycart.controller.web.cart.logic.CartLogic;
+import com.easycart.controller.web.index.ProductView;
 import com.easycart.db.entity.Product;
-
-import junit.framework.Assert;
 
 
 /**
@@ -89,7 +89,7 @@ public class CartLogicTest {
 		
 		
 		
-		Double[] ret = cartLogic.getProductTotalPrice(productViewList,discount);
+		Double[] ret = cartLogic.getProductTotalPrice(productViewList,discount,ToArea.china);
 		assertTrue(ret[0]==1.4);
 		assertTrue(ret[1]==1.4);
 		

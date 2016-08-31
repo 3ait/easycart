@@ -43,7 +43,6 @@ public class CompanyinfoController extends BaseController{
 		mv.addObject(ADMIN_CATEGORY_LIGHT, light);
 		
 		mv.addObject("companyInfoView", companyInfoLogic.getCompanyInfo());
-		mv.addObject("user", new User());
 	
 		return mv;
 	}
@@ -66,6 +65,24 @@ public class CompanyinfoController extends BaseController{
 		return mv;
 	}
 	
+	/**
+	 * 管理员页面跳转
+	 * @param UserForm
+	 * @param BindingResult
+	 * @return
+	 */
+	@RequestMapping("/user/")
+	public ModelAndView user(HttpServletRequest request){
+		logger.debug("user");
+		User  user = (User)request.getSession().getAttribute(SESSION_USER);
+		ModelAndView mv = new ModelAndView("admin/companyinfo/admin_user");
+		mv.addObject(ADMIN_CATEGORY_LIGHT, light);
+		mv.addObject("userList", companyInfoLogic.getUserList(user));
+		mv.addObject("userSession",user);
+		
+		
+		return mv;
+	}
 	/**
 	 * 编辑保存用户
 	 * @param UserForm
@@ -94,19 +111,36 @@ public class CompanyinfoController extends BaseController{
 	 * @param BindingResult
 	 * @return
 	 */
-	@RequestMapping("/user/save")
+	@RequestMapping("/user/add")
 	public ModelAndView userSave(@ModelAttribute(value="userForm") UserForm userForm,BindingResult br,HttpServletRequest request){
 		logger.debug("userSave");
-		ModelAndView mv = new ModelAndView("redirect:/admin/companyinfo/");
+		ModelAndView mv = new ModelAndView("redirect:/admin/companyinfo/user/");
 		
 		if(br.hasFieldErrors()){
 			return mv;
 		}
-		
+		mv.addObject(ADMIN_CATEGORY_LIGHT, light);
 		companyInfoLogic.saveUser(userForm,(User)request.getSession().getAttribute(SESSION_USER));
 		
 		return mv;
 	}
 	
+	/**
+	 * 删除用户
+	 * @param UserForm
+	 * @param BindingResult
+	 * @return
+	 */
+	@RequestMapping("/user/delete")
+	@ResponseBody
+	public String delete(@RequestParam(value="userId") int userId){
+		logger.debug("delete");
+		String ret = "false";
+		
+		companyInfoLogic.deleteUser(userId);
+		
+		
+		return ret;
+	}
 	
 }

@@ -235,7 +235,7 @@
 	                        <h3 class="freight_calculate">運費計算</h3><br/>
 	                        <div class="shortline"></div><br/>
 	                        <div class="freight_formula">運費&nbsp;＝&nbsp;(商品重量&nbsp;*&nbsp;數量&nbsp;+&nbsp;包裝重量)&nbsp;*&nbsp;運費單價</div>
-	                        <div class="additional">不足1kg按1kg計算,&nbsp;超過1kg,&nbsp;按照实际重量。</div>
+	                        <div class="additional">不足1kg按1kg計算,&nbsp;超過1kg,&nbsp;按照实际重量。<br/>香港运费每KG+40$,新西兰本地+5$</div>
 	                        
 	                    </div>
 	                </div>
@@ -250,7 +250,8 @@
 	
 	        <div id="address">
 	            <div class="title">
-	                <h2 class="cateTitle">確認收發商品地址</h2>
+	                <h2 class="cateTitle">確認收發商品地址
+	                </h2>
 	            </div>
 	            <div class="addMix">
 	                <div class="send">
@@ -292,7 +293,8 @@
 	                </div>
 	                <div class="receive">
 	                    <div class="receive_first">
-	                        <h3 class="receive_title">收貨人地址</h3>
+	                        <h3 class="receive_title">收貨人地址
+	                        </h3>
 	                        <div >
                                 <div class="addrDefault" th:each="toAddress:${toAddressList}">
                                     <input type="radio" name="add" checked="checked" value="default" id="add_rdefault" th:onclick="|changeToForm(${toAddress.id})|"/>
@@ -319,9 +321,6 @@
 	                            <div class="r_saveblock">
 	                                <div class="r_save">
 	                                    <button type="button" class="receive_button" onclick="saveTo()">保存收貨人信息</button>
-	                                    <!-- 
-	                                    <button type="reset" class="receive_button">取消</button>
-	                                     -->
 	                                </div>
 	                            </div>
 	                        </div>

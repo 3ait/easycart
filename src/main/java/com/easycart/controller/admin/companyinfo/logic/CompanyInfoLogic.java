@@ -89,4 +89,23 @@ public class CompanyInfoLogic {
 		userDao.update(dbUser);
 	}
 
+	/**
+	 * 删除User
+	 * @param userId
+	 */
+	public void deleteUser(int userId) {
+
+		userDao.delete(userDao.getById(userId));
+		
+	}
+
+	/**
+	 * 获取用户列表
+	 * @param user
+	 * @return
+	 */
+	public List<User> getUserList(User user) {
+		return userDao.getUserList(user);
+		}
+
 }

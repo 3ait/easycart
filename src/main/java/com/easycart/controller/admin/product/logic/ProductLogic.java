@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.easycart.controller.BaseLogic;
 import com.easycart.controller.admin.product.ProductForm;
 import com.easycart.controller.admin.product.SearchForm;
-import com.easycart.controller.index.ProductView;
+import com.easycart.controller.web.index.ProductView;
 import com.easycart.db.dao.IMenuDao;
 import com.easycart.db.dao.IProductBrandDao;
 import com.easycart.db.dao.IProductDao;
@@ -40,7 +40,7 @@ public class ProductLogic extends BaseLogic{
 	@Autowired
 	IProductImgDao productImgDao;
 	
-	private final int listImgWidth = 350;
+	private final int listImgWidth = 500;
 	private final int descImgWidth = 640;
 	
 	

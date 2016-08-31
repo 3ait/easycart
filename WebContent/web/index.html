@@ -70,8 +70,8 @@
 			<div class="main1">
 				<div class="vain"></div>
 				
-<!--banner-->				
-				<div id="slideShow">
+		<!--banner-->				
+		<div id="slideShow">
 			<div class="focus" id="focus001">
 				<ul>
 					<li th:each="banner:${bannerList}">
@@ -80,7 +80,7 @@
 				</ul>
 			</div>				
 		</div>
-<!--banner end-->				
+		<!--banner end-->				
 				
 			</div>
 
@@ -132,18 +132,8 @@
 			
 			<div class="main3" th:each="menuProduct:${menuProductList}">
 				<div class="brandBar">
-					<!-- 
-					<ul>
-						<li><img src="#" /></li>
-						<li><img src="#" /></li>
-						<li><img src="#" /></li>
-						<li><img src="#" /></li>
-						<li><img src="#" /></li>
-					</ul>
-					 -->
 				</div>
 				<div class="White32"></div>
-
 				<div class="shelf">
 					<div class="shelfBar">
 						<div class="shelfPoint">
@@ -165,7 +155,8 @@
 								<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
 									<img src="#" th:if="${productView.defaultImg.href!=null}" th:src="|@{/}${productView.defaultImg.href}|" th:alt="${productView.product.productNameEn}" />
 								</a>
-								<div class="productName" th:text="${productView.product.productNameCn}">productname</div>
+								<div class="productName" th:text="${productView.product.productNameCn}" >productname</div>
+								<div class="productName" th:text="${productView.product.productNameEn}" >productname</div>
 								<div class="productPrice" >
 									<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${productView.product.price1}|" ></span> 
 									<span th:if="${customer!=null}" th:text="|NZ$:${productView.discountPrice}|" ></span>
@@ -178,7 +169,7 @@
 			</div>
 			<!--结束-->
 			
-				<div id="ToTop" style="display: none;">
+			<div id="ToTop" style="display: none;">
 				<img src="../resources/web/img/icon/top.png" th:src="@{/resources/web/img/icon/top.png}" />
 			</div>
 			

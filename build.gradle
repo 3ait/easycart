@@ -20,7 +20,9 @@ war {
 }
 
 repositories {
+    // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     mavenCentral()
+    
 }
 
 dependencies {
@@ -74,7 +76,9 @@ dependencies {
 	compile 'org.apache.logging.log4j:log4j-core:2.4.1'
 	
     //PDF
-    compile 'com.itextpdf:itextpdf:5.5.7'
+    compile 'com.itextpdf:itextpdf:5.5.9'
+	compile 'com.itextpdf.tool:xmlworker:5.5.9'
+    
 	compile 'com.itextpdf:itext-asian:5.2.0'
 	
 	//been to json

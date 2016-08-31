@@ -40,25 +40,22 @@ public class BannerLogic {
 	 * @param position=1 表示首页banner
 	 */
 	@Transactional(rollbackOn=Exception.class)
-	public void saveBanner(MultipartFile fuMultipartFile, String url, int position,HttpServletRequest request) {
+	public void saveBanner(MultipartFile fuMultipartFile, Banner banner,HttpServletRequest request) {
 		
 		try {
-			if(!(fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("jpg") ||
+			if((fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("jpg") ||
 					fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("gif")||
 					fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("png")||
 					fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("bmp"))){
 				
+				String imgDir = "/resources/banner/";
+				
+				String fileName = "banner" + DateHelper.getTime() + fuMultipartFile.getOriginalFilename().substring(fuMultipartFile.getOriginalFilename().lastIndexOf("."));
+				String filePath = request.getServletContext().getRealPath("/") + imgDir + fileName;
+				ImgCompress.resizePic(fuMultipartFile.getInputStream(), new File(filePath), bannerWidth,bannerHeight);
+				
+				banner.setImgHref(imgDir + fileName);
 			}
-			String imgDir = "/resources/banner/";
-			
-			String fileName = "banner" + DateHelper.getTime() + fuMultipartFile.getOriginalFilename().substring(fuMultipartFile.getOriginalFilename().lastIndexOf("."));
-			String filePath = request.getServletContext().getRealPath("/") + imgDir + fileName;
-			ImgCompress.resizePic(fuMultipartFile.getInputStream(), new File(filePath), bannerWidth,bannerHeight);
-			
-			Banner banner = new Banner();
-			banner.setImgHref(imgDir + fileName);
-			banner.setPosition(position);
-			banner.setUrl(url);
 			bannerDao.save(banner);
 		
 			
@@ -87,6 +84,8 @@ public class BannerLogic {
 	public void updateBanner(Banner banner) {
 		Banner dbBanner = bannerDao.getById(banner.getId());
 		dbBanner.setUrl(banner.getUrl());
+		dbBanner.setTitle(banner.getTitle());
+		dbBanner.setType(banner.getType());
 		bannerDao.update(dbBanner);
 	}
 	

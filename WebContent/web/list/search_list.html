@@ -107,10 +107,15 @@
 									<img src="../../resources/web/img/product/demo_Img1.png" th:src="|@{/}${recommendProductView.defaultImg.href}|" />
 								</a>
 							</div>
-						<div class="listLeftD">
+						<div class="r_price" >
 							<span><a  target="_blank" th:text="${recommendProductView.product.productNameCn}" th:href="|@{/product/}${recommendProductView.product.id}|">产品名称</a></span>
+							<!-- 
 							<span style="color: #C81623; margin-top:8px;">NZ$ 12.5</span>
+							 -->
+							<div th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${recommendProductView.product.price1}|" style="color: #C81623; margin-top:8px;" ></div> 
+							<div th:if="${customer!=null}" th:text="|NZ$:${recommendProductView.discountPrice}|" style="color: #C81623;" ></div>
 						</div>
+						
 					</div>
 					
 				</div>

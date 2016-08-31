@@ -9,6 +9,7 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.thymeleaf.extras.eclipse.core.ThymeleafNature</nature>
 	</natures>
 	<buildSpec>
 		<buildCommand>
@@ -25,6 +26,10 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments/>
+		</buildCommand>
+		<buildCommand>
+			<name>org.thymeleaf.extras.eclipse.core.ThymeleafBuilder</name>
 			<arguments/>
 		</buildCommand>
 	</buildSpec>

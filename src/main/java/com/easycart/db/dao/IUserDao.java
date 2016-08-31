@@ -10,4 +10,6 @@ public interface IUserDao extends ISupport<User>{
 	public User login(String email, String password);
 
 	public List<User> getByCompanyId(Integer id);
+
+	public List<User> getUserList(User user);
 }

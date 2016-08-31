@@ -135,6 +135,8 @@
     			  }else{
     				  if($("#"+ type +"phone").val().indexOf("0")==0){
     					  phone = $("#"+type+"zone").val() + $("#"+ type +"phone").val().substr(1);
+    				  }else{
+    					  phone = $("#"+type+"zone").val() + $("#"+ type +"phone").val();
     				  }
     			  }
 	    			

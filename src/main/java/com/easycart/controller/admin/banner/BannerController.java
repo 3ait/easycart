@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.easycart.controller.BaseController;
 import com.easycart.controller.admin.banner.logic.BannerLogic;
-import com.easycart.controller.cart.CartController;
 import com.easycart.db.entity.Banner;
 
 /**
@@ -30,7 +30,7 @@ import com.easycart.db.entity.Banner;
 @Controller
 public class BannerController extends BaseController{
 
-	private static Logger logger = LogManager.getLogger(CartController.class);
+	private static Logger logger = LogManager.getLogger(BannerController.class);
 	private static int light = 5;
 	
 	@Autowired
@@ -48,20 +48,20 @@ public class BannerController extends BaseController{
 		modelAndView.addObject(ADMIN_CATEGORY_LIGHT, light);
 		
 		modelAndView.addObject("bannerList",bannerLogic.listBanner());
-
 		return modelAndView;
 	}
 	
 	/**
+	 * 
 	 * banner save
 	 * @return ModelAndView
 	 * 
 	 */
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	public ModelAndView bannerSave(MultipartFile multipartFile,String url,HttpServletRequest request){
+	public ModelAndView bannerSave(MultipartFile multipartFile,@ModelAttribute(value="banner") Banner banner,HttpServletRequest request){
 		logger.debug("bannerSave");
 		
-		bannerLogic.saveBanner(multipartFile,url,1,request);
+		bannerLogic.saveBanner(multipartFile,banner,request);
 		return new ModelAndView(new RedirectView(request.getServletContext().getContextPath()+"/admin/banner/"));
 	}
 	
@@ -84,13 +84,19 @@ public class BannerController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/update/{bannerId}")
-	public String updateBanner(@PathVariable("bannerId") int bannerId,@RequestParam("url") String url,HttpServletRequest request){
+	public String updateBanner(@PathVariable("bannerId") int bannerId,
+			@RequestParam("url") String url,
+			@RequestParam("title") String title, 
+			@RequestParam("type") String type, 
+			HttpServletRequest request){
 		logger.debug("deleteBanner");
 		String ret = "success";
 		
 		Banner banner = new Banner();
 		banner.setId(bannerId);
 		banner.setUrl(url);
+		banner.setTitle(title);
+		banner.setType(type);
 		bannerLogic.updateBanner(banner);
 		
 		return ret;

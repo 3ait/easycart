@@ -1,4 +1,4 @@
-svn://104.237.152.94/trunk/project/huanglu/easycart
+﻿svn://104.237.152.94/trunk/project/huanglu/easycart
 yaoliang 123456
 
 设置tomcat/conf/web.xml不显示Jsession
@@ -47,3 +47,18 @@ function addToCart(productId){
            	
 		/*]]>*/
 </script>
+
+
+当前线上版本 2016-08-29
+Working Copy Root Path: /opt/workspace/easycart
+URL: svn://104.237.152.94/trunk/project/huanglu/easycart
+Relative URL: ^/trunk/project/huanglu/easycart
+Repository Root: svn://104.237.152.94
+Repository UUID: 0d46c4f3-84ce-4955-9e19-89c052da1255
+Revision: 1280
+Node Kind: directory
+Schedule: normal
+Last Changed Author: leo
+Last Changed Rev: 1268
+Last Changed Date: 2016-08-29 12:50:11 +1200 (Mon, 29 Aug 2016)
+

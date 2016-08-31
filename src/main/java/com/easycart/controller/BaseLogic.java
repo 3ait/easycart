@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.easycart.controller.index.ProductView;
+import com.easycart.controller.web.index.ProductView;
 import com.easycart.db.entity.Customer;
 import com.easycart.db.entity.Product;
 import com.easycart.db.entity.ProductImg;
