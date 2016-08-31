@@ -270,7 +270,7 @@ li {
 }
 
 .pic {
-	height: 360px;
+	height: 380px;
 	/*background: blue;*/
 }
 
@@ -312,7 +312,7 @@ li {
 
 .productName {
 	width: 150px;
-	height: 38px;
+	/* height: 38px; */
 	/*background: blue;*/
 	font-size: 12px;
 	line-height: 18px;

@@ -120,6 +120,7 @@
 	}
 	.header1{
 		width: 100%;
+		min-width: 1200px;
 		background: #fafafa;
 	}
 	.headLogin {
@@ -206,6 +207,7 @@
 	#headerFather {
 		display: flex;
 		width: 100%;
+		min-width: 1200px;
 	}
 	
 	.NoUse {
@@ -219,6 +221,7 @@
 		width: 1200px;
 		*/
 		width: 100%;
+		min-width: 1200px;
 		margin: 0 auto;
 		/*border: 1px solid green;*/
 		/*margin-left: auto;
