@@ -1,9 +1,9 @@
 *.class
 *.svn
 *.jar
-.gradle/**
-build/**
-
+.gradle/*
+build/*
+WebContent/WEB-INF/classes/*
 
 
 
