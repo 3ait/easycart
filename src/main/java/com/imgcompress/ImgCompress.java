@@ -56,6 +56,10 @@ public class ImgCompress {
 		try {
 			image = ImageIO.read(fileInputStream);
 			
+			if(image.getWidth()<outputPicWidth){
+				outputPicWidth =  image.getWidth();
+			}
+			
 			int outputPicHeight = outputPicWidth;
 			if(flag==1){
 				outputPicHeight = outputPicWidth*image.getHeight()/image.getWidth();
@@ -63,7 +67,13 @@ public class ImgCompress {
 			
 			BufferedImage bufferedImage = new BufferedImage(outputPicWidth, outputPicHeight,BufferedImage.TYPE_INT_RGB );
 			Graphics2D graphics2d = bufferedImage.createGraphics();
-			graphics2d.drawImage(image, 0,0,outputPicWidth,outputPicHeight, null);
+			
+			if(image.getWidth()>outputPicWidth){
+				graphics2d.drawImage(image, 0,0,outputPicWidth,outputPicHeight, null);
+			}else{
+				graphics2d.drawImage(image, 0,0,image.getWidth(),outputPicHeight, null);
+			}
+			
 			bufferedImage.flush();
 			ImageIO.write(bufferedImage, "jpg", outputPic);
 		} catch (IOException e) {
@@ -82,6 +92,10 @@ public class ImgCompress {
 		try {
 			image = ImageIO.read(fileInputStream);
 			
+			if(image.getWidth()<outputPicWidth){
+				outputPicWidth =  image.getWidth();
+				outputPicHeight = image.getHeight();
+			}
 			BufferedImage bufferedImage = new BufferedImage(outputPicWidth, outputPicHeight,BufferedImage.TYPE_INT_RGB );
 			Graphics2D graphics2d = bufferedImage.createGraphics();
 			graphics2d.drawImage(image, 0,0,outputPicWidth,outputPicHeight, null);

@@ -1,93 +1,86 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8"></meta>
-<title>checkout</title>
-<link rel="stylesheet" type="text/css"
-	href="../../resources/web/css/header.css"
-	th:href="@{/resources/web/css/header.css}" />
-<link rel="stylesheet" type="text/css"
-	href="../../resources/web/css/footer.css"
-	th:href="@{/resources/web/css/footer.css}" />
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<link rel="stylesheet" type="text/css"
-	href="../../resources/web/css/page_checkout.css"
-	th:href="@{/resources/web/css/page_checkout.css}" />
+	<head>
+		<meta charset="UTF-8"></meta>
+		<title>checkout</title>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/main.css" th:href="@{/resources/web/css/main.css}" />-->
+		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_checkout.css" th:href="@{/resources/web/css/page_checkout.css}" />
+		<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
+		<script src="../resources/web/js/roll.js" th:src="@{/resources/web/js/roll.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../../resources/web/js/page_checkout.js" th:src="@{/resources/web/js/page_checkout.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../../resources/web/search.js" th:src="@{/resources/web/search.js}"></script>
+		
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			$(function() {
+				$("#pay_form").css("display", "none");
+				$("#subtitle2").click(function() {
+					$("#pay_form").css("display", "block");
+					$("#subtitle2").css("color", "#C05100")
+					$("#shortline2").css("background-color", "#C05100");
+					$("#subtitle1").css("color", "#535353");
+					$("#bank_info").css("display", "none");
+					$("#shortline1").css("background-color", "#e6e6e6");
 
-<script src="../../resources/web/jquery/jquery-2.2.1.min.js"
-	th:src="@{/resources/web/jquery/jquery-2.2.1.min.js}"
-	type="text/javascript" charset="utf-8"></script>
-<script src="../../resources/web/js/page_checkout.js"
-	th:src="@{/resources/web/js/page_checkout.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script src="../../resources/web/search.js"
-	th:src="@{/resources/web/search.js}"></script>
-<script th:inline="javascript">
-	/*<![CDATA[*/
-	$(function() {
-		$("#pay_form").css("display", "none");
-		$("#subtitle2").click(function() {
-			$("#pay_form").css("display", "block");
-			$("#subtitle2").css("color", "#F0C103")
-			$("#shortline2").css("background-color", "#F0C103");
-			$("#subtitle1").css("color", "#535353");
-			$("#bank_info").css("display", "none");
-			$("#shortline1").css("background-color", "#e6e6e6");
+				});
 
-		});
+				$("#subtitle1").click(function() {
+					$("#pay_form").css("display", "none");
+					$("#subtitle2").css("color", "#535353")
+					$("#shortline2").css("background-color", "#e6e6e6");
+					$("#subtitle1").css("color", "#C05100");
+					$("#bank_info").css("display", "block");
+					$("#shortline1").css("background-color", "#C05100");
 
-		$("#subtitle1").click(function() {
-			$("#pay_form").css("display", "none");
-			$("#subtitle2").css("color", "#535353")
-			$("#shortline2").css("background-color", "#e6e6e6");
-			$("#subtitle1").css("color", "#F0C103");
-			$("#bank_info").css("display", "block");
-			$("#shortline1").css("background-color", "#F0C103");
+				});
 
-		});
+			});
 
-	});
+			/*]]>*/
+		</script>
+	</head>
 
-	/*]]>*/
-</script>
-</head>
+	<body>
+		<!-- 引入title -->
+		<div th:include="/web/header :: hearderFragement"></div>
 
-<body>
-	<!-- 引入title -->
-	<div th:include="/web/header :: hearderFragement"></div>
+		<div id="container">
+			<h2 class="title">收銀台</h2>
+			<div class="line"></div>
+			<div class="c_info">
+				<span class="c_text">應付總額:</span> <span class="c_amount" th:text="|$ ${confirmView.totalFreight + confirmView.totalProductPrice} NZD|">NZ$13.99</span>
+			</div>
 
-	<div id="container">
-		<h2 class="title">收銀台</h2>
-		<div class="line"></div>
-		<div class="c_info">
-			<span class="c_text">應付總額:</span> <span class="c_amount"
-				th:text="|$ ${confirmView.totalFreight + confirmView.totalProductPrice} NZD|">NZ$13.99</span>
-		</div>
+			<div class="content">
+				<div id="transfer">
+					<h3 id="subtitle1">線下轉帳</h3>
+					<div id="shortline1"></div>
+					<div id="bank_info">
+						账户名称:<span th:text="${companyInfo.accountName}"></span><br /> 帳號:<span th:text="${companyInfo.accountNumber}"></span>
+					</div>
+				</div>
+				<div id="online">
+					<h3 id="subtitle2">在线支付</h3>
+					<div id="shortline2"></div>
 
-		<div class="content">
-			<div id="transfer">
-				<h3 id="subtitle1">線下轉帳</h3>
-				<div id="shortline1"></div>
-				<div id="bank_info">
-					账户名称:<span th:text="${companyInfo.accountName}"></span><br /> 帳號:<span
-						th:text="${companyInfo.accountNumber}"></span>
+					<form id="pay_form" name="pay_form" th:action="@{/cart/unionpay}" method="post" target="_blank">
+						<input type="hidden" id="orderId" name="orderId" th:value="${orderId}"></input>
+						<button type="submit" class="btn confirm_button">確認支付</button>
+					</form>
 				</div>
 			</div>
-			<div id="online">
-				<h3 id="subtitle2">在线支付</h3>
-				<div id="shortline2"></div>
-
-				<form id="pay_form" name="pay_form" th:action="@{/cart/unionpay}" method="post" target="_blank">
-					<input type="hidden" id="orderId" name="orderId" th:value="${orderId}"></input>
-					<button type="submit" class="confirm_button">確認支付</button>
-				</form>
-			</div>
 		</div>
-	</div>
+<div class="h80"></div>
+		<!-- 引入footer -->
+		<div th:include="/web/footer :: footerFragement"></div>
 
-	<!-- 引入footer -->
-	<div th:include="/web/footer :: footerFragement"></div>
+	</body>
 
-</body>
 </html>

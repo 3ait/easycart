@@ -90,7 +90,9 @@
 							<input th:id="|url_${banner.id}|" th:value="${banner.url}"/>&nbsp;
 							<input th:id="|title_${banner.id}|" th:value="${banner.title}"/>&nbsp;
 							<select th:id="|type_${banner.id}|"  style="height: 30px;">
-								<option value="indexBanner" th:selected="${banner.type=='indexBanner'}?1:0">Index Banner</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_1'}?1:0">Index 1</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_2'}?1:0">Index 2</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_3'}?1:0">Index 3</option>
 							</select>&nbsp;
 							<input style="width:65px;" type="button" value="update" th:onclick="|updateBanner(${banner.id})|" />&nbsp;
 							<input style="width:65px;" type="button" value="delete" th:onclick="|deleteBanner(${banner.id})|" />&nbsp;
@@ -101,8 +103,10 @@
 								<input id="multipartFile" name="multipartFile" style="width:200px;" type="file"/>
 								<input id="url" name="url" placeholder="URL" />&nbsp;
 								<input id="title" name="title" placeholder="Title" />&nbsp;
-								<select th:id="type" style="height: 30px;">
-									<option value="indexBanner">Index Banner</option>
+								<select th:id="type" name="type" style="height: 30px;">
+									<option value="index_1" >Index 1</option>
+									<option value="index_2" >Index 2</option>
+									<option value="index_3" >Index 3</option>
 								</select>&nbsp;
 								<input style="width:65px;" type="submit" th:value="submit" ></input>
 							</div>

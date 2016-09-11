@@ -145,15 +145,15 @@
 								<option th:each="menu2 : ${menu2List}" th:value="${menu2.id}" th:text="${menu2.nameEn}" th:selected="${menu2.id==menu2Id}?1:0">Sub Category</option>
 							</select>
 						</div>
-						<input th:onclick="|search()|" type="radio" th:name="status" value="-1"  th:checked="${searchForm.status==-1}?1:0" style="width:20px;"/><label for="">&nbsp;全部</label>
-						<input th:onclick="|search()|" type="radio" th:name="status" value="0"  th:checked="${searchForm.status==0}?1:0" style="width:20px;" /><label for="">&nbsp;離線</label>
-						<input th:onclick="|search()|" type="radio" th:name="status" value="1"  th:checked="${searchForm.status==1}?1:0" style="width:20px;" /><label for="">&nbsp;在線</label>
-						<input th:onclick="|search()|" type="radio" th:name="status" value="2"  th:checked="${searchForm.status==2}?1:0" style="width:20px;" /><label for="">&nbsp;缺貨</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="-1"  th:checked="${searchForm.status==-1}?1:0" style="width:20px;"/><label class="input_label" for="">全部</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="0"  th:checked="${searchForm.status==0}?1:0" style="width:20px;" /><label class="input_label" for="">離線</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="1"  th:checked="${searchForm.status==1}?1:0" style="width:20px;" /><label class="input_label" for="">在線</label>
+						<input th:onclick="|search()|" type="radio" th:name="status" value="2"  th:checked="${searchForm.status==2}?1:0" style="width:20px;" /><label class="input_label" for="">缺貨</label>
 						&nbsp;|&nbsp;
-						<input th:onclick="|search()|" type="checkbox" th:name="hot" value="1" th:checked="${searchForm.hot==1}?1:0" style="width:20px;"/><label for="q_hot">&nbsp;热销</label>
-						<input th:onclick="|search()|" type="checkbox" th:name="promote" value="1" th:checked="${searchForm.promote==1}?1:0"  style="width:20px;"/><label for="q_promote">&nbsp;促销</label>
-						<input th:onclick="|search()|" type="checkbox" th:name="frontPage" value="1" th:checked="${searchForm.frontPage==1}?1:0"  style="width:20px;"/><label for="q_frontPage">&nbsp;首页</label>
-						<input th:onclick="|search()|" type="checkbox" th:name="recommend" value="1" th:checked="${searchForm.recommend==1}?1:0"  style="width:20px;"/><label for="q_recommend">&nbsp;推荐</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="hot" value="1" th:checked="${searchForm.hot==1}?1:0" style="width:20px;"/><label class="input_label" for="q_hot">热销</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="promote" value="1" th:checked="${searchForm.promote==1}?1:0"  style="width:20px;"/><label class="input_label" for="q_promote">促销</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="frontPage" value="1" th:checked="${searchForm.frontPage==1}?1:0"  style="width:20px;"/><label class="input_label" for="q_frontPage">首页</label>
+						<input th:onclick="|search()|" type="checkbox" th:name="recommend" value="1" th:checked="${searchForm.recommend==1}?1:0"  style="width:20px;"/><label class="input_label" for="q_recommend">推荐</label>
 					</div>
 				</form>
 				<form th:action="@{/admin/product/list/edit/confirm}" th:object="${product}">

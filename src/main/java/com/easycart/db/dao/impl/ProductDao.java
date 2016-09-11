@@ -153,8 +153,8 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 //				criteria.addOrder(Order.desc(page.getOrderby()));
 //			}
 			
-			criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
-			
+			//随机
+			//criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
 			list = (List<Product>) hibernateTemplate.findByCriteria(criteria,page.getSt(),page.getRows());
 			list.forEach(p -> hibernateTemplate.initialize(p.getProductImgs()));
 		} catch (Exception e) {
@@ -298,13 +298,13 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 			}
 			criteria.add(disjunction);
 			
-			if(searchForm.getMenu1Id()!=0){
+			if(searchForm.getMenu1Id()>0){
 				criteria.add(Restrictions.eq("menu.fatherId", searchForm.getMenu1Id()));
 			}
-			if(searchForm.getMenu2Id()!=0){
+			if(searchForm.getMenu2Id()>0){
 				criteria.add(Restrictions.eq("menu.id", searchForm.getMenu2Id()));
 			}
-			if(searchForm.getBrandId()!=0){
+			if(searchForm.getBrandId()>0){
 				criteria.add(Restrictions.eq("productBrand.id", searchForm.getBrandId()));
 			}
 			if(searchForm.getStatus()==1){
@@ -344,13 +344,13 @@ public class ProductDao extends HibernateTemplateDaoSupport<Product> implements 
 				disjunction.add(Restrictions.like("mpn", searchForm.getQ(), MatchMode.ANYWHERE));
 			}
 			criteria.add(disjunction);
-			if(searchForm.getMenu1Id()!=0){
+			if(searchForm.getMenu1Id()>0){
 				criteria.add(Restrictions.eq("menu.fatherId", searchForm.getMenu1Id()));
 			}
-			if(searchForm.getMenu2Id()!=0){
+			if(searchForm.getMenu2Id()>0){
 				criteria.add(Restrictions.eq("menu.id", searchForm.getMenu2Id()));
 			}
-			if(searchForm.getBrandId()!=0){
+			if(searchForm.getBrandId()>0){
 				criteria.add(Restrictions.eq("productBrand.id", searchForm.getBrandId()));
 			}
 			if(searchForm.getStatus()==1){

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +20,13 @@ import com.imgcompress.ImgCompress;
 
 @Component("bannerLogic")
 public class BannerLogic {
-
+	private static Logger logger = LogManager.getLogger(BannerLogic.class);
+	
 	@Autowired
 	BannerDao bannerDao;
 
-	private final int bannerWidth = 1200;
+	//PX
+	private final int bannerWidth = 1420;
 	private final int bannerHeight = 542;
 	
 	/**
@@ -52,6 +56,7 @@ public class BannerLogic {
 				
 				String fileName = "banner" + DateHelper.getTime() + fuMultipartFile.getOriginalFilename().substring(fuMultipartFile.getOriginalFilename().lastIndexOf("."));
 				String filePath = request.getServletContext().getRealPath("/") + imgDir + fileName;
+				
 				ImgCompress.resizePic(fuMultipartFile.getInputStream(), new File(filePath), bannerWidth,bannerHeight);
 				
 				banner.setImgHref(imgDir + fileName);
@@ -72,7 +77,11 @@ public class BannerLogic {
 	@Transactional(rollbackOn=Exception.class)
 	public void deleteBannerById(int bannerId) {
 		Banner banner = bannerDao.getById(bannerId);
-		new File(banner.getImgHref()).deleteOnExit();
+		try {
+			new File(banner.getImgHref()).deleteOnExit();
+		} catch (Exception e) {
+			logger.error(e);
+		}
 		bannerDao.delete(banner);
 	}
 	

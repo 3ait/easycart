@@ -25,6 +25,7 @@ public class BannerDao extends HibernateTemplateDaoSupport<Banner> implements IB
 			DetachedCriteria criteria = DetachedCriteria.forClass(Banner.class);
 			
 			criteria.addOrder(Order.desc("id"));
+			criteria.addOrder(Order.asc("type"));
 			list = (List<Banner>) hibernateTemplate.findByCriteria(criteria);
 			
 		} catch (Exception e) {

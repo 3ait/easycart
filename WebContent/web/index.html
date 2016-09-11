@@ -4,16 +4,37 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title></title>
-
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>
 		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
 		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
 		<link rel="stylesheet" type="text/css" href="../resources/web/css/main.css" th:href="@{/resources/web/css/main.css}" />
-		<script type="text/javascript" src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}"></script>
+		<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
+		<script src="../resources/web/js/roll.js" th:src="@{/resources/web/js/roll.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
 	</head>
 	
 	<script type="text/javascript">
+	
+	//  = banner 获取宽度 = 
+	$(document).ready(function  () {
+//	alert(document.body.clientWidth)	;
+var $w=document.body.clientWidth
+$(".banner_img").attr("width",$w);
+})
+	
+	//  = 无缝滚动 = 
+	$(document).ready(function(){
+	$('.marquee').kxbdMarquee({
+			direction:'left',
+			eventA:'mouseenter',
+			eventB:'mouseleave'
+	});
+});
+	
+	
 		$(document).ready(function() {
 				$.focus("#focus001");
 				
@@ -65,59 +86,43 @@
 
 		<!-- 引入title -->
 		<div th:include="/web/header :: hearderFragement"></div>
-
-		<div id="containerM">
-			<div class="main1">
-				<div class="vain"></div>
-				
-		<!--banner-->				
-		<div id="slideShow">
-			<div class="focus" id="focus001">
-				<ul>
-					<li th:each="banner:${bannerList}">
-						<a th:href="${banner.url}" target="_blank"><img style="width: 1200px;" src="../resources/banner01.jpg" th:src="|@{/}${banner.imgHref}|" alt="" /></a>
-					</li>
-				</ul>
-			</div>				
-		</div>
-		<!--banner end-->				
-				
-			</div>
-
-			<div class="main2">
-				<div class="White50"></div>
-				<div id="tagHot">
-					<div class="option">
-						<div class="oWord" onmouseover="show('hotProduct','promoteProduct')">熱銷</div>
-						<div class="oLine"></div>
-					</div>
-					<div class="option">
-						<div class="oWord" onmouseover="show('promoteProduct','hotProduct')">促銷</div>
-						<div class="oLine"></div>
+			<section class="banner container-fluid m0 p0">
+				<div id="slideShow">
+					<div class="focus" id="focus001">
+						<ul>
+							<li th:each="banner:${bannerList}" th:if="${banner.type=='index_1'}">
+								<a th:href="${banner.url}" target="_blank"><img class="banner_img" src="../resources/web/img/new/banner_n1.png" th:src="|@{/}${banner.imgHref}|" alt="" /></a>
+							</li>
+						</ul>
+					</div>				
+				</div>
+			</section>
+			<div class="h50"></div>
+			<!--  = 3img =  -->
+			<section class="3img container">
+				<div class="row">
+					<div class="col-xs-4 thumb_nail center product_hover"  th:each="banner,iterStat:${bannerList}" th:if="${banner.type=='index_2'}" >
+						<a th:href="${banner.url}" target="_blank">
+							<img class="center img-responsive" style="width:260px;height:140px;" src="../resources/web/img/new/banner_n1.png" th:src="|@{/}${banner.imgHref}|" alt="" />
+						</a>
+						<h3 th:text="${banner.title}">Royal Deer Story</h3>
 					</div>
 				</div>
-				<div class="pic" id="hotProduct" >
-					<ul>
-						<li th:each="hotProduct:${hotProductList}">
-							<a target="_blank" th:href="|@{/product/}${hotProduct.product.id}|">
-								<img src="#" th:if="${hotProduct.defaultImg.href!=null}" th:src="|@{/}${hotProduct.defaultImg.href}|" alt="picture" />
-							</a>
-							<div class="productName" th:text="${hotProduct.product.productNameCn}">productname</div>
-							<div class="productPrice" >
-								<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${hotProduct.product.price1}|" ></span> 
-								<span th:if="${customer!=null}" th:text="|NZ$:${hotProduct.discountPrice}|" ></span>
-							</div>
-						</li>
-						
-					</ul>
-				</div>
-				<div class="pic pic_hidden" id="promoteProduct" >
-					<ul>
-						<li th:each="promoteProduct:${promoteProductList}">
+				<div class="h50"></div>
+			</section>
+			<!--促销-->
+			<section class="promotion">
+				<div class="h40 private_bg_gray prom_label">Promotion Products</div>
+				<hr class="ml15 mr15" />
+				
+				<div class="container pic">
+						<ul class="row">
+						<li class="col-xs-3 product_hover" th:each="promoteProduct:${promoteProductList}">
 							<a target="_blank" th:href="|@{/product/}${promoteProduct.product.id}|">
-								<img src="#" th:if="${promoteProduct.defaultImg.href!=null}" th:src="|@{/}${promoteProduct.defaultImg.href}|" alt="picture" />
+								<img src="#" class="img-responsive" th:if="${promoteProduct.defaultImg.href!=null}" th:src="|@{/}${promoteProduct.defaultImg.href}|" alt="picture" />
 							</a>
 							<div class="productName" th:text="${promoteProduct.product.productNameCn}">productname</div>
+							<div class="productName" th:text="${promoteProduct.product.productNameEn}">productname</div>
 							<div class="productPrice" >
 								<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${promoteProduct.product.price1}|" ></span> 
 								<span th:if="${customer!=null}" th:text="|NZ$:${promoteProduct.discountPrice}|" ></span>
@@ -125,56 +130,53 @@
 						</li>
 					</ul>
 				</div>
-				<div class="White30"></div>
-			</div>
-			<!--重复-->
-			<!--乳制品-->
-			
-			<div class="main3" th:each="menuProduct:${menuProductList}">
-				<div class="brandBar">
+	
+				
+			</section>
+			<div class="h40"></div>
+			<!--热销-->
+			<section class="bestsell">
+				<div class="h40 private_bg_gray prom_label">Best Selling</div>
+				<hr class="ml15 mr15" />
+				
+				<div class="container marquee pic " style="padding-top:3px ;">
+						<ul class="row" >
+						<li class=" " style="width: 300px;" th:each="hotProduct:${hotProductList}">
+							<a target="_blank" class="product_hover" th:href="|@{/product/}${hotProduct.product.id}|">
+								<img  src="#" class=" " th:if="${hotProduct.defaultImg.href!=null}" th:src="|@{/}${hotProduct.defaultImg.href}|" alt="picture" />
+								<div class="productName" th:text="${hotProduct.product.productNameCn}">productname</div>
+								<div class="productName" th:text="${hotProduct.product.productNameEn}">productname</div>
+								<span style="color: #c81623;" th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${hotProduct.product.price1}|" ></span> 
+								<span th:if="${customer!=null}" th:text="|NZ$:${hotProduct.discountPrice}|" ></span>
+							</a> 
+							<div class="productPrice" >
+							</div>
+						</li>
+					</ul>
 				</div>
-				<div class="White32"></div>
-				<div class="shelf">
-					<div class="shelfBar">
-						<div class="shelfPoint">
-							<ul>
-								<li><span class="shelfLogo" th:text="${menuProduct.menu.nameCn}">一级菜单</span></li>
-							</ul>
-						</div>
-						<div class="shelWHite" style="flex: 1;"></div>
-						<!-- tag切换 -->
-						<div class="shelfTag" th:onclick="|productList('${menuProduct.menu.id}','${subMenu.id}')|" th:each="subMenu,loop:${menuProduct.subMenuList}" th:if="${loop.index} &lt; 4" th:text="${subMenu.nameCn}">二级菜单</div>
-						<a th:href="|@{/list/}${menuProduct.menu.nameEn}|"><div class="shelfTag" style="margin-right: 0;" >更多</div></a>
-					</div>
-					<div class="barLine"></div>
-					<div class="pic" th:id="|${menuProduct.menu.id}|" >
-						
-						<ul>
-							<li th:each="productView:${menuProduct.productViewList}" >
-								<div th:if="${productView.product.status==2}" style="position:absolute;margin-left:30px; z-index: 1;border:1px solid red;color: red;padding: 3px;">已售完</div>
-								<a target="_blank" th:href="|@{/product/}${productView.product.id}|">
-									<img src="#" th:if="${productView.defaultImg.href!=null}" th:src="|@{/}${productView.defaultImg.href}|" th:alt="${productView.product.productNameEn}" />
-								</a>
-								<div class="productName" th:text="${productView.product.productNameCn}" >productname</div>
-								<div class="productName" th:text="${productView.product.productNameEn}" >productname</div>
-								<div class="productPrice" >
-									<span th:class="${customer!=null}?priceDeleted" th:text="|NZ$:${productView.product.price1}|" ></span> 
-									<span th:if="${customer!=null}" th:text="|NZ$:${productView.discountPrice}|" ></span>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<div class="White30"></div>
-				</div>
-			</div>
+ <div class="h40"></div>
+				 
+				 <!--  = brand =  -->
+				 <div class="container brand">
+				 	<div class="row"  >
+				 		<div class="col-xs-3 product_hover" th:each="banner,iterStat:${bannerList}" th:if="${banner.type=='index_3'}">
+							<a th:href="${banner.url}" target="_blank">
+								<img class="img img-responsive"  src="../resources/web/img/new/banner_n1.png" th:src="|@{/}${banner.imgHref}|" alt="" />
+							</a>
+				 		</div>
+				 		
+				 	</div>
+			 	</div>
+				<div class="h40"></div>
+			</section>
+
 			<!--结束-->
 			
-			<div id="ToTop" style="display: none;">
+				<div id="ToTop" style="display: none;">
 				<img src="../resources/web/img/icon/top.png" th:src="@{/resources/web/img/icon/top.png}" />
 			</div>
 			
 			
-		</div>
 		<!-- 引入title -->
 		<div th:include="/web/footer :: footerFragement"></div>
 		<!--div-->

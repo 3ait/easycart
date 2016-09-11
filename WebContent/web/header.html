@@ -4,73 +4,100 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />-->
+		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>-->
+		<!--<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>-->
 	</head>
 
 	<body>
 		<div th:fragment="hearderFragement">
-			<div class="header1">
-				<div class="headLogin">
-					<ul>
-						<li th:if="${customer==null}"><a th:href="@{/customer/}">登錄</a></li>
-						<li th:if="${customer==null}">&nbsp;|&nbsp;</li>
-						<li th:if="${customer==null}"><a th:href="@{/customer/register}">註冊</a></li>
-						<li th:if="${customer!=null}" th:text="|你好：${customer.phone}|"></li>
-						<li >&nbsp;|&nbsp;</li>
-						<li><a th:href="@{/customer/order/}">我的訂單</a></li>
-						<li th:unless="${customer==null}">&nbsp;|&nbsp;</li>
-						<li th:unless="${customer==null}"><a th:href="@{/customer/logout}">退出</a></li>
-					</ul>
-				</div>
-			</div>
-			<form id="searchForm" action="#" th:action="@{/s}"  onsubmit="check()" method="get">
-				<div id="header2">
-					<div id="logo">
-						<a th:href="@{/}"><img src="../resources/logo02.jpg" th:src="@{/resources/logo02.jpg}" style="height: 65px;" /></a>
-						<a th:href="@{/}"><img src="../resources/logo003.png" th:src="@{/resources/logo003.png}" style="height: 42px; margin-left:20px ;" /></a>
-					</div>
-					<div style="width: 85px;"></div>
-					<div><input type="text" name="q"  id="q" th:value="${q}" placeholder=" 奶粉、蜜蜂、葡萄籽" /></div>
-					<div id="searchBotton" th:onclick="|productSearch()|">搜索</div>
-					<div style="width:85px;"></div>
-					<a th:href="@{/cart/}" target="_blank">
-						<div id="car">
-							<div class="headIcon"><img src="../resources/web/img/icon/cart.png" th:src="@{/resources/web/img/icon/cart.png}" alt="cart" />
+			<section class="header">
+				<div class="container-fluid h30 private_bg_gray">
+					<nav class=" navbar-static-top">
+						<div class="container">
+							<div id="navbar_top">
+								<ul class="top_bar navbar-nav navbar-right">
+									<li th:if="${customer==null}">
+										<a href="" th:href="@{/customer/}">登錄&nbsp;&nbsp;</a>
+									</li>
+									<li th:if="${customer==null}">
+										<a href="" th:href="@{/customer/register}">註冊&nbsp;&nbsp;</a>
+									</li>
+									<li th:if="${customer!=null}" th:text="|你好：${customer.phone}|"></li>
+									<li>
+										<a th:href="@{/customer/order/}">我的訂單</a>
+									</li>
+									<li th:unless="${customer==null}">
+										<a th:href="@{/customer/logout}">退出</a>
+									</li>
+								</ul>
 							</div>
-							<span style="padding:0 15px;">購物車</span>
-							<span class="headIcon" >(</span>
-							<span class="headIcon" id="productInCartNum" th:text="|${productInCartNum}|">(0)</span>
-							<span class="headIcon" >)</span>
 						</div>
-					</a>
-					
+					</nav>
 				</div>
-			</form>
-			<div id="header3">
-
-				<ul class="ulF">
-					<div id="ulFcontainer">
-						<li class="liF"><a href="#" th:href="@{/}">首&nbsp;&nbsp;頁</a></li>
-						<li class="liF" th:each="menuView:${menuViewList}">
-							<a th:href="|@{/list/}${menuView.menu.nameEn}|"><div th:text="${menuView.menu.nameCn}">一级菜单</div></a>
-							<ul class="ulC">
-								<li>
-									<div class="navInner">
-										<div class="navInner_FC" style="">
-										<div class="navInnerContainer">
-											<div th:each="subMenu:${menuView.subMenuList}">
-												<a style="color: #626262;" th:href="|@{/list/}${menuView.menu.nameEn}?submenu=${subMenu.nameEn}|" >
-												<span th:text="${subMenu.nameCn}">二级菜单</span></a>
-											</div>
-										</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</li>
+				<div class="h30"></div>
+				<form id="searchForm" action="#" th:action="@{/s}" onsubmit="check()" method="get">
+					<div class="container search_bar ">
+						<div class="row pl20 pr20">
+							<div class="col-xs-2">
+								<a th:href="@{/}"><img class="img-responsive" src="../resources/web/img/new/logo_n1.png" th:src="@{/resources/web/img/new/logo_n1.png}" alt="" /></a>
+							</div>
+						</div>
+						<div class="row pl20 pr20">
+							<div class="col-xs-2 col-md-2">
+								<a th:href="@{/}"><img class="img-responsive pl10" src="../resources/web/img/new/logo_n2.png" th:src="@{/resources/web/img/new/logo_n2.png}" /></a>
+							</div>
+							<div class="col-xs-6 col-md-4  search_aa">
+								<img  id="searchBotton" class=""  th:onclick="|productSearch()|" src="../resources/web/img/new/search_n.png" th:src="@{/resources/web/img/new/search_n.png}" alt="" />
+								<input class="search_input pl10 ml10" name="q" id="q" th:value="${q}" type="text" placeholder="WELLCOME TO ROYAL DEER......." />
+							</div>
+							<div class="col-xs-4 col-md-6">
+								<a th:href="@{/cart/}" target="_blank">
+									<span class="headIcon float_R">)</span>
+									<span class="headIcon float_R" id="productInCartNum" th:text="|${productInCartNum}|">(0)</span>
+									<span class="headIcon float_R">(</span>
+									<img class="img-responsive search_cart float_R" src="../resources/web/img/new/cart_n.png" th:src="@{/resources/web/img/new/cart_n.png}" alt="" />
+								</a>
+							</div>
+						</div>
+						<div class="h5 private_bg_black"></div>
 					</div>
-				</ul>
-			</div>
+				</form>
+
+				<div class="menu container">
+					<div id="header3">
+						<ul class="ulF m0">
+							<div id="ulFcontainer">
+								<li class="liF">
+									<a class="each_menu1" href="#" th:href="@{/}">首&nbsp;&nbsp;頁</a>
+								</li>
+								<li class="liF" th:each="menuView:${menuViewList}">
+									<a class="each_menu1" th:href="|@{/list/}${menuView.menu.nameEn}|">
+										<div th:text="${menuView.menu.nameCn}">一级菜单</div>
+									</a>
+									<ul class="ulC">
+										<li>
+											<div class="navInner">
+												<div class="navInner_FC" style="">
+													<div class="navInnerContainer">
+														<div class="each_menu2" th:each="subMenu:${menuView.subMenuList}">
+															<a style="color: #626262;" th:href="|@{/list/}${menuView.menu.nameEn}?submenu=${subMenu.nameEn}|">
+																<span th:text="${subMenu.nameCn}">二级菜单</span></a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</section>
+
 		</div>
 	</body>
 

@@ -1,126 +1,7 @@
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
-	font-size: 100%;
-	vertical-align: baseline;
-}
-
-body {
-	cursor: default;
-	font-family: "AdobeFanHeitiStd" "Helvetica Neue", Helvetica, Roboto, Arial, "PingFang SC", "Noto Sans CJK SC", "Source Han Sans CN", "Lantinghei SC", "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
-	/*letter-spacing: 1px;*/
-}
-
-img {
-	cursor: pointer;
-}
-
-li {
-	list-style: none;
-}
-
-#containerM {
-	width: 1200px;
-	margin: 0 auto;
-}
-
-.vain {
-	height: 20px;
-	/*background: red;*/
-}
-
-#slideShow {
-	height: 540px;
-	background: gray;
-}
-
-
 /*banner*/
 
 .focus {
-	width: 1200px;
+	/*width: 1200px;*/
 	height: 542px;
 	/*height: 510px;*/
 	overflow: hidden;
@@ -135,8 +16,9 @@ li {
 
 .focus ul li {
 	float: left;
-	width: 1200px;
-	height: 557px;
+	/*width: 1200px;*/
+	/*width: 100%;*/
+	height: 522px;
 	overflow: hidden;
 	position: relative;
 	background: #000;
@@ -161,7 +43,7 @@ li {
 	position: absolute;
 	height: 12px;
 	padding: 0px 10px 0px 10px;
-	right: 530px;
+	right: 50%;
 	/*right:0px;*/
 	bottom: 30px;
 	text-align: right;
@@ -220,90 +102,37 @@ li {
 
 /*bnner end*/
 
-.main2 {
-	/*height: 325px;
-	background: grey;*/
+
+/* = 3img = */
+.3img{
+}
+.thumb_nail{
+	text-align: center;
+	/*margin: 0 auto;*/
+}
+.thumb_nail h3{
+	color: #8f8f8f;
 }
 
-.White50 {
-	height: 50px;
-	/*background: olive;*/
-}
 
-#tagHot {
-	height: 50px;
-	display: flex;
-	/*background: yellow;*/
-	padding: 0 330px;
-}
-
-.option {
-	/*height: 60px;*/
-	/*background: purple;*/
-}
-
-.oWord {
-	width: 50px;
-	font-size: 24px;
-	padding: 10px 118px;
-	cursor: pointer;
-	/*background: white;*/
-}
-
-.oLine {
-	width: 46px;
-	height: 3px;
-	background: #F0C103;
-	margin: 0 auto;
-	display: none;
-}
-
-.brandBar {
-	/*background: red;*/
-	height: 70px;
-	background: #e6e6e6;
-}
-
-.brandBar ul {
-	display: flex;
-	justify-content: center;
-}
-
-.pic {
-	height: 380px;
-	/*background: blue;*/
-}
-
-.pic_hidden {
-	display: none;
-}
-
-.option:hover .oLine {
-	display: block;
-}
-
-.pic ul {
-	/*background: green;*/
-	display: flex;
-	/*	justify-content: center;*/
+/* = promotion = */
+.prom_label{
+	text-align: center;
+	line-height: 40px;
+	font-size:30px ;
 }
 
 .pic ul li {
-	/*	border: 1px solid yellow;*/
-	display: flex;
-	flex-flow: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	width: 300px;
-	height: 360px;
-	/*background: yellow;*/
+text-align: center;
 }
 
 .pic ul li img {
-	height: 250px;
-	/*background: red;*/
-	width: 250px;
+	width: 263px;
+	
+}
+.pic ul li div {
+	display: block;
+	
 }
 
 .pic li:hover img {
@@ -311,124 +140,52 @@ li {
 }
 
 .productName {
-	width: 150px;
-	/* height: 38px; */
-	/*background: blue;*/
 	font-size: 12px;
 	line-height: 18px;
 }
 
 .productPrice {
-	width: 80px;
-	height: 14px;
 	margin: 5px;
-	/*background: grey;*/
 	font-size: 14px;
 	color: #c81623;
 }
 
-.White32 {
-	height: 32px;
-	/*background: purple;*/
-}
+/* = brand = */
 
-.shelf {
-	height: 400px;
-	/*background: orange;*/
-}
-
-.shelfBar {
-	height: 50px;
-	/*background: green;*/
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	position: relative;
-}
-
-.shelfPoint {
-	color: #f29c9f;
-	padding: 0 38px;
-	width: 135px;
-	/*background: red;*/
-}
-
-.shelfPoint ul li {
-	list-style-type: disc;
-	font-size: 40px;
-	/*cursor: pointer;*/
-}
-
-.shelfLogo {
-	color: #313131;
-	font-size: 24px;
-}
-
-.shelfTag {
-	width: 75px;
-	height: 32px;
-	background: #f29c9f;
-	/*background: red;*/
-	margin: 0 5px;
-	padding: 2px 2px;
-	font-size: 14px;
-	position: relative;
-	top: 16px;
-	text-align: center;
-	line-height: 32px;
-	color: #FFFFFF;
-}
-
-.shelfTag a {
-	color: #FFFFFF;
-}
-
-.shelfTag:hover {
-	background: rgba(0, 0, 0, 0.0);
-	color: #F29C9F;
-	cursor: pointer;
-}
-
-.shelfTag:hover a {
-	color: #F29C9F;
-}
-
-.barLine {
-	/*position: relative;
-	top: -2px;*/
-	height: 2px;
-	background: #f29c9f;
-}
-
-
-/*.iconList {
-	position: fixed;
-	top: 300px;
-	left: 70px;
-	width: 30px;
-}*/
-
-
-/*
-.iconList {
-	display: flex;
-	flex-flow: column;
-	align-items: center;
-}
-
-.iconC img {
-	margin: 10px 0;
-}*/
-
-.changColor:hover {
-	background: #F0C103;
-	display: inline;
-}
-
+/* = top button = */
 #ToTop {
 	position: fixed;
 	right: 60px;
 	bottom: 100px;
 	display: none;
 	/*transition: all 0.5s;*/
+}
+
+/* = 滚动 = */
+
+.marquee {height:335px;overflow:hidden;}
+.marquee li{ display:inline; float:left; margin-left: 10px;}
+.marquee li a{ color: inherit;  display:block; float:left; text-align:center; font-size:14px;}
+.marquee li a:hove{ text-decoration:none;}
+.marquee li img { }
+.marquee li em{font-style: normal; height:24px; line-height:24px; display:block; margin-top:8px;}
+
+/* = brand = */
+.brand img{ 
+display: inline-block;}
+.brand div{
+	padding: 20px 0;
+	/*height: 84px;*/
+}
+
+
+/* = brand = */
+.product_hover{
+	border: 1px solid white !important;
+	transition: all 0.5s;
+}
+.product_hover:hover{
+	margin-top:-3px ;
+	margin-bottom:3px ;
+	border: 1px solid #c81623 !important;
 }

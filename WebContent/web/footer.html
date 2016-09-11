@@ -4,171 +4,102 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}" />
-		<style type="text/css">
-
-		</style>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>
+		<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
+	
 	</head>
 
 	<body>
 		<div th:fragment="footerFragement">
-			<div id="footer1">
-				<div style="height: 80px;"></div>
-				<div id="footbar"></div>
-				<div style="height: 27px;"></div>
-			</div>
-			
-		<div id="footer2_father">
-			<div id="footer2">
-				<div style="padding-top: 20px;padding-right: 50px;">
-					<img alt="" th:src="@{/resources/unionpay.png}" width="114px;" height="70px;" />
-				</div>
-
-				<div id="footLeft">
-					<div>
-						<ul>
-							<li style="font-size: 14px;">店舖地址</li>
-							<li>
-								<div class="White"></div>
-							</li>
-							<li>
-								<div class="underLine"></div>
-							</li>
-							<li>
-								<div class="White"></div>
-							</li>
-						</ul>
-					</div>
-					<div id="add">
-						<div id="add1">
-							<span class="addName">Main Shop市區總店</span>
-							<div class="White10"></div>
-							<p>65 Wakefield Street, Auckland C.B.D.<br /> Tel : 0064-9-3031619 <br /> Fax : 0064-9-3031608 <br /> Email : info@royaldeer.co.nz</p>
-							<div class="White10"></div>
-							<span class="addName" style="">Howick 分店</span>
-							<div class="White10"></div>
-							<p>6Shop5/16 Gooch Place,<br /> Highgate ,Howick <br /> Tel : 09-537-1109
-							</p> <br />
-						</div>
-						<div style="width: 70px;"></div>
-						<div id="add2">
-							<span class="addName">Botany  South 分店</span>
-							<div class="White10"></div>
-							<p>14 Bishop Lenihan Place,<br /> East Tamaki <br /> Tel : 09-265-1100
+			<section class="footer container-fluid mt25">
+				<div class="container h100  pt15 " >
+					<div class="col-xs-3 col-md-3">
+						<label>Main Shop市區總店</label>
+						<p>65 Wakefield Street, Auckland C.B.D.<br /> Tel : 0064-9-3031619 <br />
+								 Fax : 0064-9-3031608 <br /> Email : info@royaldeer.co.nz</p>
+								 
+						<label>Howick 分店</label>
+						 <p>14 Bishop Lenihan Place,<br /> East Tamaki <br /> Tel : 09-265-1100
 							</p>
-							<div class="White10"></div>
-							<span class="addName" style="">Glenfield 分店</span>
-							<div class="White10"></div>
-							<p>31 Link Drive, <br /> Glenfield
+					</div>
+					<div class="col-xs-3 col-md-3">
+						<label>Botany  South 分店</label>
+						<p>65 Wakefield Street, Auckland C.B.D.<br /> Tel : 0064-9-3031619 <br />
+								 Fax : 0064-9-3031608 <br /> Email : info@royaldeer.co.nz</p>
+						<label>Glenfield 分店</label>
+						 <p>31 Link Drive, <br /> Glenfield
 								<br /> Tel : 09-912-8831
-							</p> <br />
-						</div>
-						<div style="width: 70px;"></div>
-						<div id="add3">
-							<span class="addName">Northcote 分店</span>
-							<div class="White10"></div>
-							<p>15 Pearn Place,<br /> Northcote Shopping Centre<br /> Tel : 09-480-3151
 							</p>
-						</div>
 					</div>
-				</div>
-
-				<div id="footMid">
-					<div>
-						<ul class="Aus">
-							<li style="color: black;">關於我們</li>
-							<li>
-								<div class="White"></div>
-							</li>
-							<li>
-								<div class="underLine"></div>
-							</li>
-
-							<li>
-								<div class="White"></div>
-							</li>
-							<li>
+					<div class="col-xs-2 col-md-2">
+						<label>Northcote 分店</label>
+						<p>15 Pearn Place,<br /> Northcote Shopping Centre<br /> Tel : 09-480-3151
+							</p>
+					</div>
+					<div class="col-xs-4 col-md-2">
+						<div class="col-xs-6">
+							<label for="">關於我們</label>
+							<ul class="footer_link mt25">
+								<li>
 								<a th:href="@{/about/us/}">
-									<div class="auChangColor">關於我們</div>
+									關於我們
 								</a>
 							</li>
 							<li>
 								<a th:href="@{/about/policy/}">
-									<div class="auChangColor">售後政策</div>
+									售後政策
 								</a>
 							</li>
 							<li>
 								<a th:href="@{/about/product_returns/}">
-									<div class="auChangColor">退貨條款</div>
+									退貨條款
 								</a>
 							</li>
 							<li>
 								<a th:href="@{/about/state/}">
-									<div class="auChangColor">退款說明</div>
+									退款說明
 								</a>
 							</li>
 
 							<li>
 								<a th:href="@{/about/exceptions/}">
-									<div class="auChangColor">免責條款</div>
+									免責條款
 								</a>
 							</li>
-							<li>
-								<!--<a th:href="@{/aboutus/a5/}"><div class="auChangColor">購物條款</div></a>-->
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div id="footRight">
-					<div>
-						<ul class="Aus">
-							<li style="color: black;">訂單相關</li>
-							<li>
-								<div class="White"></div>
-							</li>
-							<li>
-								<div class="underLine"></div>
-							</li>
-
-							<li>
-								<div class="White"></div>
-							</li>
-							<li>
+							</ul>
+						</div>
+						<div class="col-xs-6 ">
+							<label for="">訂單相關</label>
+							<ul class="footer_link mt25">
+								<li>
 								<a th:href="@{/customer/order/}">
-									<div class="auChangColor">訂單查詢</div>
+									訂單查詢
 								</a>
 							</li>
 							<li>
 								<a th:href="@{/customer/}">
-									<div class="auChangColor">忘記密碼</div>
+									忘記密碼
 								</a>
 							</li>
 							<li>
 								<a th:href="@{/about/freight/}">
-									<div class="auChangColor">運費細則</div>
+									運費細則
 								</a>
 							</li>
-
-						</ul>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-2 ">
+						<img class="float_R img-responsive pr10 pb15" src="../resources/web/img/new/unionpay.png" th:src="@{/resources/web/img/new/unionpay.png}" alt="" />
+						<img class="float_R img-responsive" src="../resources/web/img/new/qr_code.png" th:src="@{/resources/web/img/new/qr_code.png}" alt="" />
 					</div>
 				</div>
-				<div style="padding-left: 40px;padding-right: 50px;">
-					<img alt="" th:src="@{/resources/qr_code.png}"  />
-				</div>
-			</div>
-		</div>
-			<div class="clr"></div>
+			</section>
+			
 
-			<div id="footer3">
-				<div id="hr"></div>
-				<div style="height: 8px;"></div>
-				<div id="copy">
-					<p>Copyright © 2016 Royal Deer of New Zealand Ltd 版權所有.</p>
-					<div style="height:4px ;"></div>
-					<p> 鹿皇土產- 紐西蘭大型禮品連鎖店</p>
-				</div>
-				<br />
-			</div>
 		</div>
 	</body>
 

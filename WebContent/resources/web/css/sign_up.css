@@ -36,17 +36,17 @@ li {
 
 .rpWay {
 	display: flex;
-	color: #626262;
+	color: #C05100;
 }
 
 #rpway1 {
-	border-bottom: 5px solid #F0C103;
+	border-bottom: 5px solid #C05100;
 	flex: 1;
 	height: 34px;
 	font-size: 14px;
 	line-height: 34px;
 	text-align: center;
-	color: #F0C103;
+	color: #C05100;
 }
 
 #rpway2 {
@@ -179,7 +179,7 @@ li {
 .rpBtn {
 	width: 115px;
 	height: 35px;
-	background: #F0C103;
+	background: #C05100;
 	color: #FFFFFF;
 	line-height: 35px;
 	text-align: center;

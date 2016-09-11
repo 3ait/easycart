@@ -59,17 +59,15 @@ public class IndexController extends BaseController{
 		List<MenuView> menuList = indexLogic.getMenus();
 		modelAndView.addObject("menuViewList", menuList);
 		
-		Page page = new Page();
-		page.setRows(4);
 		
 		//获取热销产品
-		modelAndView.addObject("hotProductList", indexLogic.getHotProduct(page,customer));
+		modelAndView.addObject("hotProductList", indexLogic.getHotProduct(new Page(20),customer));
 		
 		//获取促销产品
-		modelAndView.addObject("promoteProductList", indexLogic.getPromoteProduct(page,customer));
+		modelAndView.addObject("promoteProductList", indexLogic.getPromoteProduct(new Page(8),customer));
 		
 		//获取首页产品列表
-		modelAndView.addObject("menuProductList", indexLogic.getFrontPageProductByMenu(menuList,page,customer));
+		modelAndView.addObject("menuProductList", indexLogic.getFrontPageProductByMenu(menuList,new Page(4),customer));
 		
 		//购物车产品数量
 		List<Cart> cartProductList = this.getAllProductFromSession(-1,0, request);
