@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../resources/plugin/bootstrap-3.3.7/css/bootstrap.min.css" th:href="@{/resources/plugin/bootstrap-3.3.7/css/bootstrap.min.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_product.css" th:href="@{/resources/admin/css/admin_product.css}" />
+		<link rel="stylesheet" type="text/css" href="../../resources/admin/css/admin_header_footer.css" th:href="@{/resources/admin/css/admin_header_footer.css}" />
+		<script src="../../resources/plugin/jquery/jquery-2.2.1.min.js" th:src="@{/resources/plugin/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+		
+	</head>
+
+	<body>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_header :: admin_headerFragement"></div>
+
+		<div id="apContainer">
+			<aside class="aside">
+				<a th:href="@{/administratro/statistics/}">
+					<div class="aNav selected" >
+					Statistics
+					</div>
+				</a>
+			</aside>
+			
+			<div class="flex1"></div>
+			
+			<section>
+				<div class="container">
+					<div class="row page-header">
+						<div class="col-sm-1 " >
+						  From:
+						</div>
+						<div class="col-sm-3 " >
+						  <input class="form-control"  id="from" type="date" th:value="${from}" th:onchange="|createChart()|"/>
+						</div>
+						<div class="col-sm-1 " >
+						  To:
+						</div>
+						<div class="col-sm-3 " >
+						  <input class="form-control" id="to" type="date" th:value="${to}"  th:onchange="|createChart()|"/>
+						</div>
+					</div>
+					<div class="row page-header">
+						<div class="col-sm-12 " >
+							<canvas id="myChart" width="500" height=""></canvas>
+						</div>
+					</div>
+					<div class="row " >
+						<div class="col-sm-2 " >
+							<label>点击数量</label>
+						</div>
+						<div class="col-sm-10 " >
+							<label>链接地址</label>
+						</div>
+						<th:block th:each="url :${urlList}">
+						<div class="col-sm-2 " >
+							<label th:text="${url[1]}">点击数</label>
+						</div>
+						<div class="col-sm-10 " >
+							<a target="_blank" th:href="${url[0]}"><span th:text="${url[0]}">asdfasdf</span></a>
+						</div>
+						</th:block>
+					</div>
+					<br/>
+					<br/>
+				</div>
+			</section>
+		</div>
+
+		<!-- 引入title -->
+		<div th:include="/admin/admin_footer :: admin_footerFragement"></div>
+
+	</body>
+
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+				/**
+				     创建图表
+				**/
+				var ctx = document.getElementById("myChart");
+				var labels =  [[${dateNumber[0]}]].split(",");
+				labels.pop();
+				var data =  [[${dateNumber[1]}]].split(",");
+				data.pop();
+				var myChart = new Chart(ctx, {
+				    type: 'line',
+				    data: {
+				    	labels : labels,
+			    		datasets : [
+			    			{
+			    				label: "Page View",
+			    	            fill: false,
+			    	            lineTension: 0.1,
+			    	            backgroundColor: "rgba(75,192,192,0.4)",
+			    	            borderColor: "rgba(75,192,192,1)",
+			    	            borderCapStyle: 'butt',
+			    	            borderDash: [],
+			    	            borderDashOffset: 0.0,
+			    	            borderJoinStyle: 'miter',
+			    	            pointBorderColor: "rgba(75,192,192,1)",
+			    	            pointBackgroundColor: "#fff",
+			    	            pointBorderWidth: 1,
+			    	            pointHoverRadius: 5,
+			    	            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+			    	            pointHoverBorderColor: "rgba(220,220,220,1)",
+			    	            pointHoverBorderWidth: 2,
+			    	            pointRadius: 1,
+			    	            pointHitRadius: 10,
+			    	            spanGaps: false,
+				    	        data: data,
+			    			},
+			    			
+			    		]
+				    },
+				   
+				});
+				
+				function createChart(){
+					var from = $("#from").val();
+					var to = $("#to").val();
+					window.location.href = [[@{/administratro/statistics/}]] + "?from=" + from + "&to=" + to;
+				}
+				
+			/*]]>*/	
+		</script>
+</html>

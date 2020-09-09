@@ -51,6 +51,7 @@
 	    <mapping class="com.easycart.db.entity.Reply"/>
 	    <mapping class="com.easycart.db.entity.ToAddress"/>
 	    <mapping class="com.easycart.db.entity.Banner"/>
+	    <mapping class="com.easycart.db.entity.LogUrl"/>
 	    
     </session-factory>
 </hibernate-configuration>

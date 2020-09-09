@@ -20,7 +20,7 @@
 					return false;
 				}
 				$.ajax({
-					url: [[@{/admin/customer/list/edit/confirm}]],
+					url: [[@{/administratro/customer/list/edit/confirm}]],
 					method: "POST",
 					data: { 
 						"id" : id,
@@ -106,7 +106,7 @@
 			</aside>
 			<div class="flex1"></div>
 			<section>
-				<form id="customerSearchForm" th:action="@{/admin/customer/}"  th:method="post">
+				<form id="customerSearchForm" th:action="@{/administratro/customer/}"  th:method="post">
 					<div class="search">
 						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
 						<input type="text" th:name="q" placeholder="名字/電話" />

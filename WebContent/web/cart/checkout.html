@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
 		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/main.css" th:href="@{/resources/web/css/main.css}" />-->
 		<link rel="stylesheet" type="text/css" href="../../resources/web/css/page_checkout.css" th:href="@{/resources/web/css/page_checkout.css}" />
-		<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
 		<script src="../resources/web/js/roll.js" th:src="@{/resources/web/js/roll.js}" type="text/javascript" charset="utf-8"></script>
@@ -69,11 +69,19 @@
 				<div id="online">
 					<h3 id="subtitle2">在线支付</h3>
 					<div id="shortline2"></div>
-
-					<form id="pay_form" name="pay_form" th:action="@{/cart/unionpay}" method="post" target="_blank">
-						<input type="hidden" id="orderId" name="orderId" th:value="${orderId}"></input>
-						<button type="submit" class="btn confirm_button">確認支付</button>
+					<div id="pay_form">
+						<br />
+					<form  name="pay_form" th:action="@{/cart/unionpay}" method="post" target="_blank">
+						<input type="hidden"  name="orderId" th:value="${orderId}"></input>
+						<button type="submit" class="btn confirm_button">银联支付</button>
 					</form>
+					<form  name="pay_form_wechat" th:action="@{/cart/wechat}" method="post" target="_blank">
+						<input type="hidden"  name="orderId" th:value="${orderId}"></input>
+						<img th:alt="|@{/cart/wechat?orderId=}${orderId}|" th:src="|@{/cart/wechat?orderId=}${orderId}|"   width="150" height="150"/><br />
+						<h3>&nbsp;&nbsp;微信扫码支付</h3>
+						<h3>&nbsp;&nbsp;<a th:href="@{/customer/order/}">支付成功后，点击这里跳转</a></h3>
+					</form>
+					</div>
 				</div>
 			</div>
 		</div>

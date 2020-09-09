@@ -25,7 +25,7 @@ public abstract class BaseLogic{
 	/**
 	 * "/resources/product_img/"
 	 */
-	public static final String imgDir = "/resources/product_img/";
+	public static final String imgDir = "resources/product_img/";
 	
 	/**
 	 * 获取产品和图片的组合，返回给页面

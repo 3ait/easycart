@@ -187,5 +187,8 @@ display: inline-block;}
 .product_hover:hover{
 	margin-top:-3px ;
 	margin-bottom:3px ;
-	border: 1px solid #c81623 !important;
 }
+.product_hover:hover >  a{
+	
+}
+

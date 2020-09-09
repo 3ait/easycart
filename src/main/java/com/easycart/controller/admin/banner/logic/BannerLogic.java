@@ -52,7 +52,7 @@ public class BannerLogic {
 					fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("png")||
 					fuMultipartFile.getOriginalFilename().toLowerCase().endsWith("bmp"))){
 				
-				String imgDir = "/resources/banner/";
+				String imgDir = "resources/banner/";
 				
 				String fileName = "banner" + DateHelper.getTime() + fuMultipartFile.getOriginalFilename().substring(fuMultipartFile.getOriginalFilename().lastIndexOf("."));
 				String filePath = request.getServletContext().getRealPath("/") + imgDir + fileName;

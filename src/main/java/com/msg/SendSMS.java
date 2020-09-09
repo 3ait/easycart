@@ -55,7 +55,7 @@ public class SendSMS {
 	private String username = "3aa";
 	private String password_md5 = Md5.getMd5String("zxcv1234") ;
 	private String apikey = "e9e90e468e60b328e2497a1464388737";
-	private String companyName = "www.royaldeer.co.nz";
+	private String companyName = "【www.royaldeer.co.nz】";
 	
 	public SendSMS(){
 		

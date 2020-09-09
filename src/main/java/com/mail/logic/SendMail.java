@@ -46,6 +46,9 @@ public class SendMail {
 			javaMailProperties.setProperty("mail.smtp.starttls.enable",  "true");
 			javaMailProperties.setProperty("mail.debug",  mailProperty.getDebug());
 			
+			javaMailProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			javaMailProperties.setProperty("mail.smtp.port", "465");
+			
 			Authenticator authenticator = new Authenticator() {
 				@Override
 				public PasswordAuthentication getPasswordAuthentication(){
@@ -100,6 +103,9 @@ public class SendMail {
 			javaMailProperties.setProperty("mail.smtp.auth", "true");
 			javaMailProperties.setProperty("mail.smtp.starttls.enable",  "true");
 			javaMailProperties.setProperty("mail.debug",  mailProperty.getDebug());
+			
+			javaMailProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			javaMailProperties.setProperty("mail.smtp.port", "465");
 			
 			Authenticator authenticator = new Authenticator() {
 				@Override
@@ -163,15 +169,27 @@ public class SendMail {
 	
 	public static void main(String[] args) throws AddressException, Exception{
 		SendMail sendMail = new SendMail();
+		
+		/*
 		MailProperty mailProperty = new MailProperty();
-		mailProperty.setEmail("");
-		mailProperty.setPassword("");
+		mailProperty.setEmail("info@royaldeer.co.nz");
+		mailProperty.setPassword("123456789");
 		mailProperty.setDebug("true");
-		mailProperty.setHost("");
+		mailProperty.setHost("smtp.zoho.com");
 		mailProperty.setTo("yaolyaol@sina.com");
 		mailProperty.setCc("");
-		sendMail.send(mailProperty, "subject", "content");
+		sendMail.send(mailProperty, "subjecttttt", "contenttt");
+		*/
 		
+		MailProperty mailProperty = new MailProperty();
+		mailProperty.setEmail("info@royaldeer.co.nz");
+		mailProperty.setPassword("royaldeer65");
+		mailProperty.setDebug("true");
+		mailProperty.setHost("smtp.zoho.com");
+		mailProperty.setTo("info@royaldeer.co.nz");
+		mailProperty.setCc("");
+		sendMail.send(mailProperty, "subjecttttt", "contenttt");
+		 
 		
 	}
 }

@@ -112,7 +112,7 @@ public class CartLogic extends BaseLogic {
 			NumberFormat nf = new DecimalFormat("0.00");
 			total[0] = new Double(nf.format(productViewList.stream()
 					.map(pv -> pv.getNum() * pv.getProduct().getPrice1()).reduce(0D, (a, b) -> a + b) * discount));
-			double productWeight = productViewList.stream().map(pv -> pv.getNum() * pv.getProduct().getWeight()).reduce(0D, (a, b) -> a + b);
+			double productWeight = productViewList.stream().map(pv -> pv.getNum() * (pv.getProduct().getWeight()==null?0:pv.getProduct().getWeight())).reduce(0D, (a, b) -> a + b);
 
 			// 按照 升价排序
 			Set<Integer> menu1Ids = new HashSet<>();

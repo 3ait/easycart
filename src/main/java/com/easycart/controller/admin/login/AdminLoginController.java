@@ -32,7 +32,7 @@ import com.easycart.utils.Md5;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin"})
+@RequestMapping(value={"/administratro"})
 public class AdminLoginController extends BaseController{
 	private static Logger logger = LogManager.getLogger(AdminLoginController.class);
 	
@@ -86,7 +86,7 @@ public class AdminLoginController extends BaseController{
 			modelAndView.addObject("msg", "用户或密码错误");
 			return modelAndView;
 		}else{
-			View view = new RedirectView("/admin/order/",true);
+			View view = new RedirectView("/administratro/statistics/",true);
 			modelAndView = new ModelAndView(view);
 			request.getSession().setAttribute(BaseController.SESSION_USER, user);
 		}
@@ -99,7 +99,7 @@ public class AdminLoginController extends BaseController{
 		logger.debug("logout" );
 		request.getSession().removeAttribute(BaseController.SESSION_USER);
 		request.getSession().removeAttribute(request.getRemoteHost());
-		response.sendRedirect(request.getContextPath()+"/admin/");
+		response.sendRedirect(request.getContextPath()+"/administratro/");
 	}
 
 

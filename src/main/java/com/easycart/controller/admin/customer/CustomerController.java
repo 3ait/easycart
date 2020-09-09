@@ -21,7 +21,7 @@ import com.easycart.utils.Page;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin/customer"})
+@RequestMapping(value={"/administratro/customer"})
 public class CustomerController extends BaseController{
 	private static Logger logger = LogManager.getLogger(CustomerController.class);
 	private static int light = 3;

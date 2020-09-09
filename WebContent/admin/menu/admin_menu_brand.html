@@ -14,7 +14,7 @@
 		           
 		//选择一级分类
 		function menu1Select(menu1Id){
-			$("#brandList").load([[@{/admin/category/brand/ajax/}]]+menu1Id);
+			$("#brandList").load([[@{/administratro/category/brand/ajax/}]]+menu1Id);
 		}
 		//添加
 		function addBrand(){
@@ -30,13 +30,13 @@
 					$("#brandNameEn").focus();
 					return false;
 				}
-				$("#brandList").load([[@{/admin/category/brand/ajax/add}]],$('#brandForm').serialize());
+				$("#brandList").load([[@{/administratro/category/brand/ajax/add}]],$('#brandForm').serialize());
 			}
 		}
 		//删除
 		function brandDelete(brandId,menuId){
 			if(confirm("confirm?")){
-				$("#brandList").load([[@{/admin/category/brand/delete/}]] + brandId + "?mid="+menuId);
+				$("#brandList").load([[@{/administratro/category/brand/delete/}]] + brandId + "?mid="+menuId);
 			}
 		}
 		/*]]>*/	
@@ -49,9 +49,9 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<a th:href="@{/admin/category/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">一級分類</div></a>
-				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">二級分類</div></a>
-				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >品牌</div></a>
+				<a th:href="@{/administratro/category/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">一級分類</div></a>
+				<a th:href="@{/administratro/category/level2/}" style="text-decoration: none;text-decoration: none;"><div class="aNav">二級分類</div></a>
+				<a th:href="@{/administratro/category/brand/}" style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >品牌</div></a>
 			</aside>
 			<div class="flex1"></div>
 			<section>

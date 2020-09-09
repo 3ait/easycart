@@ -1,10 +1,13 @@
 package com.easycart.controller.web.cart;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -36,15 +39,22 @@ import com.easycart.controller.web.cart.logic.CartLogic;
 import com.easycart.controller.web.index.MenuView;
 import com.easycart.controller.web.index.ProductView;
 import com.easycart.controller.web.index.logic.IndexLogic;
+import com.easycart.db.dao.impl.CustomerDao;
 import com.easycart.db.entity.Cart;
 import com.easycart.db.entity.Customer;
 import com.easycart.db.entity.FromAddress;
 import com.easycart.db.entity.Order;
 import com.easycart.db.entity.ToAddress;
+import com.easycart.utils.QrCode;
+import com.google.zxing.WriterException;
 import com.latipay.config.LatipayConfig;
 import com.mail.logic.RoyalDeerMailLogic;
 import com.unionpay.upop.sdk.QuickPayConf;
 import com.unionpay.upop.sdk.QuickPayUtils;
+import com.wechat.ApiDemoForJava;
+import com.wechat.GetPostUtil;
+
+import net.sf.json.JSONObject;
 
 /**
  * admin login
@@ -67,7 +77,9 @@ public class CartController extends BaseController {
 	OrderLogic orderLogic;
 	@Autowired
 	RoyalDeerMailLogic royalDeerMailLogic;
-	
+	@Autowired
+	CustomerDao customerDao;
+
 	/**
 	 * 展示购物车 || 直接购买
 	 * 
@@ -103,19 +115,18 @@ public class CartController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/confirm/{area}")
-	public ModelAndView confirm(@PathVariable("area")String area, HttpServletRequest request) {
+	public ModelAndView confirm(@PathVariable("area") String area, HttpServletRequest request) {
 		logger.debug("checkout");
 		ModelAndView modelAndView = new ModelAndView("web/cart/confirm");
 
-		//只能选择香港，中国和新西兰
-		ToArea toArea ;
+		// 只能选择香港，中国和新西兰
+		ToArea toArea;
 		try {
 			toArea = ToArea.valueOf(area);
 		} catch (Exception e) {
 			return new ModelAndView(new RedirectView(request.getServletContext().getContextPath() + "/cart/"));
 		}
-		
-		
+
 		// 获取菜单
 		List<MenuView> menuList = indexLogic.getMenus();
 		modelAndView.addObject("menuViewList", menuList);
@@ -144,7 +155,7 @@ public class CartController extends BaseController {
 			discount = customer.getDiscount();
 		}
 
-		Double[] priceAndFreight = cartLogic.getProductTotalPrice(productViewList, discount,toArea);
+		Double[] priceAndFreight = cartLogic.getProductTotalPrice(productViewList, discount, toArea);
 		// 产品总价
 		modelAndView.addObject("productTotalPrice", priceAndFreight[0]);
 		// 运费总价
@@ -193,7 +204,7 @@ public class CartController extends BaseController {
 		// 保存订单数据
 		Order order = cartLogic.saveOrder(customer, cartList, confirmView);
 		modelAndView.addObject("orderId", order.getId());
-		if(customer==null){
+		if (customer == null) {
 			customer = order.getCustomer();
 		}
 		request.getSession().setAttribute(SESSION_CUSTOMER, customer);
@@ -207,6 +218,9 @@ public class CartController extends BaseController {
 		modelAndView.addObject("companyInfo", companyInfoLogic.getCompanyInfo());
 
 		royalDeerMailLogic.newOrderMail(order.getId(), customer);
+		
+		
+		
 		return modelAndView;
 	}
 
@@ -406,6 +420,7 @@ public class CartController extends BaseController {
 
 	/**
 	 * 银联支付
+	 * 
 	 * @param orderId
 	 * @param request
 	 * @param response
@@ -445,8 +460,9 @@ public class CartController extends BaseController {
 			String transferFee = "";
 			// 支付类型 554 纽币
 			String orderCurrency = "554";
-			String orderAmount = new DecimalFormat("0").format((order.getTotalFreight()+order.getTotalProductPrice())*100);
-//			String orderAmount = "1";
+			String orderAmount = new DecimalFormat("0")
+					.format((order.getTotalFreight() + order.getTotalProductPrice()) * 100);
+			// String orderAmount = "1";
 
 			String signType = QuickPayConf.signType;
 
@@ -527,7 +543,7 @@ public class CartController extends BaseController {
 	}
 
 	/**
-	 * 支付返回跳转
+	 * 银联支付返回跳转
 	 * 
 	 * @param request
 	 * @param response
@@ -540,7 +556,7 @@ public class CartController extends BaseController {
 		try {
 			request.setCharacterEncoding(QuickPayConf.charset);
 		} catch (UnsupportedEncodingException e) {
-			
+
 		}
 
 		Map<String, String> map = new TreeMap<String, String>();
@@ -550,22 +566,22 @@ public class CartController extends BaseController {
 			resArr[i] = request.getParameter(QuickPayConf.notifyVo[i]);
 			map.put(QuickPayConf.notifyVo[i], resArr[i]);
 		}
-		
+
 		logger.info("支付信息" + resArr);
 		String signature = request.getParameter(QuickPayConf.signature);
 		String signMethod = request.getParameter(QuickPayConf.signMethod);
 		Boolean signatureCheck = new QuickPayUtils().checkSign(QuickPayConf.notifyVo, resArr, signMethod, signature);
 
-		//支付状态
-		//支付成功更新订单
+		// 支付状态
+		// 支付成功更新订单
 		String respMsg = "";
-		if("00".equals(map.get("respCode")) && map.get("respMsg").equals("success") && signatureCheck){
+		if ("00".equals(map.get("respCode")) && map.get("respMsg").equals("success") && signatureCheck) {
 			Integer orderId = Integer.valueOf(map.get("orderNumber").substring(14));
-			//更新Order 变为已付款 status = 1;
-			orderLogic.updateOrder(orderId,1);
+			// 更新Order 变为已付款 status = 1;
+			orderLogic.updateOrder(orderId, 1);
 			respMsg = map.get("respMsg");
-			royalDeerMailLogic.paidMail(orderId, customer,map.get("orderNumber"));
-		}else{
+			royalDeerMailLogic.paidMail(orderId, customer, map.get("orderNumber"));
+		} else {
 			respMsg = "fail";
 		}
 		// 获取菜单
@@ -573,7 +589,6 @@ public class CartController extends BaseController {
 
 		// 获取SESSION数据
 		List<Cart> cartList = this.getAllProductFromSession(-1, 0, request);
-
 
 		// 购物车产品数量
 		modelAndView.addObject("productInCartNum", super.getCartNum(cartList));
@@ -584,6 +599,108 @@ public class CartController extends BaseController {
 
 		return modelAndView;
 	}
+
+	/**
+	 * wechat 支付
+	 * 
+	 * @throws IOException
+	 * @throws WriterException
+	 * 
+	 */
+	@RequestMapping(value = "/wechat")
+	public void forwordToWeChat(@RequestParam(value = "orderId") int orderId, HttpServletRequest request,
+			HttpServletResponse response) throws WriterException, IOException {
+
+		Customer customer = (Customer) request.getSession().getAttribute(SESSION_CUSTOMER);
+		if (customer != null) {
+			Order order = orderLogic.getOrderById(orderId, customer);
+			String orderAmount = (order.getTotalFreight() + order.getTotalProductPrice()) + "";
+			ApiDemoForJava api = new ApiDemoForJava();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("merchant_id", api.merchant_id);// 分配的商户ID
+			params.put("increment_id", orderId + "");// 商户系统的订单号
+														// “C222333”测试订单号，实际测试请使用自己的订单号
+			params.put("currency", "NZD");
+			params.put("grandtotal", orderAmount);// 订单金额
+			params.put("return_url", "http://royaldeer.co.nz/cart/wechat/ret");
+			params.put("notify_url", "http://royaldeer.co.nz/cart/wechat/ret");// 支付异步结果通知地址，在支付完成后支付结构会调用此结果推送支付结果
+			params.put("subject", "orderId:" + order.getId());// 订单描述
+			JSONObject descJson = new JSONObject();
+			descJson.put("customerId", order.getCustomer().getId());
+			params.put("describe", descJson.toString());
+			params.put("service", "create_scan_code");
+			params.put("signature", api.getSignObjForAPI1_0(params, api.sign_key)); // 计算签名
+																					// 详细见getSignObjForAPI1_0方法
+																					// "845943"
+																					// 为商户分配的sign_key
+			params.put("sign_type", "MD5");
+			String paramsStr = api.getEncodeUrlStrFromObj(params);
+			String getCodeUrl = "http://www.kiwifast.com/api/v1/info/pay"; // 接口调用请求地址
+			System.out.println(GetPostUtil.sendGet(getCodeUrl, paramsStr));
+			JSONObject ret = JSONObject.fromObject(GetPostUtil.sendGet(getCodeUrl, paramsStr));
+
+			// {"response":{"code":"0","message":"success","qrcode_url":"weixin://wxpay/bizpayurl?pr=GQhlsbA"}}
+			// {"response":{"code":"TRADE_HAS_SUCCESS ","message":"交易已被支付"}}
+			logger.debug("调用接口返回结果" + ret.toString());
+
+			response.setContentType("text/html;charset=" + QuickPayConf.charset);
+			response.setCharacterEncoding(QuickPayConf.charset);
+			if ("success".equals(ret.getJSONObject("response").getString("message"))) {
+				QrCode.createZxing(ret.getJSONObject("response").getString("qrcode_url"), response.getOutputStream());
+				response.setStatus(HttpServletResponse.SC_OK);
+			} else if ("TRADE_HAS_SUCCESS".equals(ret.getJSONObject("response").getString("code").trim())) {
+				// 更新Order 变为已付款 status = 1;
+				orderLogic.updateOrder(orderId, 1);
+				royalDeerMailLogic.paidMail(orderId, customer, orderId + "");
+				// 清除SEssion数据
+				request.getSession().removeAttribute(SESSION_CART);
+			} else {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			}
+
+		}
+	}
+
+	/**
+	 * 微信支付返回跳转
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/wechat/ret")
+	public ModelAndView forwordToWechatReturn(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("web/cart/pay_return");
+
+		// merchant_id=57c3d70b9f7bcdec10066629&increment_id=50&grandtotal=0.01&receipt_amount=0.01&currency=NZD&
+		//trade_no=4008202001201703295014917577&
+		//service=create_scan_code&rate=4.8653&notify_time=2017-03-29%2007%3A07%3A11&
+		//created_at=2017-03-29%2007%3A06%3A32&gmt_payment=2017-03-29%2007%3A06%3A32&
+		//payment_channels=WECHAT&subject=%E6%B5%8B%E8%AF%95&openid=o4FhqwKlZZGQt9skLTKqV_5FTxpE&describe=%E6%B5%8B%E8%AF%95&
+		//trade_status=TRADE_SUCCESS&signature=2388b0653a27e96ad5a2c3f2cee968e6&sign_type=MD5
+		String orderId = request.getParameter("increment_id");
+		String tradeStatus =  request.getParameter("trade_status");
+		JSONObject describe =  JSONObject.fromObject(request.getParameter("describe"));
+		Customer customer = customerDao.getById(describe.getInt("customerId"));
+		if("TRADE_SUCCESS".equals(tradeStatus)){
+			// 更新Order 变为已付款 status = 1;
+			System.out.println("########### forwordToWechatReturn" );
+			orderLogic.updateOrder(Integer.valueOf(orderId), 1);
+			royalDeerMailLogic.paidMail(new Integer(orderId), customer, orderId + "");
+		}
+/*		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				System.out.println("########### " + customer.getName() + "pay success #######" + line);
+			}
+			reader.close();
+		} catch (Exception e) {
+
+		}*/
 	
+		System.out.println("########### pay success orderId：" + orderId );
+		return modelAndView;
+	}
 
 }

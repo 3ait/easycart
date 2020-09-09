@@ -88,6 +88,11 @@ dependencies {
 	
 	//latipay
 	compile 'commons-codec:commons-codec:1.9'
+	
+	//qr-code
+	compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
+	compile group: 'com.google.zxing', name: 'javase', version: '3.3.0'
+	
 }
 
 

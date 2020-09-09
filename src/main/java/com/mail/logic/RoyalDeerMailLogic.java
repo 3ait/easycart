@@ -95,7 +95,7 @@ public class RoyalDeerMailLogic {
 		if(unionpayId!=null){
 			content.append("UnionPay ID：" + unionpayId).append("<br/><br/>");
 		}
-		content.append("CustomerName:" + customer.getName() + "&nbsp;     &nbsp;Phone:" + customer.getPhone()).append("<br/><br/>");
+		content.append("CustomerName:" + customer.getName() + "Email:" + customer.getEmail()  +  "&nbsp;     &nbsp;Phone:" + customer.getPhone()).append("<br/><br/>");
 		content.append("</div>");
 
 		content.append(" <div>");

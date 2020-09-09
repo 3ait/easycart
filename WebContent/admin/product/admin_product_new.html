@@ -29,12 +29,12 @@
 
 		//选择一级分类
 		function men1Select(menu1Id){
-			$("#menu2_brand").load([[@{/admin/product/add/ajax/menu1/}]]+menu1Id);
+			$("#menu2_brand").load([[@{/administratro/product/add/ajax/menu1/}]]+menu1Id);
 		}
 		
 		//添加
 		function addmenu2(){
-			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/add}]],$('#menu2Form').serialize());
+			$("#leve2MenuList").load([[@{/administratro/category/level2/ajax/add}]],$('#menu2Form').serialize());
 		}
 		
 		//提交检查
@@ -64,12 +64,12 @@
 		
 		<div id="apContainer">
 			<aside class="aside">
-				<a th:href="@{/admin/product/}"><div class="aNav" >全部産品</div></a>
-				<a th:href="@{/admin/product/add/}"  style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;">添加産品</div></a>
+				<a th:href="@{/administratro/product/}"><div class="aNav" >全部産品</div></a>
+				<a th:href="@{/administratro/product/add/}"  style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;">添加産品</div></a>
 			</aside>
 			<div class="flex1"></div>
 			<section>
-				<form method="post" th:action="@{/}+'admin/product/add/save'" th:object="${productForm}" onsubmit="return checkInput()" enctype="multipart/form-data"  >
+				<form method="post" th:action="@{/administratro/product/add/save}" th:object="${productForm}" onsubmit="return checkInput()" enctype="multipart/form-data"  >
 					<div style="height: 20px;">
 					<!-- 占位 -->
 					</div>

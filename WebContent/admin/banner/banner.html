@@ -22,7 +22,7 @@
 					return false;
 				}
 				$.ajax({
-					url: [[@{/admin/banner/update/}]]+id,
+					url: [[@{/administratro/banner/update/}]]+id,
 					method: "GET",
 					data: { 
 						"url" : $("#url_"+id).val(),
@@ -41,7 +41,7 @@
 					return false;
 				}
 				$.ajax({
-					url: [[@{/admin/banner/delete/}]]+id,
+					url: [[@{/administratro/banner/delete/}]]+id,
 					method: "GET",
 					data: { 
 						},
@@ -85,28 +85,34 @@
 			<section>
 				<div style="height: 30px;"></div>
 					<div class="companyInfo" >
+						<div >
+							<span style="width:200px;">Image</span>&nbsp;
+							<span style="width:505px;">URL</span>&nbsp;
+							<span style="width:200px;">Title</span>&nbsp;
+							<span style="width:65px;">Position</span>&nbsp;
+						</div>
 						<div th:each="banner:${bannerList}">
 							<img src="#" width="200px;" th:src="|@{/}${banner.imgHref}|" />
-							<input th:id="|url_${banner.id}|" th:value="${banner.url}"/>&nbsp;
+							<input style="width:505px;" th:id="|url_${banner.id}|" th:value="${banner.url}"/>&nbsp;
 							<input th:id="|title_${banner.id}|" th:value="${banner.title}"/>&nbsp;
 							<select th:id="|type_${banner.id}|"  style="height: 30px;">
-								<option value="indexBanner" th:selected="${banner.type=='index_1'}?1:0">Index 1</option>
-								<option value="indexBanner" th:selected="${banner.type=='index_2'}?1:0">Index 2</option>
-								<option value="indexBanner" th:selected="${banner.type=='index_3'}?1:0">Index 3</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_1'}?1:0">Banner大图</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_2'}?1:0">Banner小图</option>
+								<option value="indexBanner" th:selected="${banner.type=='index_3'}?1:0">合作LOGO</option>
 							</select>&nbsp;
 							<input style="width:65px;" type="button" value="update" th:onclick="|updateBanner(${banner.id})|" />&nbsp;
 							<input style="width:65px;" type="button" value="delete" th:onclick="|deleteBanner(${banner.id})|" />&nbsp;
 						</div>
 						
-						<form action="#" th:action="@{/admin/banner/save}" onsubmit="retun checkForm()" method="post" th:object="${banner}" enctype="multipart/form-data">
+						<form action="#" th:action="@{/administratro/banner/save}" onsubmit="retun checkForm()" method="post" th:object="${banner}" enctype="multipart/form-data">
 							<div>
 								<input id="multipartFile" name="multipartFile" style="width:200px;" type="file"/>
-								<input id="url" name="url" placeholder="URL" />&nbsp;
+								<input style="width:505px;" id="url" name="url" placeholder="URL" />&nbsp;
 								<input id="title" name="title" placeholder="Title" />&nbsp;
 								<select th:id="type" name="type" style="height: 30px;">
-									<option value="index_1" >Index 1</option>
-									<option value="index_2" >Index 2</option>
-									<option value="index_3" >Index 3</option>
+									<option value="index_1" >Banner大图</option>
+									<option value="index_2" >Banner小图</option>
+									<option value="index_3" >合作LOGO</option>
 								</select>&nbsp;
 								<input style="width:65px;" type="submit" th:value="submit" ></input>
 							</div>

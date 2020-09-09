@@ -83,9 +83,9 @@ public class QuickPayConf {
 	public final static String merName = "Ahura Consulting Ltd";
 
 //	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "/web/cart/unionpay/ret";
-	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "/web/cart/unionpay/ret";
+	public final static String merFrontEndUrl = LOCAL_FRONT_END_IP + "/cart/unionpay/ret";
 
-	public final static String merBackEndUrl = LOCAL_BACK_END_IP + "/web/cart/unionpay/ret";
+	public final static String merBackEndUrl = LOCAL_BACK_END_IP + "/cart/unionpay/ret";
 
 	// 加密方式
 	public final static String signType = "MD5";

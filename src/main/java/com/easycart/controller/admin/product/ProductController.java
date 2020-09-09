@@ -27,7 +27,7 @@ import com.easycart.utils.Page;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin/product"})
+@RequestMapping(value={"/administratro/product"})
 public class ProductController extends BaseController{
 	private static Logger logger = LogManager.getLogger(ProductController.class);
 	private static int light = 2;
@@ -247,6 +247,6 @@ public class ProductController extends BaseController{
 			e.printStackTrace();
 		}
 		
-		return new ModelAndView("redirect:/admin/product/edit/"+ productForm.getProductId());
+		return new ModelAndView("redirect:/administratro/product/edit/"+ productForm.getProductId());
 	}
 }

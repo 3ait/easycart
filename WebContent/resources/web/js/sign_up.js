@@ -61,18 +61,18 @@ $(function() {
 		$(".findPLabel").css("display", "none");
 	})
 	
-	//输入框
-	/*
-	 * */
-	$(".rpiLabel").click(function() {
-		$(this).children(".rpiInput").css("height", "30px");
-		$(this).children(".rpiInput")[0].focus();
-	});
-	//输入框
-	$(".countrySelect").change(function() {
-		$(this).parent().next(".rpiInput").css("height", "30px");
-		$(this).parent().next(".rpiInput").focus();
-	});
+//	//输入框
+//	/*
+//	 * */
+//	$(".rpiLabel").click(function() {
+//		$(this).children(".rpiInput").css("height", "30px");
+//		$(this).children(".rpiInput")[0].focus();
+//	});
+//	//输入框
+//	$(".countrySelect").change(function() {
+//		$(this).parent().next(".rpiInput").css("height", "30px");
+//		$(this).parent().next(".rpiInput").focus();
+//	});
 
 	
 	$("#loginBtn").click(function(){

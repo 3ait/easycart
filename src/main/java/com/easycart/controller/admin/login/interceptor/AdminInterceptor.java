@@ -39,7 +39,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 			logger.debug("login successed! "+user.getEmail() + request.getRemoteHost() + request.getRequestURI());
 			ret = true;
 		}else{
-			response.sendRedirect(request.getContextPath()+"/admin/");
+			response.sendRedirect(request.getContextPath()+"/administratro/");
 		}
 		
 		return ret;

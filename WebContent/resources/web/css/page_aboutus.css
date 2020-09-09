@@ -20,7 +20,7 @@ button{
     cursor: pointer;
 }
 #about_container{
-    width: 1200px;
+    max-width: 1200px;
     display: flex;
     justify-content: center;
     margin: 0 auto;
@@ -34,10 +34,10 @@ button{
     height: 245px;
     background: #aaaaaa;
     margin-left: 90px;
-    margin-right: 60px;
+    margin-right: 50px;
 }
 .brand_content{
-    width: 690px;
+    max-width: 690px;
     margin-top: 10px;
     color:  #59493f;
     font-size: 12px;

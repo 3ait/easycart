@@ -17,7 +17,7 @@
 			if(menu1Id=="-1"){
 				return false;
 			}
-			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/}]]+menu1Id);
+			$("#leve2MenuList").load([[@{/administratro/category/level2/ajax/}]]+menu1Id);
 		}
 		//添加
 		function addmenu2(){
@@ -33,16 +33,16 @@
 				$("#position").focus();
 				return false;
 			}
-			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/add}]],$('#menu2Form').serialize());
+			$("#leve2MenuList").load([[@{/administratro/category/level2/ajax/add}]],$('#menu2Form').serialize());
 		}
 		//编辑保存
 		function editSave(){
-			$("#leve2MenuList").load([[@{/admin/category/level2/ajax/edit/save}]],$('#listForm').serialize());
+			$("#leve2MenuList").load([[@{/administratro/category/level2/ajax/edit/save}]],$('#listForm').serialize());
 		}
 		//删除
 		function deleteMenu2(menuId,fatherId){
 			if(confirm("confirm?")){
-				$("#leve2MenuList").load([[@{/admin/category/level2/delete/}]] + menuId+"?fid="+fatherId);
+				$("#leve2MenuList").load([[@{/administratro/category/level2/delete/}]] + menuId+"?fid="+fatherId);
 			}
 		}
 		function edit(obj){
@@ -58,9 +58,9 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<a th:href="@{/admin/category/}" style="text-decoration: none;"><div class="aNav">一級分類</div></a>
-				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >二級分類</div></a>
-				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
+				<a th:href="@{/administratro/category/}" style="text-decoration: none;"><div class="aNav">一級分類</div></a>
+				<a th:href="@{/administratro/category/level2/}" style="text-decoration: none;"><div class="aNav" style="background: #FFFFFF;color:#F0C200;"  >二級分類</div></a>
+				<a th:href="@{/administratro/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
 			</aside>
 			<div class="flex1"></div>
 			<section>

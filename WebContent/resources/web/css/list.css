@@ -1,6 +1,6 @@
 
 .containerList {
-	width: 1200px;
+	max-width: 1200px;
 	margin: 0 auto;
 	/*height: 100px;background: red;*/
 }
@@ -47,7 +47,7 @@
 	/*background: yellow;*/
 	width: 100%;
 	/*width: 800px;*/
-	height: 60px;
+/* 	height: 60px; */
 	display: flex;
 	align-items: center;
 	flex-flow: row wrap;
@@ -153,7 +153,6 @@
 
 .lrBarTitle {
 	margin: 0 15px;
-	line-height: 40px;
 	color: #434343;
 	font-size: 12px;
 	cursor: pointer;

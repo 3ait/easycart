@@ -185,6 +185,11 @@ public class CustomerLoginController  extends BaseController{
 		//获取订单
 		Order  order = customerLoginLogic.getOrderbyId(orderId,customer.getId());
 		
+		if(order.getStatus()==1){
+			modelAndView.setView(new RedirectView("/customer/order/",true));
+			return modelAndView;
+		}
+		
 		if(order!=null){
 			ConfirmView confirmView = new ConfirmView();
 			confirmView.setTotalFreight(order.getTotalFreight());

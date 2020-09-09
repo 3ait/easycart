@@ -7,13 +7,13 @@
 		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />-->
 		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>-->
 		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>-->
-		<!--<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>-->
 		<!--<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>-->
 	</head>
-
 	<body>
 		<div th:fragment="hearderFragement">
-			<section class="header">
+		
+			<section class="header-width">
 				<div class="container-fluid h30 private_bg_gray">
 					<nav class=" navbar-static-top">
 						<div class="container">
@@ -51,7 +51,7 @@
 							</div>
 							<div class="col-xs-6 col-md-4  search_aa">
 								<img  id="searchBotton" class=""  th:onclick="|productSearch()|" src="../resources/web/img/new/search_n.png" th:src="@{/resources/web/img/new/search_n.png}" alt="" />
-								<input class="search_input pl10 ml10" name="q" id="q" th:value="${q}" type="text" placeholder="WELLCOME TO ROYAL DEER......." />
+								<input class="search_input pl10 ml10" name="q" id="q" th:value="${q}" type="text" placeholder="WELCOME TO ROYAL DEER......." />
 							</div>
 							<div class="col-xs-4 col-md-6">
 								<a th:href="@{/cart/}" target="_blank">
@@ -92,12 +92,14 @@
 										</li>
 									</ul>
 								</li>
+								<li class="liF">
+									<a target="_blank" class="each_menu1" href="#" th:href="@{/about/contact}">联系我们</a>
+								</li>
 							</div>
 						</ul>
 					</div>
 				</div>
 			</section>
-
 		</div>
 	</body>
 

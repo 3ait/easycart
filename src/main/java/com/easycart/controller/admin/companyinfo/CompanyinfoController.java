@@ -23,7 +23,7 @@ import com.easycart.db.entity.User;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin/companyinfo"})
+@RequestMapping(value={"/administratro/companyinfo"})
 public class CompanyinfoController extends BaseController{
 	private static Logger logger = LogManager.getLogger(CompanyinfoController.class);
 	private static int light = 6;
@@ -55,7 +55,7 @@ public class CompanyinfoController extends BaseController{
 	@RequestMapping("/company/save")
 	public ModelAndView companySave(@ModelAttribute(value="companyInfoView") CompanyInfoView companyInfoView,BindingResult br){
 		logger.debug("companySave");
-		ModelAndView mv = new ModelAndView("redirect:/admin/companyinfo/");
+		ModelAndView mv = new ModelAndView("redirect:/administratro/companyinfo/");
 		
 		if(br.hasFieldErrors()){
 			return mv;
@@ -114,7 +114,7 @@ public class CompanyinfoController extends BaseController{
 	@RequestMapping("/user/add")
 	public ModelAndView userSave(@ModelAttribute(value="userForm") UserForm userForm,BindingResult br,HttpServletRequest request){
 		logger.debug("userSave");
-		ModelAndView mv = new ModelAndView("redirect:/admin/companyinfo/user/");
+		ModelAndView mv = new ModelAndView("redirect:/administratro/companyinfo/user/");
 		
 		if(br.hasFieldErrors()){
 			return mv;

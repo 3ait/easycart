@@ -16,7 +16,7 @@
 				}
 				
 				$.ajax({
-					url: [[@{/admin/order/list/edit/confirm}]],
+					url: [[@{/administratro/order/list/edit/confirm}]],
 					method: "POST",
 					data: { 
 						"id" : orderId,
@@ -35,7 +35,7 @@
 			function print(orderId){
 				
 				var courierType = $(":radio[name='courierType']:checked").val();
-				var url = [[@{/admin/order/print/}]]+orderId+"/"+courierType;
+				var url = [[@{/administratro/order/print/}]]+orderId+"/"+courierType;
 				window.open(url,"_blank");
 			}
 			/**
@@ -43,7 +43,7 @@
 			**/
 			function printDetail(orderId){
 				
-				var url = [[@{/admin/order/print/detail/}]]+orderId;
+				var url = [[@{/administratro/order/print/detail/}]]+orderId;
 				window.open(url,"_blank");
 			}
 			
@@ -87,7 +87,7 @@
 			
 			//编辑查看
 			function edit(productId){
-				var url = [[@{/admin/product/edit/}]]+productId;
+				var url = [[@{/administratro/product/edit/}]]+productId;
 				window.open(url,'newwindow','width=1000,height=800');
 			}
 			//切换订单状态
@@ -114,7 +114,7 @@
 			</aside>
 			<div class="flex1"></div>
 			<section>
-				<form id="orderSearchForm" th:action="@{/admin/order/}" th:object="${orderSearchForm}" th:method="post">
+				<form id="orderSearchForm" th:action="@{/administratro/order/}" th:object="${orderSearchForm}" th:method="post">
 					<div class="search">
 						<input type="hidden" id="hidden_pageNum" name="pageNum" th:value="${page.pageNum}" />
 						<input type="text" th:field="*{q}" placeholder="訂單號/姓名/電話" />

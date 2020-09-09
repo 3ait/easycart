@@ -24,7 +24,7 @@ import com.easycart.db.entity.Menu;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin/category"})
+@RequestMapping(value={"/administratro/category"})
 public class CategoryController extends BaseController{
 	private static Logger logger = LogManager.getLogger(CategoryController.class);
 	
@@ -56,7 +56,7 @@ public class CategoryController extends BaseController{
 	public ModelAndView levelAdd(@ModelAttribute("menuForm") @Valid MenuForm menuForm,BindingResult bindingResult){
 		
 		logger.debug("levelAdd");
-		ModelAndView mov = new ModelAndView("redirect:/admin/category/");
+		ModelAndView mov = new ModelAndView("redirect:/administratro/category/");
 		//数据验证
 		if(bindingResult.hasFieldErrors()){
 			return mov;
@@ -74,7 +74,7 @@ public class CategoryController extends BaseController{
 	@RequestMapping(value={"/level1/edit/save"})
 	public ModelAndView levelEditSave(@ModelAttribute @Valid CategoryView categoryView,BindingResult bindingResult){
 		logger.debug("index");
-		ModelAndView mov = new ModelAndView("redirect:/admin/category/");
+		ModelAndView mov = new ModelAndView("redirect:/administratro/category/");
 		//数据验证
 		if(bindingResult.hasFieldErrors()){
 			return mov;
@@ -91,7 +91,7 @@ public class CategoryController extends BaseController{
 	@RequestMapping(value={"/level1/delete/{menuId}"})
 	public ModelAndView level1Delete(@PathVariable(value="menuId") int menuId){
 		logger.debug("index");
-		ModelAndView mov = new ModelAndView("redirect:/admin/category/");
+		ModelAndView mov = new ModelAndView("redirect:/administratro/category/");
 		//数据验证
 		
 		categoryLogic.deleteCategoryById(menuId);

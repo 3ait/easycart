@@ -21,7 +21,6 @@ public class ConfirmView {
 	private String fromName;
 	
 	@Length(min=1,max=100)
-	@Pattern(regexp="[0-9]+")
 	private String fromPhone;
 	@Length(min=1,max=300)
 	private String fromAddress;
@@ -31,7 +30,6 @@ public class ConfirmView {
 	private String toName;
 	
 	@Length(min=1,max=100)
-	@Pattern(regexp="[0-9]+")
 	private String toPhone;
 	@Length(min=1,max=300)
 	private String toAddress;

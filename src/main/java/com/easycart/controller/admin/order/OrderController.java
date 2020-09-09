@@ -39,7 +39,7 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
  * 24-12-2015
  */
 @Controller
-@RequestMapping(value={"/admin/order"})
+@RequestMapping(value={"/administratro/order"})
 public class OrderController extends BaseController{
 	private static Logger logger = LogManager.getLogger(OrderController.class);
 	private static int light = 1;

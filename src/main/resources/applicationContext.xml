@@ -46,23 +46,34 @@
 	
 	<mvc:interceptors  >
 		<!-- admin 登录拦截器  -->
-			<mvc:interceptor >
-				<mvc:mapping path="/admin/**" />
-				<mvc:exclude-mapping path="/admin/"/>
-				<mvc:exclude-mapping path="/admin/login"/>
-				<bean class="com.easycart.controller.admin.login.interceptor.AdminInterceptor"/>
-			</mvc:interceptor>
+		<mvc:interceptor >
+			<mvc:mapping path="/administratro/**" />
+			<mvc:exclude-mapping path="/administratro/"/>
+			<mvc:exclude-mapping path="/administratro/login"/>
+			<bean class="com.easycart.controller.admin.login.interceptor.AdminInterceptor"/>
+		</mvc:interceptor>
+		
 		<!-- customer 登录拦截器  -->
-			<mvc:interceptor >
-				<mvc:mapping path="/customer/**" />
-				<mvc:exclude-mapping path="/customer/"/>
-				<mvc:exclude-mapping path="/customer/login"/>
-				<mvc:exclude-mapping path="/customer/register"/>
-				<mvc:exclude-mapping path="/customer/register/save"/>
-				<mvc:exclude-mapping path="/customer/ajax/**"/>
-				<mvc:exclude-mapping path="/customer/retrieve"/>
-				<bean class="com.easycart.controller.web.customer.interceptor.CustomerInterceptor"/>
-			</mvc:interceptor>
+		<mvc:interceptor >
+			<mvc:mapping path="/customer/**" />
+			<mvc:exclude-mapping path="/customer/"/>
+			<mvc:exclude-mapping path="/customer/login"/>
+			<mvc:exclude-mapping path="/customer/register"/>
+			<mvc:exclude-mapping path="/customer/register/save"/>
+			<mvc:exclude-mapping path="/customer/ajax/**"/>
+			<mvc:exclude-mapping path="/customer/retrieve"/>
+			<bean class="com.easycart.controller.web.customer.interceptor.CustomerInterceptor"/>
+		</mvc:interceptor>
+			
+		<!-- 统计拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<mvc:exclude-mapping path="/admin/**" />
+			<mvc:exclude-mapping path="/error" />
+			<mvc:exclude-mapping path="/administrator/**" />
+			<bean class="com.easycart.controller.statistics.interceptor.AccessInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 </beans>

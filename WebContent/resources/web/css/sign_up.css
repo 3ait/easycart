@@ -127,12 +127,13 @@ li {
 }
 .countrySelect{
 	height: 25px;
+	float: left;
 }
 
 .rpiLabelC {
 	height: 30px;
 	line-height: 30px;
-	/*background: yellow;*/
+	/*background: red;*/
 	width: 70px;
 	/*transition: 1s;*/
 }
@@ -143,13 +144,14 @@ li {
 	font-size: 16px;
 	outline: none;
 	border: none;
-	width: 270px;
-	/*height: 45px;*/
-	height: 0px;
+	width: 290px;
+	height: 30px;
+	line-height:30px ;
+	/*height: 0px;*/
 	padding: 0;
 	/*display: none;*/
-	/*background: red;*/
-	transition: 0.2s;
+	/*background:red;*/
+	/*transition: 0.2s;*/
 }
 
 #rpiSend {

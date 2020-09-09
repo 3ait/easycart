@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
 		<!--<link rel="stylesheet" type="text/css" href="../../resources/web/css/sign_up.css" th:href="@{/resources/web/css/sign_up.css}"/>-->
     <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_confirm.css" th:href="@{/resources/web/css/page_confirm.css}"  />
-		<script src="../resources/admin/web/jquery/jquery-2.2.1.min.js" th:src="@{/resources/admin/web/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
 		<script src="../resources/web/js/roll.js" th:src="@{/resources/web/js/roll.js}" type="text/javascript" charset="utf-8"></script>
@@ -35,8 +35,7 @@
 				$("#fromName").click();
 				return false;
 			}
-			var reg = new RegExp("^[0-9]+$");
-			if($("#fromPhone").val()=="" || !reg.test($("#fromPhone").val())){
+			if($("#fromPhone").val()==""){
 				$("#fromPhone").prev().css("color","red");
 				$("#fromPhone").focus();
 				return false;
@@ -51,7 +50,7 @@
 				$("#toName").focus();
 				return false;
 			}
-			if($("#toPhone").val()=="" || !reg.test($("#toPhone").val())){
+			if($("#toPhone").val()==""){
 				$("#toPhone").prev().css("color","red");
 				$("#toPhone").focus();
 				return false;

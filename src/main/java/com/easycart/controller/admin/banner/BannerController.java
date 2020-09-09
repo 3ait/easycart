@@ -26,7 +26,7 @@ import com.easycart.db.entity.Banner;
  * @author yaoliang
  *
  */
-@RequestMapping(value="/admin/banner")
+@RequestMapping(value="/administratro/banner")
 @Controller
 public class BannerController extends BaseController{
 
@@ -62,7 +62,7 @@ public class BannerController extends BaseController{
 		logger.debug("bannerSave");
 		
 		bannerLogic.saveBanner(multipartFile,banner,request);
-		return new ModelAndView(new RedirectView(request.getServletContext().getContextPath()+"/admin/banner/"));
+		return new ModelAndView(new RedirectView(request.getServletContext().getContextPath()+"/administratro/banner/"));
 	}
 	
 	/**

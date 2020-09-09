@@ -13,7 +13,7 @@
 		/*<![CDATA[*/
 		function delcategory(menuId){
 			if(confirm("confirm?")){
-				var url = [[@{/admin/category/level1/delete/}]] + menuId;
+				var url = [[@{/administratro/category/level1/delete/}]] + menuId;
 				window.location.href = url;
 			}
 		}
@@ -53,9 +53,9 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<a th:href="@{/admin/category/}" style="text-decoration: none;"><div class="aNav"  style="background: #FFFFFF;color:#F0C200;">一級分類</div></a>
-				<a th:href="@{/admin/category/level2/}" style="text-decoration: none;"><div class="aNav">二級分類</div></a>
-				<a th:href="@{/admin/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
+				<a th:href="@{/administratro/category/}" style="text-decoration: none;"><div class="aNav"  style="background: #FFFFFF;color:#F0C200;">一級分類</div></a>
+				<a th:href="@{/administratro/category/level2/}" style="text-decoration: none;"><div class="aNav">二級分類</div></a>
+				<a th:href="@{/administratro/category/brand/}" style="text-decoration: none;"><div class="aNav">品牌</div></a>
 			</aside>
 			<div style="width: 20px;"></div>
 			<section>
@@ -72,7 +72,7 @@
 					<div class="tHeaderL">新西兰运费</div>
 				</div>
 				
-				<form th:action="@{/}+'/admin/category/level1/edit/save'" method="post" th:object="${categoryView}">
+				<form th:action="@{/administratro/category/level1/edit/save}" method="post" th:object="${categoryView}">
 					<div class="tContent" th:each="menuLevel1,stat : *{menuList}"  >
 						<input type="hidden" th:field="*{menuList[__${stat.index}__].id}" />
 						<input type="hidden" th:field="*{menuList[__${stat.index}__].level}" />
@@ -110,7 +110,7 @@
 					</div>
 				</form>
 
-				<form th:action="@{/}+'admin/category/level1/add'" method="post" th:object="${menuForm}" onsubmit="return checkform();" >
+				<form th:action="@{/administratro/category/level1/add}" method="post" th:object="${menuForm}" onsubmit="return checkform();" >
 						<input type="hidden" th:name="level" value="1" />
 						<input type="hidden" th:name="fatherId"  value="0"/>
 					<div id="newFormC" class="tContent">

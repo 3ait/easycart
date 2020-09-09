@@ -27,6 +27,11 @@ public class ImgCompress {
 		BufferedImage image;
 		try {
 			image = ImageIO.read(inputPic);
+			
+			if(image.getWidth()<outputPicWidth){
+				outputPicWidth =  image.getWidth();
+			}
+			
 			int outputPicHeight = outputPicWidth;
 			
 			if(flag==1){

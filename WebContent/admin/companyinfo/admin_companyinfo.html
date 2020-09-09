@@ -30,7 +30,7 @@
 					return false;
 				}
 				$.ajax({
-					url: [[@{/admin/companyinfo/user/edit/save}]],
+					url: [[@{/administratro/companyinfo/user/edit/save}]],
 					method: "POST",
 					data: { 
 						"userId" : id,
@@ -106,12 +106,12 @@
 
 		<div id="apContainer">
 			<aside class="aside">
-				<a th:href="@{/admin/companyinfo/}"><div class="aNav" style="background: #FFFFFF;color:#427AB8;">Company Info</div></a>
-				<a th:href="@{/admin/companyinfo/user/}"><div class="aNav" >Admin User</div></a>
+				<a th:href="@{/administratro/companyinfo/}"><div class="aNav" style="background: #FFFFFF;color:#427AB8;">Company Info</div></a>
+				<a th:href="@{/administratro/companyinfo/user/}"><div class="aNav" >Admin User</div></a>
 			</aside>
 			<div class="flex1"></div>
 			<section>
-				<form action="#" th:action="@{/admin/companyinfo/company/save}" onsubmit="submitConfirm()" th:object="${companyInfoView}" method="post" >
+				<form action="#" th:action="@{/administratro/companyinfo/company/save}" onsubmit="submitConfirm()" th:object="${companyInfoView}" method="post" >
 					<div class="companyInfo">
 						<input type="hidden" th:value="${companyInfoView.companyId}" th:name="companyId" />
 						<div class="companyInfor_row">

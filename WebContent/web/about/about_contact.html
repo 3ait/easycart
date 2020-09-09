@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>about us</title>
+    <title></title>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/bootstrap.min.css" th:href="@{/resources/web/css/bootstrap.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../resources/web/css/public.css" th:href="@{/resources/web/css/public.css}"/>
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/header.css" th:href="@{/resources/web/css/header.css}" />
+		<link rel="stylesheet" type="text/css" href="../resources/web/css/footer.css" th:href="@{/resources/web/css/footer.css}"  />
+		<!--<link rel="stylesheet" type="text/css" href="../resources/web/css/main.css" th:href="@{/resources/web/css/main.css}" />-->
+    <link rel="stylesheet" type="text/css" href="../../resources/web/css/page_aboutus.css" th:href="@{/resources/web/css/page_aboutus.css}"  />
+		<script src="../resources/jquery/jquery-2.2.1.min.js" th:src="@{/resources/jquery/jquery-2.2.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/bootstrap.min.js" th:src="@{/resources/web/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/js/banner.js" th:src="@{/resources/web/js/banner.js}" ></script>
+		<script src="../resources/web/js/roll.js" th:src="@{/resources/web/js/roll.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="../resources/web/search.js" th:src="@{/resources/web/search.js}" ></script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+
+function sendmail(){
+	
+	if($("#email_name").val()==""){
+		$("#email_name").focus();
+		return;
+	}
+	if($("#email").val()==""){
+		$("#email").focus();
+		return;
+	}
+	if($("#phone").val()==""){
+		$("#phone").focus();
+		return;
+	}
+	if($("#content").val()==""){
+		$("#content").focus();
+		return;
+	}
+	$("#form1").submit();
+	alert("success!");
+	
+}
+</script>
+
+<!-- 引入title -->
+<!--<div th:include="../web/header :: hearderFragement"></div>-->
+<div th:include="/web/header :: hearderFragement"></div>
+    <div id="about_container">
+        <div class="brand_pic"><img src="../resources/web/img/brand/brand.png" th:src="@{/resources/web/img/brand/brand.png}"/></div>
+        <div class="line_about"></div>
+        <div class="brand_content">
+       		 <form id="form1" th:action="@{/about/sendmail}" method="post"  >
+	            <input type="text" id="email_name" name="name" required="required" style="height: 25px;width: 250px;" placeholder="Name" /><br/><br/>
+	            <input type="email" id="email" name="email" required="required" style="height: 25px;width: 250px;" placeholder="Email" /><br/><br/>
+	            <input type="text" id="phone" name="phone" required="required" style="height: 25px;width: 250px;" placeholder="Phone" /><br/><br/>
+	            <textarea  name="content" required="required" style="height: 75px;width: 250px;" placeholder="Message"></textarea><br/><br/>
+	            <input type="button" value="Submit" onclick="sendmail()"  />
+            </form>
+        </div>
+    </div>
+<!-- 引入title -->
+<div th:include="/web/footer :: footerFragement"></div>
+
+</body>
+</html>
